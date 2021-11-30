@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.EntityFrameworkCore;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung
 {
@@ -23,6 +24,13 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         public MainWindow()
         {
             InitializeComponent();
+
+            // Migrate ausführen
+            using (var context = new OrderContext())
+            {
+                context.Database.Migrate();
+            }
+
         }
     }
 }
