@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DbAdvPrgAdv_Auftragsverwaltung.Form;
 using Microsoft.EntityFrameworkCore;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung
@@ -31,6 +32,12 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
                 context.Database.Migrate();
             }
 
+        }
+
+        private void CmdCreateCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            var windowCustomer = new BearbeiteKunde();
+            windowCustomer.Show();
         }
     }
 }

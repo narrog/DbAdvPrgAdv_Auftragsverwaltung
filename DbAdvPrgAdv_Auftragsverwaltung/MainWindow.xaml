@@ -5,8 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DbAdvPrgAdv_Auftragsverwaltung"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Auftragsverwaltung" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="63*"/>
+            <ColumnDefinition Width="142*"/>
+            <ColumnDefinition Width="595*"/>
+        </Grid.ColumnDefinitions>
+        <TabControl Grid.ColumnSpan="3" Margin="0,0,0,40">
+            <TabItem Header="Kunden">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid Margin="0,0,0,40"/>
+                    <Button x:Name="CmdDeleteCustomer" Content="Löschen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65"/>
+                    <Button x:Name="CmdEditCustomer" Content="Bearbeiten" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65"/>
+                    <Button x:Name="CmdCreateCustomer" Content="Erstellen" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="65" Click="CmdCreateCustomer_Click"/>
+                    <Button x:Name="CmdSearchCustomer" Content="Suchen" HorizontalAlignment="Right" Margin="0,0,235,10" VerticalAlignment="Bottom" Width="65"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Aufträge">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Artikel">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Artikelgruppen">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>

@@ -1,0 +1,29 @@
+﻿<Window x:Class="DbAdvPrgAdv_Auftragsverwaltung.Form.BearbeiteKunde"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DbAdvPrgAdv_Auftragsverwaltung.Form"
+        mc:Ignorable="d"
+        Title="BearbeiteKunde" Height="200" Width="700">
+    <Grid>
+        <TextBox x:Name="TxtVorname" HorizontalAlignment="Left" Margin="10,40,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Vorname" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TxtName" HorizontalAlignment="Left" Margin="145,40,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="145,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TxtStrasse" HorizontalAlignment="Left" Margin="280,40,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Strasse" HorizontalAlignment="Left" Margin="280,10,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="CmbPLZ" HorizontalAlignment="Left" Margin="415,38,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="PLZ" HorizontalAlignment="Left" Margin="415,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TxtOrt" HorizontalAlignment="Left" Margin="550,40,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <Label Content="Ort" HorizontalAlignment="Left" Margin="550,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TxtEMail" HorizontalAlignment="Left" Margin="10,110,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="EMail" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TxtWebseite" HorizontalAlignment="Left" Margin="145,110,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Webseite" HorizontalAlignment="Left" Margin="145,80,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TxtPasswort" HorizontalAlignment="Left" Margin="280,110,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Passwort" HorizontalAlignment="Left" Margin="280,80,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="CmdSave" Content="Speichern" HorizontalAlignment="Left" Margin="531,108,0,0" VerticalAlignment="Top" Width="65"/>
+        <Button x:Name="CmdClose" Content="Schliessen" HorizontalAlignment="Left" Margin="605,108,0,0" VerticalAlignment="Top" Width="65" Click="CmdClose_Click"/>
+    </Grid>
+</Window>
