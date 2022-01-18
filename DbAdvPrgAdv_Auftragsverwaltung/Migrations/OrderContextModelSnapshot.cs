@@ -122,6 +122,22 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                     b.HasIndex("OrtID");
 
                     b.ToTable("Kunden");
+
+                    b.HasData(
+                        new
+                        {
+                            KundeID = 1,
+                            Name = "Muster",
+                            Ort_ID = 0,
+                            Vorname = "Hans"
+                        },
+                        new
+                        {
+                            KundeID = 2,
+                            Name = "Peter",
+                            Ort_ID = 0,
+                            Vorname = "Benjamin"
+                        });
                 });
 
             modelBuilder.Entity("DbAdvPrgAdv_Auftragsverwaltung.Model.Ort", b =>
@@ -140,6 +156,14 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                     b.HasKey("OrtID");
 
                     b.ToTable("Orte");
+
+                    b.HasData(
+                        new
+                        {
+                            OrtID = 1,
+                            Ortschaft = "St. Gallen",
+                            PLZ = 9000
+                        });
                 });
 
             modelBuilder.Entity("DbAdvPrgAdv_Auftragsverwaltung.Model.Position", b =>
