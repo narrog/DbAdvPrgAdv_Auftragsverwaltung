@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
 {
-    public partial class InitalCreate : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -131,6 +131,21 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                         principalColumn: "AuftragID",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Kunden",
+                columns: new[] { "KundeID", "Email", "Name", "OrtID", "Ort_ID", "Passwort", "Strasse", "Vorname", "Webseite" },
+                values: new object[] { 1, null, "Muster", null, 0, null, null, "Hans", null });
+
+            migrationBuilder.InsertData(
+                table: "Kunden",
+                columns: new[] { "KundeID", "Email", "Name", "OrtID", "Ort_ID", "Passwort", "Strasse", "Vorname", "Webseite" },
+                values: new object[] { 2, null, "Peter", null, 0, null, null, "Benjamin", null });
+
+            migrationBuilder.InsertData(
+                table: "Orte",
+                columns: new[] { "OrtID", "Ortschaft", "PLZ" },
+                values: new object[] { 1, "St. Gallen", 9000 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Artikel_GruppeID",

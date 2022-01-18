@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
 {
     [DbContext(typeof(OrderContext))]
-    [Migration("20211130140309_InitalCreate")]
-    partial class InitalCreate
+    [Migration("20220118150744_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -124,6 +124,22 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                     b.HasIndex("OrtID");
 
                     b.ToTable("Kunden");
+
+                    b.HasData(
+                        new
+                        {
+                            KundeID = 1,
+                            Name = "Muster",
+                            Ort_ID = 0,
+                            Vorname = "Hans"
+                        },
+                        new
+                        {
+                            KundeID = 2,
+                            Name = "Peter",
+                            Ort_ID = 0,
+                            Vorname = "Benjamin"
+                        });
                 });
 
             modelBuilder.Entity("DbAdvPrgAdv_Auftragsverwaltung.Model.Ort", b =>
@@ -142,6 +158,14 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                     b.HasKey("OrtID");
 
                     b.ToTable("Orte");
+
+                    b.HasData(
+                        new
+                        {
+                            OrtID = 1,
+                            Ortschaft = "St. Gallen",
+                            PLZ = 9000
+                        });
                 });
 
             modelBuilder.Entity("DbAdvPrgAdv_Auftragsverwaltung.Model.Position", b =>
