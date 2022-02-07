@@ -11,7 +11,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Model
         public int OrtID { get; set; }
         public int PLZ { get; set; }
         public string Ortschaft { get; set; }
-
         public virtual ICollection<Kunde> Kunden { get; set; }
 
     }

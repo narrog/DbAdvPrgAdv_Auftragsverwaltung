@@ -31,10 +31,10 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         {
             // PK zusammen bauen aus 2 FK
             modelBuilder.Entity<Position>()
-                .HasKey(t => new { t.Auftrag_ID, t.Artikel_ID});
-            modelBuilder.Entity<Kunde>().HasData(new Kunde() {KundeID = 1, Vorname = "Hans", Name = "Muster"});
-            modelBuilder.Entity<Kunde>().HasData(new Kunde() {KundeID = 2, Vorname = "Benjamin", Name = "Peter"});
-            modelBuilder.Entity<Ort>().HasData(new Ort() { OrtID = 1, PLZ = 9000, Ortschaft = "St. Gallen"});
+                .HasKey(t => new { t.AuftragID, t.ArtikelID});
+            modelBuilder.Entity<Ort>().HasData(new Ort() { OrtID = 1, PLZ = 9000, Ortschaft = "St. Gallen" });
+            modelBuilder.Entity<Kunde>().HasData(new Kunde() {KundeID = 1, Vorname = "Hans", Name = "Muster",OrtID = 1});
+            modelBuilder.Entity<Kunde>().HasData(new Kunde() {KundeID = 2, Vorname = "Benjamin", Name = "Peter", OrtID = 1});
         }
     }
 }

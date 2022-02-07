@@ -14,7 +14,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Model
         public string Bezeichnung { get; set; }
         [Column(TypeName = "decimal(7,2)")]
         public double Preis { get; set; }
-        public int Gruppe_ID { get; set; }
+        public int GruppeID { get; set; }
         public virtual Gruppe Gruppe { get; set; }
 
         public virtual ICollection<Position> Positionen { get; set; }

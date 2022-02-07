@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DbAdvPrgAdv_Auftragsverwaltung.Form;
+using DbAdvPrgAdv_Auftragsverwaltung.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung
@@ -36,21 +37,27 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 
         private void CmdCreateCustomer_Click(object sender, RoutedEventArgs e)
         {
-            var windowCustomer = new BearbeiteKunde(this);
+            var windowCustomer = new BearbeiteKunde(this,0);
             windowCustomer.Show();
         }
 
         private void CmdEditCustomer_Click(object sender, RoutedEventArgs e)
         {
-            var windowCustomer = new BearbeiteKunde(this);
-            var ID = GrdCustomer.SelectedItem;
-            MessageBox.Show(Convert.ToString(ID));
+            var selected = (Kunde)GrdCustomer.SelectedItem;
+            var windowCustomer = new BearbeiteKunde(this, selected.KundeID);
             windowCustomer.Show();
         }
 
         private void CmdDeleteCustomer_Click(object sender, RoutedEventArgs e)
         {
-
+            using (var context = new OrderContext())
+            {
+                var selected = (Kunde)GrdCustomer.SelectedItem;
+                var toDelete = context.Kunden.Find(selected.KundeID);
+                context.Kunden.Remove(toDelete);
+                context.SaveChanges();
+                UpdateGrid();
+            }
         }
 
         // Tabellen befüllen

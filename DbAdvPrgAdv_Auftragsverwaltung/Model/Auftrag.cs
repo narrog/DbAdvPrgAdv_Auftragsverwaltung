@@ -13,7 +13,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Model
         public DateTime Datum { get; set; }
         [Column(TypeName = "decimal(7,2)")]
         public double PreisTotal { get; set; }
-        public int Kunde_ID { get; set; }
+        public int KundeID { get; set; }
         public virtual Kunde Kunde { get; set; }
 
         public virtual ICollection<Position> Positionen { get; set; }

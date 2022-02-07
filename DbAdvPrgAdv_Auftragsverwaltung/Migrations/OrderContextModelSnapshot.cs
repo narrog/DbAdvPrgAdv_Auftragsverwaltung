@@ -16,7 +16,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.12")
+                .HasAnnotation("ProductVersion", "5.0.13")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("DbAdvPrgAdv_Auftragsverwaltung.Model.Artikel", b =>
@@ -29,10 +29,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                     b.Property<string>("Bezeichnung")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("GruppeID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Gruppe_ID")
+                    b.Property<int>("GruppeID")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Preis")
@@ -55,10 +52,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                     b.Property<DateTime>("Datum")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("KundeID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Kunde_ID")
+                    b.Property<int>("KundeID")
                         .HasColumnType("int");
 
                     b.Property<decimal>("PreisTotal")
@@ -99,10 +93,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrtID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Ort_ID")
+                    b.Property<int>("OrtID")
                         .HasColumnType("int");
 
                     b.Property<string>("Passwort")
@@ -128,14 +119,14 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                         {
                             KundeID = 1,
                             Name = "Muster",
-                            Ort_ID = 0,
+                            OrtID = 1,
                             Vorname = "Hans"
                         },
                         new
                         {
                             KundeID = 2,
                             Name = "Peter",
-                            Ort_ID = 0,
+                            OrtID = 1,
                             Vorname = "Benjamin"
                         });
                 });
@@ -168,29 +159,21 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
 
             modelBuilder.Entity("DbAdvPrgAdv_Auftragsverwaltung.Model.Position", b =>
                 {
-                    b.Property<int>("Auftrag_ID")
+                    b.Property<int>("AuftragID")
                         .HasColumnType("int");
 
-                    b.Property<int>("Artikel_ID")
+                    b.Property<int>("ArtikelID")
                         .HasColumnType("int");
 
                     b.Property<int>("Anzahl")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ArtikelID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AuftragID")
-                        .HasColumnType("int");
-
                     b.Property<int>("Nummer")
                         .HasColumnType("int");
 
-                    b.HasKey("Auftrag_ID", "Artikel_ID");
+                    b.HasKey("AuftragID", "ArtikelID");
 
                     b.HasIndex("ArtikelID");
-
-                    b.HasIndex("AuftragID");
 
                     b.ToTable("Positionen");
                 });
@@ -199,7 +182,9 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                 {
                     b.HasOne("DbAdvPrgAdv_Auftragsverwaltung.Model.Gruppe", "Gruppe")
                         .WithMany("Artikels")
-                        .HasForeignKey("GruppeID");
+                        .HasForeignKey("GruppeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Gruppe");
                 });
@@ -208,7 +193,9 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                 {
                     b.HasOne("DbAdvPrgAdv_Auftragsverwaltung.Model.Kunde", "Kunde")
                         .WithMany("Auftraege")
-                        .HasForeignKey("KundeID");
+                        .HasForeignKey("KundeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Kunde");
                 });
@@ -217,7 +204,9 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                 {
                     b.HasOne("DbAdvPrgAdv_Auftragsverwaltung.Model.Ort", "Ort")
                         .WithMany("Kunden")
-                        .HasForeignKey("OrtID");
+                        .HasForeignKey("OrtID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Ort");
                 });
@@ -226,11 +215,15 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                 {
                     b.HasOne("DbAdvPrgAdv_Auftragsverwaltung.Model.Artikel", "Artikel")
                         .WithMany("Positionen")
-                        .HasForeignKey("ArtikelID");
+                        .HasForeignKey("ArtikelID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DbAdvPrgAdv_Auftragsverwaltung.Model.Auftrag", "Auftrag")
                         .WithMany("Positionen")
-                        .HasForeignKey("AuftragID");
+                        .HasForeignKey("AuftragID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Artikel");
 

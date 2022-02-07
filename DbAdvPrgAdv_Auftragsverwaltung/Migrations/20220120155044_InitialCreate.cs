@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -42,8 +42,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Bezeichnung = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Preis = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
-                    Gruppe_ID = table.Column<int>(type: "int", nullable: false),
-                    GruppeID = table.Column<int>(type: "int", nullable: true)
+                    GruppeID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,7 +52,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                         column: x => x.GruppeID,
                         principalTable: "Gruppen",
                         principalColumn: "GruppeID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,8 +67,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Webseite = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Passwort = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Ort_ID = table.Column<int>(type: "int", nullable: false),
-                    OrtID = table.Column<int>(type: "int", nullable: true)
+                    OrtID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,7 +77,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                         column: x => x.OrtID,
                         principalTable: "Orte",
                         principalColumn: "OrtID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,8 +88,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Datum = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PreisTotal = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
-                    Kunde_ID = table.Column<int>(type: "int", nullable: false),
-                    KundeID = table.Column<int>(type: "int", nullable: true)
+                    KundeID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -101,51 +98,49 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                         column: x => x.KundeID,
                         principalTable: "Kunden",
                         principalColumn: "KundeID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Positionen",
                 columns: table => new
                 {
-                    Auftrag_ID = table.Column<int>(type: "int", nullable: false),
-                    Artikel_ID = table.Column<int>(type: "int", nullable: false),
+                    AuftragID = table.Column<int>(type: "int", nullable: false),
+                    ArtikelID = table.Column<int>(type: "int", nullable: false),
                     Nummer = table.Column<int>(type: "int", nullable: false),
-                    AuftragID = table.Column<int>(type: "int", nullable: true),
-                    ArtikelID = table.Column<int>(type: "int", nullable: true),
                     Anzahl = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Positionen", x => new { x.Auftrag_ID, x.Artikel_ID });
+                    table.PrimaryKey("PK_Positionen", x => new { x.AuftragID, x.ArtikelID });
                     table.ForeignKey(
                         name: "FK_Positionen_Artikel_ArtikelID",
                         column: x => x.ArtikelID,
                         principalTable: "Artikel",
                         principalColumn: "ArtikelID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Positionen_Aufträge_AuftragID",
                         column: x => x.AuftragID,
                         principalTable: "Aufträge",
                         principalColumn: "AuftragID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.InsertData(
-                table: "Kunden",
-                columns: new[] { "KundeID", "Email", "Name", "OrtID", "Ort_ID", "Passwort", "Strasse", "Vorname", "Webseite" },
-                values: new object[] { 1, null, "Muster", null, 0, null, null, "Hans", null });
-
-            migrationBuilder.InsertData(
-                table: "Kunden",
-                columns: new[] { "KundeID", "Email", "Name", "OrtID", "Ort_ID", "Passwort", "Strasse", "Vorname", "Webseite" },
-                values: new object[] { 2, null, "Peter", null, 0, null, null, "Benjamin", null });
 
             migrationBuilder.InsertData(
                 table: "Orte",
                 columns: new[] { "OrtID", "Ortschaft", "PLZ" },
                 values: new object[] { 1, "St. Gallen", 9000 });
+
+            migrationBuilder.InsertData(
+                table: "Kunden",
+                columns: new[] { "KundeID", "Email", "Name", "OrtID", "Passwort", "Strasse", "Vorname", "Webseite" },
+                values: new object[] { 1, null, "Muster", 1, null, null, "Hans", null });
+
+            migrationBuilder.InsertData(
+                table: "Kunden",
+                columns: new[] { "KundeID", "Email", "Name", "OrtID", "Passwort", "Strasse", "Vorname", "Webseite" },
+                values: new object[] { 2, null, "Peter", 1, null, null, "Benjamin", null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Artikel_GruppeID",
@@ -166,11 +161,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                 name: "IX_Positionen_ArtikelID",
                 table: "Positionen",
                 column: "ArtikelID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Positionen_AuftragID",
-                table: "Positionen",
-                column: "AuftragID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

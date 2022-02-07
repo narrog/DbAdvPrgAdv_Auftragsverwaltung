@@ -13,7 +13,7 @@
         <Label Content="Name" HorizontalAlignment="Left" Margin="145,10,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="TxtStrasse" HorizontalAlignment="Left" Margin="280,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Strasse" HorizontalAlignment="Left" Margin="280,10,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="CmbPLZ" HorizontalAlignment="Left" Margin="415,38,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="CmbPLZ_SelectionChanged"/>
+        <TextBox x:Name="TxtPLZ" HorizontalAlignment="Left" Margin="415,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" KeyUp="TxtPLZ_KeyUp"/>
         <Label Content="PLZ" HorizontalAlignment="Left" Margin="415,10,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="TxtOrt" HorizontalAlignment="Left" Margin="550,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <Label Content="Ort" HorizontalAlignment="Left" Margin="550,10,0,0" VerticalAlignment="Top"/>
