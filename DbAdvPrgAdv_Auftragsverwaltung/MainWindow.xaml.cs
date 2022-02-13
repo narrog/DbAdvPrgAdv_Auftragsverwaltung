@@ -60,6 +60,18 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             }
         }
 
+        /* Artikel-Gruppen */
+        private void CmdCreateArticleGroup_OnClick(object sender, RoutedEventArgs e) {
+            var windowGroup = new BearbeiteGruppe(this, 0);
+            windowGroup.Show();
+        }
+
+        private void CmdEditArticleGroup_OnClick(object sender, RoutedEventArgs e) {
+            var selected = (Gruppe)GrdArticleGroup.SelectedItem;
+            var windowCustomer = new BearbeiteGruppe(this, selected.GruppeID);
+            windowCustomer.Show();
+        }
+
         // Tabellen befüllen
         public void UpdateGrid()
         {
@@ -71,5 +83,8 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
                 GrdArticleGroup.ItemsSource = context.Gruppen.ToList();
             }
         }
+
+
+     
     }
 }
