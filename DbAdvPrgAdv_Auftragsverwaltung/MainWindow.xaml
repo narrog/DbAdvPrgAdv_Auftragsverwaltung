@@ -43,10 +43,10 @@
             <TabItem Header="Artikelgruppen">
                 <Grid Background="#FFE5E5E5">
                     <DataGrid x:Name="GrdArticleGroup" Margin="0,0,0,40" IsReadOnly="True"/>
-                    <Button x:Name="CmdDeleteArticleGroup" Content="Löschen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65"/>
+                    <Button x:Name="CmdDeleteArticleGroup" Content="Löschen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65" Click="CmdDeleteArticleGroup_OnClick"/>
                     <Button x:Name="CmdEditArticleGroup" Content="Bearbeiten" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65" Click="CmdEditArticleGroup_OnClick" />
                     <Button x:Name="CmdCreateArticleGroup" Content="Erstellen" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="65" Click="CmdCreateArticleGroup_OnClick"/>
-                    <Button x:Name="CmdSearchArticleGroup" Content="Suchen" HorizontalAlignment="Right" Margin="0,0,235,10" VerticalAlignment="Bottom" Width="65"/>
+                    <Button x:Name="CmdSearchArticleGroup" Content="Suchen" HorizontalAlignment="Right" Margin="0,0,235,10" VerticalAlignment="Bottom" Width="65" />
                 </Grid>
             </TabItem>
         </TabControl>

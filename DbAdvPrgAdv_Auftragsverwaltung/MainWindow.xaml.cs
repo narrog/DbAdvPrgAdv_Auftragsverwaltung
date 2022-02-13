@@ -35,6 +35,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             UpdateGrid();
         }
 
+        /* Kunden */
         private void CmdCreateCustomer_Click(object sender, RoutedEventArgs e)
         {
             var windowCustomer = new BearbeiteKunde(this,0);
@@ -72,6 +73,16 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             windowCustomer.Show();
         }
 
+        private void CmdDeleteArticleGroup_OnClick(object sender, RoutedEventArgs e) {
+            using (var context = new OrderContext()) {
+                var selected = (Gruppe)GrdArticleGroup.SelectedItem;
+                var toDelete = context.Gruppen.Find(selected.GruppeID);
+                context.Gruppen.Remove(toDelete);
+                context.SaveChanges();
+                UpdateGrid();
+            }
+        }
+
         // Tabellen befüllen
         public void UpdateGrid()
         {
@@ -85,6 +96,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         }
 
 
-     
+        
     }
 }

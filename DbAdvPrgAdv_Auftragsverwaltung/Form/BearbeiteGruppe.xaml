@@ -12,9 +12,8 @@
                " HorizontalAlignment="Left" Margin="175,30,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.587,-0.919"/>
         <TextBox x:Name="TxtNameGroup" HorizontalAlignment="Left" Margin="30,60,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <ComboBox x:Name="CmbGroupParent" HorizontalAlignment="Left" Margin="180,60,0,0" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="CmdAbortGroup" Content="Abbrechen" HorizontalAlignment="Left" Margin="30,125,0,0" VerticalAlignment="Top" Width="65" Click="CmdAbortGroup_Click"/>
-        <Button x:Name="CmdSaveGroup" Content="Speichern" HorizontalAlignment="Left" Margin="105,125,0,0" VerticalAlignment="Top" Width="65" Click="CmdSaveGroup_Click"/>
-        <Button x:Name="CmdDeleteGroup" Content="Löschen" HorizontalAlignment="Left" Margin="180,125,0,0" VerticalAlignment="Top" Width="65" Click="CmdDeleteGroup_Click"/>
+        <Button x:Name="CmdAbortGroup" Content="Schliessen" HorizontalAlignment="Left" Margin="235,125,0,0" VerticalAlignment="Top" Width="65" Click="CmdAbortGroup_Click"/>
+        <Button x:Name="CmdSaveGroup" Content="Speichern" HorizontalAlignment="Left" Margin="165,125,0,0" VerticalAlignment="Top" Width="65" Click="CmdSaveGroup_Click"/>
 
     </Grid>
 </Window>
