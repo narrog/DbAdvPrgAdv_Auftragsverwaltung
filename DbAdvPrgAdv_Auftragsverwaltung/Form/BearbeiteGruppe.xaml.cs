@@ -31,7 +31,11 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
                     var selected = context.Gruppen.Find(SelectedID);
                     TxtNameGroup.Text = selected.Name;
                     //CmbGroupParent.Text = selected.ParentID;
-                    
+                    var kategorie = context.Gruppen;
+                    foreach (var item in kategorie) {
+                        CmbGroupParent.Items.Add((item.Name));
+                        //Kategorien.Add(new Gruppe());
+                    }
                 }
             }
         }
