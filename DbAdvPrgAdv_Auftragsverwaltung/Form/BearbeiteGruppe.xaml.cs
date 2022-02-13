@@ -67,9 +67,5 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
             Close();
         }
 
-        private void CmdDeleteGroup_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

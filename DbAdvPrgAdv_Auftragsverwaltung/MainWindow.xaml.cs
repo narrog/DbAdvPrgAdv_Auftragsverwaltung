@@ -61,6 +61,28 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             }
         }
 
+        /* Artikel */
+        private void CmdCreateArticle_OnClick(object sender, RoutedEventArgs e) {
+            var windowGroup = new BearbeiteArtikel(this, 0);
+            windowGroup.Show();
+        }
+
+        private void CmdEditArticle_OnClick(object sender, RoutedEventArgs e) {
+            var selected = (Artikel)GrdArticle.SelectedItem;
+            var windowCustomer = new BearbeiteArtikel(this, selected.ArtikelID);
+            windowCustomer.Show();
+        }
+
+        private void CmdDeleteArticle_OnClick(object sender, RoutedEventArgs e) {
+            using (var context = new OrderContext()) {
+                var selected = (Artikel)GrdArticleGroup.SelectedItem;
+                var toDelete = context.Artikel.Find(selected.ArtikelID);
+                context.Artikel.Remove(toDelete);
+                context.SaveChanges();
+                UpdateGrid();
+            }
+        }
+
         /* Artikel-Gruppen */
         private void CmdCreateArticleGroup_OnClick(object sender, RoutedEventArgs e) {
             var windowGroup = new BearbeiteGruppe(this, 0);
@@ -96,6 +118,5 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         }
 
 
-        
     }
 }

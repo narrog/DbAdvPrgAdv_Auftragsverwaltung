@@ -34,9 +34,9 @@
             <TabItem Header="Artikel">
                 <Grid Background="#FFE5E5E5">
                     <DataGrid x:Name="GrdArticle" Margin="0,0,0,40" IsReadOnly="True"/>
-                    <Button x:Name="CmdDeleteArticle" Content="Löschen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65"/>
-                    <Button x:Name="CmdEditArticle" Content="Bearbeiten" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65"/>
-                    <Button x:Name="CmdCreateArticle" Content="Erstellen" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="65" Click="CmdCreateCustomer_Click"/>
+                    <Button x:Name="CmdDeleteArticle" Content="Löschen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65" Click="CmdDeleteArticle_OnClick"/>
+                    <Button x:Name="CmdEditArticle" Content="Bearbeiten" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65" Click="CmdEditArticle_OnClick"/>
+                    <Button x:Name="CmdCreateArticle" Content="Erstellen" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="65" Click="CmdCreateArticle_OnClick" />
                     <Button x:Name="CmdSearchArticle" Content="Suchen" HorizontalAlignment="Right" Margin="0,0,235,10" VerticalAlignment="Bottom" Width="65"/>
                 </Grid>
             </TabItem>
