@@ -13,5 +13,9 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Model
         public int ParentID  { get; set; }
 
         public virtual ICollection<Artikel> Artikels { get; set; }
+
+        public bool Equals(Gruppe obj) {
+            return this.Name == obj.Name;
+        }
     }
 }

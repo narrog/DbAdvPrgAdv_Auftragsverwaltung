@@ -23,15 +23,18 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
             Main = mainWindow;
             SelectedID = selectedID;
             using (var context = new OrderContext()) {
+                var selected = context.Artikel.Find(SelectedID);
                 if (SelectedID != 0) {
-                    var selected = context.Artikel.Find(SelectedID);
                     TxtBezeichnung.Text = selected.Bezeichnung;
                     TxtPreis.Text = Convert.ToString(selected.Preis);
                 }
                 var kategorie = context.Gruppen;
                 foreach (var item in kategorie) {
                     CmbGruppe.Items.Add((item.Name));
-                    //Kategorien.Add(new Gruppe());
+                    /*if (item.Equals(selected.Gruppe))
+                    {
+                        CmbGruppe.Text = item.Name;
+                    }*/
                 }
             }
 
