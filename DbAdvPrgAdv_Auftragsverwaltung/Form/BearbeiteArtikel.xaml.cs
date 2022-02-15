@@ -67,7 +67,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
                         var artikel = context.Artikel.Where(x => x.ArtikelID.Equals(SelectedID))
                             .FirstOrDefault();
                         artikel.Bezeichnung = TxtBezeichnung.Text;
-                        artikel.Preis = Convert.ToDouble(TxtPreis);
+                        artikel.Preis = Convert.ToDouble(TxtPreis.Text);
                         artikel.GruppeID = kategorieID;
                     }
 
