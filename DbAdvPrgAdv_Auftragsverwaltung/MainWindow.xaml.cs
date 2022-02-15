@@ -75,7 +75,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 
         private void CmdDeleteArticle_OnClick(object sender, RoutedEventArgs e) {
             using (var context = new OrderContext()) {
-                var selected = (Artikel)GrdArticleGroup.SelectedItem;
+                var selected = (Artikel)GrdArticle.SelectedItem;
                 var toDelete = context.Artikel.Find(selected.ArtikelID);
                 context.Artikel.Remove(toDelete);
                 context.SaveChanges();

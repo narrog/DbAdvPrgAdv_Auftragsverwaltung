@@ -10,7 +10,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Model
     {
         public int GruppeID { get; set; }
         public string Name { get; set; }
-        //public int ParentID  { get; set; }
+        public int ParentID  { get; set; }
 
         public virtual ICollection<Artikel> Artikels { get; set; }
     }

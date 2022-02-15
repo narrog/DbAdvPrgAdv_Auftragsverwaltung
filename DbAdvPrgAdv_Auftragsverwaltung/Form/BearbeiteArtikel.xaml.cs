@@ -53,19 +53,22 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
             {
                 try
                 {
-                    var kategorieID = context.Gruppen.Where(x => x.Name.Equals(CmbGruppe.Text));
+                    var kategorieID = context.Gruppen.Where(x => x.Name.Equals(CmbGruppe.Text))
+                        .FirstOrDefault()
+                        .GruppeID;
                     var preis = Convert.ToDouble(TxtPreis.Text);
                     if (SelectedID == 0)
                     {
                         
-                        var artikel = new Artikel() { Bezeichnung = TxtBezeichnung.Text, Preis = preis, GruppeID = Convert.ToInt32(kategorieID)};
+                        var artikel = new Artikel() { Bezeichnung = TxtBezeichnung.Text, Preis = preis, GruppeID = kategorieID};
                         context.Artikel.Add(artikel);
                     }
                     else {
-                        var artikel = context.Artikel.Where(x => x.ArtikelID.Equals(SelectedID)).FirstOrDefault();
+                        var artikel = context.Artikel.Where(x => x.ArtikelID.Equals(SelectedID))
+                            .FirstOrDefault();
                         artikel.Bezeichnung = TxtBezeichnung.Text;
                         artikel.Preis = Convert.ToDouble(TxtPreis);
-                        artikel.GruppeID = Convert.ToInt32(kategorieID);
+                        artikel.GruppeID = kategorieID;
                     }
 
                     context.SaveChanges();
