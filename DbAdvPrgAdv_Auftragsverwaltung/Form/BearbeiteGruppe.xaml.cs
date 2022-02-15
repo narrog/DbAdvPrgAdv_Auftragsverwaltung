@@ -53,15 +53,19 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
         {
             using (var context = new OrderContext())
             {
+                var parentID = context.Gruppen.Where(x => x.Name.Equals(CmbGroupParent.Text))
+                    .FirstOrDefault()
+                    .GruppeID;
                 if (SelectedID == 0)
                 {
-                    var newGroup = new Gruppe() { Name = TxtNameGroup.Text };
+                    var newGroup = new Gruppe() { Name = TxtNameGroup.Text, ParentID = parentID };
                     context.Gruppen.Add(newGroup);
                 }
                 else
                 {
                     var newGroup = context.Gruppen.Where(x => x.GruppeID.Equals(SelectedID)).FirstOrDefault();
                     newGroup.Name = TxtNameGroup.Text;
+                    newGroup.ParentID = parentID;
                 }
 
                 context.SaveChanges();
