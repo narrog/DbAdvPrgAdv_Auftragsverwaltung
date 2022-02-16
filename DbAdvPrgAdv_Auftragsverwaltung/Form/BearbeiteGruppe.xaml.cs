@@ -21,7 +21,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
     /// </summary>
     public partial class BearbeiteGruppe : Window
     {
-        public BearbeiteGruppe(MainWindow mainWindow, int selectedID)
+        public BearbeiteGruppe(MainWindow mainWindow, int selectedID, int parentGroupID)
         {
             InitializeComponent();
             Main = mainWindow;

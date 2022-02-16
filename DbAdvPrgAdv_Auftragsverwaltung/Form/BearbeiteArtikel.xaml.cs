@@ -18,7 +18,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
     /// Interaction logic for BearbeiteArtikel.xaml
     /// </summary>
     public partial class BearbeiteArtikel : Window {
-        public BearbeiteArtikel(MainWindow mainWindow, int selectedID) {
+        public BearbeiteArtikel(MainWindow mainWindow, int selectedID, int gruppeID) {
             InitializeComponent();
             Main = mainWindow;
             SelectedID = selectedID;
