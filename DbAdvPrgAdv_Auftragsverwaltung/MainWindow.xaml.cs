@@ -63,13 +63,13 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 
         /* Artikel */
         private void CmdCreateArticle_OnClick(object sender, RoutedEventArgs e) {
-            var windowGroup = new BearbeiteArtikel(this, 0);
+            var windowGroup = new BearbeiteArtikel(this, 0, 0);
             windowGroup.Show();
         }
 
         private void CmdEditArticle_OnClick(object sender, RoutedEventArgs e) {
             var selected = (Artikel)GrdArticle.SelectedItem;
-            var windowCustomer = new BearbeiteArtikel(this, selected.ArtikelID);
+            var windowCustomer = new BearbeiteArtikel(this, selected.ArtikelID, selected.GruppeID);
             windowCustomer.Show();
         }
 
@@ -85,13 +85,13 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 
         /* Artikel-Gruppen */
         private void CmdCreateArticleGroup_OnClick(object sender, RoutedEventArgs e) {
-            var windowGroup = new BearbeiteGruppe(this, 0);
+            var windowGroup = new BearbeiteGruppe(this, 0, 0);
             windowGroup.Show();
         }
 
         private void CmdEditArticleGroup_OnClick(object sender, RoutedEventArgs e) {
             var selected = (Gruppe)GrdArticleGroup.SelectedItem;
-            var windowCustomer = new BearbeiteGruppe(this, selected.GruppeID);
+            var windowCustomer = new BearbeiteGruppe(this, selected.GruppeID, selected.ParentID);
             windowCustomer.Show();
         }
 

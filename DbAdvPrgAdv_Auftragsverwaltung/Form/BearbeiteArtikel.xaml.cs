@@ -18,32 +18,39 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
     /// Interaction logic for BearbeiteArtikel.xaml
     /// </summary>
     public partial class BearbeiteArtikel : Window {
-        public BearbeiteArtikel(MainWindow mainWindow, int selectedID) {
+        public BearbeiteArtikel(MainWindow mainWindow, int selectedID, int gruppeID) {
             InitializeComponent();
             Main = mainWindow;
             SelectedID = selectedID;
+            GruppeID = gruppeID;
+
             using (var context = new OrderContext()) {
                 var selected = context.Artikel.Find(SelectedID);
                 if (SelectedID != 0) {
                     TxtBezeichnung.Text = selected.Bezeichnung;
                     TxtPreis.Text = Convert.ToString(selected.Preis);
                 }
-                var kategorie = context.Gruppen;
-                foreach (var item in kategorie) {
-                    CmbGruppe.Items.Add((item.Name));
-                    /*if (item.Equals(selected.Gruppe))
-                    {
-                        CmbGruppe.Text = item.Name;
-                    }*/
+
+                if (GruppeID != 0)
+                {
+                    // CmbBox füllen
+                    var kategorie = context.Gruppen;
+                    foreach (var item in kategorie) {
+                        CmbGruppe.Items.Add((item.Name));
+                    }
+                    // Kategorie anzeigen
+
+                    var gruppe = context.Gruppen.Find(GruppeID).Name;
+                    CmbGruppe.SelectedItem = gruppe;
                 }
+                
             }
 
         }
         public MainWindow Main { get; set; }
         private List<Gruppe> Kategorien { get; set; }
         public int SelectedID { get; set; }
-
-
+        public int GruppeID { get; set; }
 
         private void CmdAbortArticle_OnClick(object sender, RoutedEventArgs e)
         {

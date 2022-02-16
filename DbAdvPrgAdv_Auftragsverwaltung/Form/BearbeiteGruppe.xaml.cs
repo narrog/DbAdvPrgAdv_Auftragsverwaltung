@@ -21,27 +21,37 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
     /// </summary>
     public partial class BearbeiteGruppe : Window
     {
-        public BearbeiteGruppe(MainWindow mainWindow, int selectedID)
+        public BearbeiteGruppe(MainWindow mainWindow, int selectedID, int parentGroupID)
         {
             InitializeComponent();
             Main = mainWindow;
             SelectedID = selectedID;
+            ParentGroupID = parentGroupID;
             using (var context = new OrderContext()) {
                 if (SelectedID != 0) {
                     var selected = context.Gruppen.Find(SelectedID);
                     TxtNameGroup.Text = selected.Name;
-                    //CmbGroupParent.Text = selected.ParentID;
+                }
+
+                if (ParentGroupID != 0)
+                {
+                    // CmbBox füllen
                     var kategorie = context.Gruppen;
                     foreach (var item in kategorie) {
                         CmbGroupParent.Items.Add((item.Name));
-                        //Kategorien.Add(new Gruppe());
+
                     }
+
+                    // CmbBox Wert auswählen // gibt momentan aktuellen Wert aus
+                    var parentGroup = context.Gruppen.Find(ParentGroupID).Name;
+                    CmbGroupParent.SelectedItem = parentGroup;
                 }
             }
         }
 
         public MainWindow Main { get; set; }
         public int SelectedID { get; set; }
+        public int ParentGroupID { get; set; }
 
         private void CmdAbortGroup_Click(object sender, RoutedEventArgs e)
         {
