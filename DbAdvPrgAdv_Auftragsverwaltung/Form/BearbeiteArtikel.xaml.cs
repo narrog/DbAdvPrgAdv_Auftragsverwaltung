@@ -22,28 +22,36 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
             InitializeComponent();
             Main = mainWindow;
             SelectedID = selectedID;
+
             using (var context = new OrderContext()) {
                 var selected = context.Artikel.Find(SelectedID);
+                GruppeID = context.Artikel.Find(SelectedID).GruppeID;
+
                 if (SelectedID != 0) {
                     TxtBezeichnung.Text = selected.Bezeichnung;
                     TxtPreis.Text = Convert.ToString(selected.Preis);
                 }
-                var kategorie = context.Gruppen;
-                foreach (var item in kategorie) {
-                    CmbGruppe.Items.Add((item.Name));
-                    /*if (item.Equals(selected.Gruppe))
-                    {
-                        CmbGruppe.Text = item.Name;
-                    }*/
+
+                if (GruppeID != 0)
+                {
+                    // CmbBox füllen
+                    var kategorie = context.Gruppen;
+                    foreach (var item in kategorie) {
+                        CmbGruppe.Items.Add((item.Name));
+                    }
+                    // Kategorie anzeigen
+
+                    var gruppe = context.Gruppen.Find(GruppeID).Name;
+                    CmbGruppe.SelectedItem = gruppe;
                 }
+                
             }
 
         }
         public MainWindow Main { get; set; }
         private List<Gruppe> Kategorien { get; set; }
         public int SelectedID { get; set; }
-
-
+        public int GruppeID { get; set; }
 
         private void CmdAbortArticle_OnClick(object sender, RoutedEventArgs e)
         {
