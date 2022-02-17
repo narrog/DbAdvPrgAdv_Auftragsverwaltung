@@ -45,8 +45,15 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         private void CmdEditCustomer_Click(object sender, RoutedEventArgs e)
         {
             var selected = (Kunde)GrdCustomer.SelectedItem;
-            var windowCustomer = new BearbeiteKunde(this, selected.KundeID);
-            windowCustomer.Show();
+
+            if (selected != null) {
+                var windowCustomer = new BearbeiteKunde(this, selected.KundeID);
+                windowCustomer.Show();
+            }
+            else {
+                MessageBox.Show("Bitte Kunde auswählen");
+            }
+            
         }
 
         private void CmdDeleteCustomer_Click(object sender, RoutedEventArgs e)
@@ -69,8 +76,16 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 
         private void CmdEditArticle_OnClick(object sender, RoutedEventArgs e) {
             var selected = (Artikel)GrdArticle.SelectedItem;
-            var windowCustomer = new BearbeiteArtikel(this, selected.ArtikelID);
-            windowCustomer.Show();
+
+            if (selected != null) {
+                var windowCustomer = new BearbeiteArtikel(this, selected.ArtikelID);
+                windowCustomer.Show();
+            }
+            else {
+                MessageBox.Show("Bitte Artikel auswählen");
+            }
+
+            
         }
 
         private void CmdDeleteArticle_OnClick(object sender, RoutedEventArgs e) {
@@ -86,15 +101,20 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         /* Artikel-Gruppen */
         private void CmdCreateArticleGroup_OnClick(object sender, RoutedEventArgs e) {
             var windowGroup = new BearbeiteGruppe(this, 0);
-            //var windowGroup = new BearbeiteGruppe(this, 0, 0);
             windowGroup.Show();
         }
 
         private void CmdEditArticleGroup_OnClick(object sender, RoutedEventArgs e) {
             var selected = (Gruppe)GrdArticleGroup.SelectedItem;
-            var windowCustomer = new BearbeiteGruppe(this, selected.GruppeID);
-            //var windowCustomer = new BearbeiteGruppe(this, selected.GruppeID, selected.ParentID);
-            windowCustomer.Show();
+            if (selected != null)
+            {
+                var windowCustomer = new BearbeiteGruppe(this, selected.GruppeID);
+                windowCustomer.Show();
+            }
+            else
+            {
+                MessageBox.Show("Bitte Gruppe auswählen");
+            }
         }
 
         private void CmdDeleteArticleGroup_OnClick(object sender, RoutedEventArgs e) {
@@ -117,9 +137,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
                 GrdArticle.ItemsSource = context.Artikel.ToList();
                 GrdArticleGroup.ItemsSource = context.Gruppen.ToList();
             }
-
         }
-
-
     }
 }

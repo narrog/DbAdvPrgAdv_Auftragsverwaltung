@@ -29,24 +29,21 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
 
             using (var context = new OrderContext())
             {
-
-                ParentGroupID = context.Gruppen.Find(SelectedID).ParentID;
-
                 if (SelectedID != 0) {
                     var selected = context.Gruppen.Find(SelectedID);
                     TxtNameGroup.Text = selected.Name;
+                    ParentGroupID = context.Gruppen.Find(SelectedID).ParentID;
                 }
+                // CmbBox füllen
+                var kategorie = context.Gruppen;
+                foreach (var item in kategorie) {
+                    CmbGroupParent.Items.Add((item.Name));
 
+                }
+                
+                // CmbBox Wert auswählen // gibt momentan aktuellen Wert aus
                 if (ParentGroupID != 0)
                 {
-                    // CmbBox füllen
-                    var kategorie = context.Gruppen;
-                    foreach (var item in kategorie) {
-                        CmbGroupParent.Items.Add((item.Name));
-
-                    }
-
-                    // CmbBox Wert auswählen // gibt momentan aktuellen Wert aus
                     var parentGroup = context.Gruppen.Find(ParentGroupID).Name;
                     CmbGroupParent.SelectedItem = parentGroup;
                 }

@@ -25,22 +25,22 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
 
             using (var context = new OrderContext()) {
                 var selected = context.Artikel.Find(SelectedID);
-                GruppeID = context.Artikel.Find(SelectedID).GruppeID;
+                
 
                 if (SelectedID != 0) {
                     TxtBezeichnung.Text = selected.Bezeichnung;
                     TxtPreis.Text = Convert.ToString(selected.Preis);
+                    GruppeID = context.Artikel.Find(SelectedID).GruppeID;
                 }
 
+                // CmbBox füllen
+                var kategorie = context.Gruppen;
+                foreach (var item in kategorie) {
+                    CmbGruppe.Items.Add((item.Name));
+                }
                 if (GruppeID != 0)
                 {
-                    // CmbBox füllen
-                    var kategorie = context.Gruppen;
-                    foreach (var item in kategorie) {
-                        CmbGruppe.Items.Add((item.Name));
-                    }
                     // Kategorie anzeigen
-
                     var gruppe = context.Gruppen.Find(GruppeID).Name;
                     CmbGruppe.SelectedItem = gruppe;
                 }
@@ -60,40 +60,54 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
 
         private void CmdSaveArticle_OnClick(object sender, RoutedEventArgs e)
         {
-            using (var context = new OrderContext())
+            try
             {
-                try
-                {
-                    var kategorieID = context.Gruppen.Where(x => x.Name.Equals(CmbGruppe.Text))
-                        .FirstOrDefault()
-                        .GruppeID;
-                    var preis = Convert.ToDouble(TxtPreis.Text);
-                    if (SelectedID == 0)
+                double preis;
+                var preisParsed = double.TryParse(TxtPreis.Text, out preis);
+                if (CmbGruppe.Text != "" && preisParsed ) {
+                    using (var context = new OrderContext())
                     {
-                        
-                        var artikel = new Artikel() { Bezeichnung = TxtBezeichnung.Text, Preis = preis, GruppeID = kategorieID};
-                        context.Artikel.Add(artikel);
+                        var kategorieID = context.Gruppen.Where(x => x.Name.Equals(CmbGruppe.Text))
+                            .FirstOrDefault()
+                            .GruppeID;
+                        if (SelectedID == 0)
+                        {
+
+                            var artikel = new Artikel()
+                                { Bezeichnung = TxtBezeichnung.Text, Preis = preis, GruppeID = kategorieID };
+                            context.Artikel.Add(artikel);
+                        }
+                        else
+                        {
+                            var artikel = context.Artikel.Where(x => x.ArtikelID.Equals(SelectedID))
+                                .FirstOrDefault();
+                            artikel.Bezeichnung = TxtBezeichnung.Text;
+                            artikel.Preis = Convert.ToDouble(TxtPreis.Text);
+                            artikel.GruppeID = kategorieID;
+                        }
+
+                        context.SaveChanges();
+
+                        Main.UpdateGrid();
+                        Close();
+                    }
+                }
+                else
+                {
+                    if (!preisParsed)
+                    {
+                        throw new ArgumentException("Bitte Preis als Zahl eingeben");
                     }
                     else {
-                        var artikel = context.Artikel.Where(x => x.ArtikelID.Equals(SelectedID))
-                            .FirstOrDefault();
-                        artikel.Bezeichnung = TxtBezeichnung.Text;
-                        artikel.Preis = Convert.ToDouble(TxtPreis.Text);
-                        artikel.GruppeID = kategorieID;
+                        throw new ArgumentException("Bitte Kategorie auswählen.");
                     }
-
-                    context.SaveChanges();
                 }
-
-                catch (FormatException)
-                {
-                    MessageBox.Show("Bitte gültigen Preis eingeben");
-                }
-
             }
-            Main.UpdateGrid();
-            Close();
 
+            catch (ArgumentException arg)
+            {
+                MessageBox.Show(arg.Message);
+            }
         }
     }
 }
