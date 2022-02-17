@@ -127,6 +127,37 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             }
         }
 
+        /* Bestellungen */
+        private void CmdCreateOrder_OnClick(object sender, RoutedEventArgs e) {
+            var windowGroup = new BearbeiteAuftrag(this, 0);
+            windowGroup.Show();
+        }
+
+        private void CmdEditOrder_OnClick(object sender, RoutedEventArgs e) {
+            var selected = (Auftrag)GrdOrder.SelectedItem;
+            if (selected != null) {
+                var windowCustomer = new BearbeiteAuftrag(this, selected.AuftragID);
+                windowCustomer.Show();
+            }
+            else {
+                MessageBox.Show("Bitte Gruppe auswählen");
+            }
+        }
+
+        private void CmdSearchOrder_OnClick(object sender, RoutedEventArgs e) {
+            throw new NotImplementedException();
+        }
+
+        private void CmdDeleteOrder_OnClick(object sender, RoutedEventArgs e) {
+            using (var context = new OrderContext()) {
+                var selected = (Auftrag)GrdOrder.SelectedItem;
+                var toDelete = context.Aufträge.Find(selected.AuftragID);
+                context.Aufträge.Remove(toDelete);
+                context.SaveChanges();
+                UpdateGrid();
+            }
+        }
+
         // Tabellen befüllen
         public void UpdateGrid()
         {
@@ -138,5 +169,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
                 GrdArticleGroup.ItemsSource = context.Gruppen.ToList();
             }
         }
+
     }
 }
