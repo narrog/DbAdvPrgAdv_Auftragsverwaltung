@@ -9,11 +9,11 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Model
     public class Position
     {
         public int Nummer { get; set; }
-        public int AuftragID { get; set; }
-        public virtual Auftrag Auftrag { get; set; }
-        public int ArtikelID { get; set; }
-        public virtual Artikel Artikel { get; set; }
-        public int Anzahl { get; set; }
+        public int OrderID { get; set; }
+        public virtual Order Order { get; set; }
+        public int ArticleID { get; set; }
+        public virtual Article Article { get; set; }
+        public int Count { get; set; }
 
     }
 }

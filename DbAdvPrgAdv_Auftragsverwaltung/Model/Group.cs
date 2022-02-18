@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Model
 {
-    public class Gruppe
+    public class Group
     {
-        public int GruppeID { get; set; }
+        public int GroupID { get; set; }
         public string Name { get; set; }
         public int ParentID  { get; set; }
 
-        public virtual ICollection<Artikel> Artikels { get; set; }
+        public virtual ICollection<Article> Articles { get; set; }
 
-        //public bool Equals(Gruppe obj) {
+        //public bool Equals(Group obj) {
         //    return this.Name == obj.Name;
         //}
     }

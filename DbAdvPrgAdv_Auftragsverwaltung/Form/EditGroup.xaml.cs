@@ -17,11 +17,11 @@ using DbAdvPrgAdv_Auftragsverwaltung.Model;
 namespace DbAdvPrgAdv_Auftragsverwaltung.Form
 {
     /// <summary>
-    /// Interaction logic for BearbeiteGruppe.xaml
+    /// Interaction logic for EditGroup.xaml
     /// </summary>
-    public partial class BearbeiteGruppe : Window
+    public partial class EditGroup : Window
     {
-        public BearbeiteGruppe(MainWindow mainWindow, int selectedID)
+        public EditGroup(MainWindow mainWindow, int selectedID)
         {
             InitializeComponent();
             Main = mainWindow;
@@ -30,12 +30,12 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
             using (var context = new OrderContext())
             {
                 if (SelectedID != 0) {
-                    var selected = context.Gruppen.Find(SelectedID);
+                    var selected = context.Groups.Find(SelectedID);
                     TxtNameGroup.Text = selected.Name;
-                    ParentGroupID = context.Gruppen.Find(SelectedID).ParentID;
+                    ParentGroupID = context.Groups.Find(SelectedID).ParentID;
                 }
                 // CmbBox füllen
-                var kategorie = context.Gruppen;
+                var kategorie = context.Groups;
                 foreach (var item in kategorie) {
                     CmbGroupParent.Items.Add((item.Name));
 
@@ -44,7 +44,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
                 // CmbBox Wert auswählen // gibt momentan aktuellen Wert aus
                 if (ParentGroupID != 0)
                 {
-                    var parentGroup = context.Gruppen.Find(ParentGroupID).Name;
+                    var parentGroup = context.Groups.Find(ParentGroupID).Name;
                     CmbGroupParent.SelectedItem = parentGroup;
                 }
             }
@@ -54,7 +54,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
         public int SelectedID { get; set; }
         public int ParentGroupID { get; set; }
 
-        private void CmdAbortGroup_Click(object sender, RoutedEventArgs e)
+        private void CmdAbCityGroup_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
@@ -64,17 +64,17 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
         {
             using (var context = new OrderContext())
             {
-                var parentID = context.Gruppen.Where(x => x.Name.Equals(CmbGroupParent.Text))
+                var parentID = context.Groups.Where(x => x.Name.Equals(CmbGroupParent.Text))
                     .FirstOrDefault()
-                    .GruppeID;
+                    .GroupID;
                 if (SelectedID == 0)
                 {
-                    var newGroup = new Gruppe() { Name = TxtNameGroup.Text, ParentID = parentID };
-                    context.Gruppen.Add(newGroup);
+                    var newGroup = new Group() { Name = TxtNameGroup.Text, ParentID = parentID };
+                    context.Groups.Add(newGroup);
                 }
                 else
                 {
-                    var newGroup = context.Gruppen.Where(x => x.GruppeID.Equals(SelectedID)).FirstOrDefault();
+                    var newGroup = context.Groups.Where(x => x.GroupID.Equals(SelectedID)).FirstOrDefault();
                     newGroup.Name = TxtNameGroup.Text;
                     newGroup.ParentID = parentID;
                 }

@@ -14,24 +14,24 @@ using System.Windows.Shapes;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
     /// <summary>
-    /// Interaction logic for BearbeiteAuftrag.xaml
+    /// Interaction logic for EditOrder.xaml
     /// </summary>
-    public partial class BearbeiteAuftrag : Window {
-        public BearbeiteAuftrag(MainWindow mainWindow, int selectedID) {
+    public partial class EditOrder : Window {
+        public EditOrder(MainWindow mainWindow, int selectedID) {
             InitializeComponent();
             Main = mainWindow;
             SelectedID = selectedID;
 
             using (var context = new OrderContext()) {
 
-                // CmbBox Kunden füllen
-                var customer = context.Kunden;
+                // CmbBox Customers füllen
+                var customer = context.Customers;
                 foreach (var item in customer) {
-                    CmbCustomer.Items.Add((item.KundeID + " " + item.Name + " " + item.Vorname));
+                    CmbCustomer.Items.Add((item.CustomerID + " " + item.Name + " " + item.Vorname));
 
                 }
-                // CmbBox Artikel füllen
-                var article = context.Artikel;
+                // CmbBox Article füllen
+                var article = context.Articles;
                 foreach (var item in article) {
                     CmbArticle.Items.Add((item.Bezeichnung));
 
@@ -39,16 +39,16 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
 
                 if (SelectedID != 0) {
                     //TxtNameGroup.Text = selected.Name;
-                    //ParentGroupID = context.Gruppen.Find(SelectedID).ParentID;
-                    var selected = context.Aufträge.Find(SelectedID);
-                    CustomerID = context.Aufträge.Find(SelectedID).KundeID;
-                    var auftragID = context.Aufträge.Find(SelectedID).AuftragID;
-                    ArticleID = context.Positionen.Find(auftragID).ArtikelID;
+                    //ParentGroupID = context.Groups.Find(SelectedID).ParentID;
+                    var selected = context.Orders.Find(SelectedID);
+                    CustomerID = context.Orders.Find(SelectedID).CustomerID;
+                    var OrderID = context.Orders.Find(SelectedID).OrderID;
+                    ArticleID = context.Positions.Find(OrderID).ArticleID;
 
                     // CmbBox Wert auswählen // gibt momentan aktuellen Wert aus
-                    var selectedCustomer = context.Kunden.Find(CustomerID).KundeID + " " + context.Kunden.Find(selectedID).Name + " " + context.Kunden.Find(selectedID).Vorname;
+                    var selectedCustomer = context.Customers.Find(CustomerID).CustomerID + " " + context.Customers.Find(selectedID).Name + " " + context.Customers.Find(selectedID).Vorname;
                     CmbCustomer.SelectedItem = selectedCustomer;
-                    var selectedArticle = context.Artikel.Find(ArticleID).ArtikelID;
+                    var selectedArticle = context.Articles.Find(ArticleID).ArticleID;
                     CmbArticle.SelectedItem = selectedArticle;
                 }
             }
@@ -58,7 +58,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
         public int ArticleID { get; set; }
         public int CustomerID { get; set; }
 
-        private void CmdAbort_OnClick(object sender, RoutedEventArgs e)
+        private void CmdAbCity_OnClick(object sender, RoutedEventArgs e)
         {
             Close();
         }

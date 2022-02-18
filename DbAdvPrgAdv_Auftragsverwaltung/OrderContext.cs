@@ -11,12 +11,12 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
     class OrderContext : DbContext
     {
         // DBs "erstellen"
-        public DbSet<Artikel> Artikel { get; set; }
-        public DbSet<Auftrag> Aufträge { get; set; }
-        public DbSet<Gruppe> Gruppen { get; set; }
-        public DbSet<Kunde> Kunden { get; set; }
-        public DbSet<Ort> Orte { get; set; }
-        public DbSet<Position> Positionen { get; set; }
+        public DbSet<Article> Articles { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Position> Positions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -31,10 +31,10 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         {
             // PK zusammen bauen aus 2 FK
             modelBuilder.Entity<Position>()
-                .HasKey(t => new { t.AuftragID, t.ArtikelID});
-            modelBuilder.Entity<Ort>().HasData(new Ort() { OrtID = 1, PLZ = 9000, Ortschaft = "St. Gallen" });
-            modelBuilder.Entity<Kunde>().HasData(new Kunde() {KundeID = 1, Vorname = "Hans", Name = "Muster",OrtID = 1});
-            modelBuilder.Entity<Kunde>().HasData(new Kunde() {KundeID = 2, Vorname = "Benjamin", Name = "Peter", OrtID = 1});
+                .HasKey(t => new { t.OrderID, t.ArticleID});
+            modelBuilder.Entity<City>().HasData(new City() { CityID = 1, PLZ = 9000, CityName = "St. Gallen" });
+            modelBuilder.Entity<Customer>().HasData(new Customer() {CustomerID = 1, Vorname = "Hans", Name = "Muster",CityID = 1});
+            modelBuilder.Entity<Customer>().HasData(new Customer() {CustomerID = 2, Vorname = "Benjamin", Name = "Peter", CityID = 1});
         }
     }
 }

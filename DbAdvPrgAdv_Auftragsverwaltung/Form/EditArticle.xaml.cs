@@ -15,45 +15,45 @@ using DbAdvPrgAdv_Auftragsverwaltung.Model;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
     /// <summary>
-    /// Interaction logic for BearbeiteArtikel.xaml
+    /// Interaction logic for EditArticle.xaml
     /// </summary>
-    public partial class BearbeiteArtikel : Window {
-        public BearbeiteArtikel(MainWindow mainWindow, int selectedID) {
+    public partial class EditArticle : Window {
+        public EditArticle(MainWindow mainWindow, int selectedID) {
             InitializeComponent();
             Main = mainWindow;
             SelectedID = selectedID;
 
             using (var context = new OrderContext()) {
-                var selected = context.Artikel.Find(SelectedID);
+                var selected = context.Articles.Find(SelectedID);
                 
 
                 if (SelectedID != 0) {
                     TxtBezeichnung.Text = selected.Bezeichnung;
-                    TxtPreis.Text = Convert.ToString(selected.Preis);
-                    GruppeID = context.Artikel.Find(SelectedID).GruppeID;
+                    TxtPrice.Text = Convert.ToString(selected.Price);
+                    GroupID = context.Articles.Find(SelectedID).GroupID;
                 }
 
                 // CmbBox füllen
-                var kategorie = context.Gruppen;
+                var kategorie = context.Groups;
                 foreach (var item in kategorie) {
-                    CmbGruppe.Items.Add((item.Name));
+                    CmbGroup.Items.Add((item.Name));
                 }
-                if (GruppeID != 0)
+                if (GroupID != 0)
                 {
                     // Kategorie anzeigen
-                    var gruppe = context.Gruppen.Find(GruppeID).Name;
-                    CmbGruppe.SelectedItem = gruppe;
+                    var Group = context.Groups.Find(GroupID).Name;
+                    CmbGroup.SelectedItem = Group;
                 }
                 
             }
 
         }
         public MainWindow Main { get; set; }
-        private List<Gruppe> Kategorien { get; set; }
+        private List<Group> Kategorien { get; set; }
         public int SelectedID { get; set; }
-        public int GruppeID { get; set; }
+        public int GroupID { get; set; }
 
-        private void CmdAbortArticle_OnClick(object sender, RoutedEventArgs e)
+        private void CmdAbCityArticle_OnClick(object sender, RoutedEventArgs e)
         {
             Close();
         }
@@ -62,28 +62,28 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
         {
             try
             {
-                double preis;
-                var preisParsed = double.TryParse(TxtPreis.Text, out preis);
-                if (CmbGruppe.Text != "" && preisParsed ) {
+                double Price;
+                var PriceParsed = double.TryParse(TxtPrice.Text, out Price);
+                if (CmbGroup.Text != "" && PriceParsed ) {
                     using (var context = new OrderContext())
                     {
-                        var kategorieID = context.Gruppen.Where(x => x.Name.Equals(CmbGruppe.Text))
+                        var kategorieID = context.Groups.Where(x => x.Name.Equals(CmbGroup.Text))
                             .FirstOrDefault()
-                            .GruppeID;
+                            .GroupID;
                         if (SelectedID == 0)
                         {
 
-                            var artikel = new Artikel()
-                                { Bezeichnung = TxtBezeichnung.Text, Preis = preis, GruppeID = kategorieID };
-                            context.Artikel.Add(artikel);
+                            var Article = new Article()
+                                { Bezeichnung = TxtBezeichnung.Text, Price = Price, GroupID = kategorieID };
+                            context.Articles.Add(Article);
                         }
                         else
                         {
-                            var artikel = context.Artikel.Where(x => x.ArtikelID.Equals(SelectedID))
+                            var Article = context.Articles.Where(x => x.ArticleID.Equals(SelectedID))
                                 .FirstOrDefault();
-                            artikel.Bezeichnung = TxtBezeichnung.Text;
-                            artikel.Preis = Convert.ToDouble(TxtPreis.Text);
-                            artikel.GruppeID = kategorieID;
+                            Article.Bezeichnung = TxtBezeichnung.Text;
+                            Article.Price = Convert.ToDouble(TxtPrice.Text);
+                            Article.GroupID = kategorieID;
                         }
 
                         context.SaveChanges();
@@ -94,9 +94,9 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
                 }
                 else
                 {
-                    if (!preisParsed)
+                    if (!PriceParsed)
                     {
-                        throw new ArgumentException("Bitte Preis als Zahl eingeben");
+                        throw new ArgumentException("Bitte Price als Zahl eingeben");
                     }
                     else {
                         throw new ArgumentException("Bitte Kategorie auswählen.");

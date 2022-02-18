@@ -35,23 +35,23 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             UpdateGrid();
         }
 
-        /* Kunden */
+        /* Customers */
         private void CmdCreateCustomer_Click(object sender, RoutedEventArgs e)
         {
-            var windowCustomer = new BearbeiteKunde(this,new Kunde() {Ort = new Ort()});
+            var windowCustomer = new EditCustomer(this,new Customer() {City = new City()});
             windowCustomer.Show();
         }
 
         private void CmdEditCustomer_Click(object sender, RoutedEventArgs e)
         {
-            var selected = (Kunde)GrdCustomer.SelectedItem;
+            var selected = (Customer)GrdCustomer.SelectedItem;
 
             if (selected != null) {
-                var windowCustomer = new BearbeiteKunde(this, selected);
+                var windowCustomer = new EditCustomer(this, selected);
                 windowCustomer.Show();
             }
             else {
-                MessageBox.Show("Bitte Kunde auswählen");
+                MessageBox.Show("Bitte Customer auswählen");
             }
             
         }
@@ -60,29 +60,29 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         {
             using (var context = new OrderContext())
             {
-                var selected = (Kunde)GrdCustomer.SelectedItem;
-                var toDelete = context.Kunden.Find(selected.KundeID);
-                context.Kunden.Remove(toDelete);
+                var selected = (Customer)GrdCustomer.SelectedItem;
+                var toDelete = context.Customers.Find(selected.CustomerID);
+                context.Customers.Remove(toDelete);
                 context.SaveChanges();
                 UpdateGrid();
             }
         }
 
-        /* Artikel */
+        /* Article */
         private void CmdCreateArticle_OnClick(object sender, RoutedEventArgs e) {
-            var windowGroup = new BearbeiteArtikel(this, 0);
+            var windowGroup = new EditArticle(this, 0);
             windowGroup.Show();
         }
 
         private void CmdEditArticle_OnClick(object sender, RoutedEventArgs e) {
-            var selected = (Artikel)GrdArticle.SelectedItem;
+            var selected = (Article)GrdArticle.SelectedItem;
 
             if (selected != null) {
-                var windowCustomer = new BearbeiteArtikel(this, selected.ArtikelID);
+                var windowCustomer = new EditArticle(this, selected.ArticleID);
                 windowCustomer.Show();
             }
             else {
-                MessageBox.Show("Bitte Artikel auswählen");
+                MessageBox.Show("Bitte Article auswählen");
             }
 
             
@@ -90,38 +90,38 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 
         private void CmdDeleteArticle_OnClick(object sender, RoutedEventArgs e) {
             using (var context = new OrderContext()) {
-                var selected = (Artikel)GrdArticle.SelectedItem;
-                var toDelete = context.Artikel.Find(selected.ArtikelID);
-                context.Artikel.Remove(toDelete);
+                var selected = (Article)GrdArticle.SelectedItem;
+                var toDelete = context.Articles.Find(selected.ArticleID);
+                context.Articles.Remove(toDelete);
                 context.SaveChanges();
                 UpdateGrid();
             }
         }
 
-        /* Artikel-Gruppen */
+        /* Article-Groups */
         private void CmdCreateArticleGroup_OnClick(object sender, RoutedEventArgs e) {
-            var windowGroup = new BearbeiteGruppe(this, 0);
+            var windowGroup = new EditGroup(this, 0);
             windowGroup.Show();
         }
 
         private void CmdEditArticleGroup_OnClick(object sender, RoutedEventArgs e) {
-            var selected = (Gruppe)GrdArticleGroup.SelectedItem;
+            var selected = (Group)GrdArticleGroup.SelectedItem;
             if (selected != null)
             {
-                var windowCustomer = new BearbeiteGruppe(this, selected.GruppeID);
+                var windowCustomer = new EditGroup(this, selected.GroupID);
                 windowCustomer.Show();
             }
             else
             {
-                MessageBox.Show("Bitte Gruppe auswählen");
+                MessageBox.Show("Bitte Group auswählen");
             }
         }
 
         private void CmdDeleteArticleGroup_OnClick(object sender, RoutedEventArgs e) {
             using (var context = new OrderContext()) {
-                var selected = (Gruppe)GrdArticleGroup.SelectedItem;
-                var toDelete = context.Gruppen.Find(selected.GruppeID);
-                context.Gruppen.Remove(toDelete);
+                var selected = (Group)GrdArticleGroup.SelectedItem;
+                var toDelete = context.Groups.Find(selected.GroupID);
+                context.Groups.Remove(toDelete);
                 context.SaveChanges();
                 UpdateGrid();
             }
@@ -129,18 +129,18 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 
         /* Bestellungen */
         private void CmdCreateOrder_OnClick(object sender, RoutedEventArgs e) {
-            var windowGroup = new BearbeiteAuftrag(this, 0);
+            var windowGroup = new EditOrder(this, 0);
             windowGroup.Show();
         }
 
         private void CmdEditOrder_OnClick(object sender, RoutedEventArgs e) {
-            var selected = (Auftrag)GrdOrder.SelectedItem;
+            var selected = (Order)GrdOrder.SelectedItem;
             if (selected != null) {
-                var windowCustomer = new BearbeiteAuftrag(this, selected.AuftragID);
+                var windowCustomer = new EditOrder(this, selected.OrderID);
                 windowCustomer.Show();
             }
             else {
-                MessageBox.Show("Bitte Gruppe auswählen");
+                MessageBox.Show("Bitte Group auswählen");
             }
         }
 
@@ -150,9 +150,9 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 
         private void CmdDeleteOrder_OnClick(object sender, RoutedEventArgs e) {
             using (var context = new OrderContext()) {
-                var selected = (Auftrag)GrdOrder.SelectedItem;
-                var toDelete = context.Aufträge.Find(selected.AuftragID);
-                context.Aufträge.Remove(toDelete);
+                var selected = (Order)GrdOrder.SelectedItem;
+                var toDelete = context.Orders.Find(selected.OrderID);
+                context.Orders.Remove(toDelete);
                 context.SaveChanges();
                 UpdateGrid();
             }
@@ -163,10 +163,10 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         {
             using (var context = new OrderContext())
             {
-                GrdCustomer.ItemsSource = context.Kunden.Include("Ort").ToList();
-                GrdOrder.ItemsSource = context.Aufträge.Include("Kunde").Include("Positionen").ToList();
-                GrdArticle.ItemsSource = context.Artikel.Include("Gruppe").Include("Positionen").ToList();
-                GrdArticleGroup.ItemsSource = context.Gruppen.Include("Artikels").ToList();
+                GrdCustomer.ItemsSource = context.Customers.Include("City").ToList();
+                GrdOrder.ItemsSource = context.Orders.Include("Customer").Include("Positions").ToList();
+                GrdArticle.ItemsSource = context.Articles.Include("Group").Include("Positions").ToList();
+                GrdArticleGroup.ItemsSource = context.Groups.Include("Articles").ToList();
             }
         }
 
