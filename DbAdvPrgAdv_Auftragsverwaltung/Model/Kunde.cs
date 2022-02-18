@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Model
@@ -20,5 +21,15 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Model
         public virtual Ort Ort { get; set; }
 
         public virtual ICollection<Auftrag> Auftraege { get; set; }
+        public Kunde LoadOne(int id)
+        {
+            using (var context = new OrderContext())
+            {
+                return context.Kunden
+                    .Include(x => x.Auftraege)
+                    .Include(x => x.Ort)
+                    .FirstOrDefault(x => x.KundeID == id);
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,60 +23,53 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
     /// </summary>
     public partial class BearbeiteKunde : Window
     {
-        public BearbeiteKunde(MainWindow mainWindow, int selectedID)
+        public BearbeiteKunde(MainWindow mainWindow, Kunde selected)
         {
             InitializeComponent();
             Main = mainWindow;
-            SelectedID = selectedID;
+            SelectedCustomer = selected;
+            this.DataContext = this;
             using (var context = new OrderContext())
             {
-                if (SelectedID != 0)
-                {
-                    var selected = context.Kunden.Find(SelectedID);
-                    TxtName.Text = selected.Name;
-                    TxtVorname.Text = selected.Vorname;
-                    TxtStrasse.Text = selected.Strasse;
-                    TxtPLZ.Text = Convert.ToString(selected.Ort.PLZ);
-                    TxtOrt.Text = selected.Ort.Ortschaft;
-                    TxtEMail.Text = selected.Email;
-                    TxtWebseite.Text = selected.Webseite;
-                    TxtPasswort.Text = selected.Passwort;
-                }
-
                 Orte = context.Orte.ToList();
+            }
+            foreach (var ort in Orte)
+            {
+                if (SelectedCustomer.Ort.PLZ == ort.PLZ)
+                {
+                    TxtOrt.Text = ort.Ortschaft;
+                }
             }
         }
         public MainWindow Main { get; set; }
         private List<Ort> Orte { get; set; }
-        public int SelectedID { get; set; }
+        public Kunde SelectedCustomer { get; set; }
+
         private void CmdSave_Click(object sender, RoutedEventArgs e)
         {
             using (var context = new OrderContext())
             {
-                var ort = context.Orte
-                    .Where(x => x.PLZ.Equals(Convert.ToInt32(TxtPLZ.Text)))
-                    .FirstOrDefault();
-                if (ort == null)
+                if (TxtPLZ.Text == "" || TxtOrt.Text == "")
                 {
-                    ort = new Ort() {PLZ = Convert.ToInt32(TxtPLZ.Text), Ortschaft = TxtOrt.Text};
-                }
-                if (SelectedID == 0)
-                {
-                    var kunde = new Kunde() { Name = TxtName.Text, Vorname = TxtVorname.Text, Strasse = TxtStrasse.Text, Email = TxtEMail.Text, Webseite = TxtWebseite.Text, Passwort = TxtPasswort.Text, Ort = ort };
-                    context.Kunden.Add(kunde);
+                    throw new ArgumentException("Bitte einen Ort eingeben");
                 }
                 else
                 {
-                    var kunde = context.Kunden
-                        .Where(x => x.KundeID.Equals(SelectedID))
-                        .FirstOrDefault();
-                    kunde.Name = TxtName.Text;
-                    kunde.Vorname = TxtVorname.Text;
-                    kunde.Strasse = TxtStrasse.Text;
-                    kunde.Email = TxtEMail.Text;
-                    kunde.Webseite = TxtWebseite.Text;
-                    kunde.Passwort = TxtPasswort.Text;
-                    kunde.Ort = ort;
+                    SelectedCustomer.Ort = context.Orte
+                        .FirstOrDefault(x => x.PLZ == SelectedCustomer.Ort.PLZ);
+                    if (SelectedCustomer.Ort == null)
+                    {
+                        SelectedCustomer.Ort = new Ort() { PLZ = Convert.ToInt32(TxtPLZ.Text), Ortschaft = TxtOrt.Text };
+                    }
+
+                    if (SelectedCustomer.KundeID == 0)
+                    {
+                        context.Kunden.Add(SelectedCustomer);
+                    }
+                    else
+                    {
+                        context.Kunden.Update(SelectedCustomer);
+                    }
                 }
                 context.SaveChanges();
             }
@@ -90,6 +84,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
         private void TxtPLZ_KeyUp(object sender, KeyEventArgs e)
         {
             TxtOrt.IsEnabled = true;
+            TxtOrt.Text = "";
             foreach (var ort in Orte)
             {
                 if (Convert.ToString(ort.PLZ) == TxtPLZ.Text)

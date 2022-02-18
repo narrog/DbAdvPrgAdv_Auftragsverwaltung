@@ -7,21 +7,21 @@
         mc:Ignorable="d"
         Title="BearbeiteKunde" Height="200" Width="700">
     <Grid>
-        <TextBox x:Name="TxtVorname" HorizontalAlignment="Left" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="TxtVorname" Text="{Binding Path=SelectedCustomer.Vorname}" HorizontalAlignment="Left" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Vorname" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="TxtName" HorizontalAlignment="Left" Margin="145,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="TxtName" Text="{Binding Path=SelectedCustomer.Name}" HorizontalAlignment="Left" Margin="145,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Name" HorizontalAlignment="Left" Margin="145,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="TxtStrasse" HorizontalAlignment="Left" Margin="280,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="TxtStrasse" Text="{Binding Path=SelectedCustomer.Strasse}" HorizontalAlignment="Left" Margin="280,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Strasse" HorizontalAlignment="Left" Margin="280,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="TxtPLZ" HorizontalAlignment="Left" Margin="415,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" KeyUp="TxtPLZ_KeyUp"/>
+        <TextBox x:Name="TxtPLZ" Text="{Binding Path=SelectedCustomer.Ort.PLZ}" HorizontalAlignment="Left" Margin="415,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" KeyUp="TxtPLZ_KeyUp"/>
         <Label Content="PLZ" HorizontalAlignment="Left" Margin="415,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="TxtOrt" HorizontalAlignment="Left" Margin="550,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox x:Name="TxtOrt" Text="{Binding Path=SelectedCustomer.Ort.Ortschaft}" HorizontalAlignment="Left" Margin="550,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <Label Content="Ort" HorizontalAlignment="Left" Margin="550,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="TxtEMail" HorizontalAlignment="Left" Margin="10,110,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="TxtEMail" Text="{Binding Path=SelectedCustomer.EMail}" HorizontalAlignment="Left" Margin="10,110,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="EMail" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="TxtWebseite" HorizontalAlignment="Left" Margin="145,110,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="TxtWebseite" Text="{Binding Path=SelectedCustomer.Webseite}" HorizontalAlignment="Left" Margin="145,110,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Webseite" HorizontalAlignment="Left" Margin="145,80,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="TxtPasswort" HorizontalAlignment="Left" Margin="280,110,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="TxtPasswort" Text="{Binding Path=SelectedCustomer.Passwort}" HorizontalAlignment="Left" Margin="280,110,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Passwort" HorizontalAlignment="Left" Margin="280,80,0,0" VerticalAlignment="Top"/>
         <Button x:Name="CmdSave" Content="Speichern" HorizontalAlignment="Left" Margin="531,108,0,0" VerticalAlignment="Top" Width="65" Click="CmdSave_Click"/>
         <Button x:Name="CmdClose" Content="Schliessen" HorizontalAlignment="Left" Margin="605,108,0,0" VerticalAlignment="Top" Width="65" Click="CmdClose_Click"/>

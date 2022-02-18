@@ -38,7 +38,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         /* Kunden */
         private void CmdCreateCustomer_Click(object sender, RoutedEventArgs e)
         {
-            var windowCustomer = new BearbeiteKunde(this,0);
+            var windowCustomer = new BearbeiteKunde(this,new Kunde() {Ort = new Ort()});
             windowCustomer.Show();
         }
 
@@ -47,7 +47,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             var selected = (Kunde)GrdCustomer.SelectedItem;
 
             if (selected != null) {
-                var windowCustomer = new BearbeiteKunde(this, selected.KundeID);
+                var windowCustomer = new BearbeiteKunde(this, selected);
                 windowCustomer.Show();
             }
             else {
@@ -163,10 +163,10 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         {
             using (var context = new OrderContext())
             {
-                GrdCustomer.ItemsSource = context.Kunden.ToList();
-                GrdOrder.ItemsSource = context.Aufträge.ToList();
-                GrdArticle.ItemsSource = context.Artikel.ToList();
-                GrdArticleGroup.ItemsSource = context.Gruppen.ToList();
+                GrdCustomer.ItemsSource = context.Kunden.Include("Ort").ToList();
+                GrdOrder.ItemsSource = context.Aufträge.Include("Kunde").Include("Positionen").ToList();
+                GrdArticle.ItemsSource = context.Artikel.Include("Gruppe").Include("Positionen").ToList();
+                GrdArticleGroup.ItemsSource = context.Gruppen.Include("Artikels").ToList();
             }
         }
 
