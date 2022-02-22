@@ -11,52 +11,49 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using DbAdvPrgAdv_Auftragsverwaltung.Model;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
     /// <summary>
     /// Interaction logic for EditOrder.xaml
     /// </summary>
     public partial class EditOrder : Window {
-        public EditOrder(MainWindow mainWindow, int selectedID) {
+        public EditOrder(MainWindow mainWindow, Order selected) {
             InitializeComponent();
             Main = mainWindow;
-            SelectedID = selectedID;
+            SelectedOrder = selected;
+            Amount = 1;
+            this.DataContext = this;
 
-            using (var context = new OrderContext()) {
+            using (var context = new OrderContext())
+            {
 
-                // CmbBox Customers füllen
-                var customer = context.Customers;
-                foreach (var item in customer) {
-                    CmbCustomer.Items.Add((item.CustomerID + " " + item.Name + " " + item.Vorname));
+                Articles = context.Articles.ToList();
+                Customers = context.Customers.ToList();
+            }
 
-                }
-                // CmbBox Article füllen
-                var article = context.Articles;
-                foreach (var item in article) {
-                    CmbArticle.Items.Add((item.Bezeichnung));
-
-                }
-
-                if (SelectedID != 0) {
-                    //TxtNameGroup.Text = selected.Name;
-                    //ParentGroupID = context.Groups.Find(SelectedID).ParentID;
-                    var selected = context.Orders.Find(SelectedID);
-                    CustomerID = context.Orders.Find(SelectedID).CustomerID;
-                    var OrderID = context.Orders.Find(SelectedID).OrderID;
-                    ArticleID = context.Positions.Find(OrderID).ArticleID;
-
-                    // CmbBox Wert auswählen // gibt momentan aktuellen Wert aus
-                    var selectedCustomer = context.Customers.Find(CustomerID).CustomerID + " " + context.Customers.Find(selectedID).Name + " " + context.Customers.Find(selectedID).Vorname;
-                    CmbCustomer.SelectedItem = selectedCustomer;
-                    var selectedArticle = context.Articles.Find(ArticleID).ArticleID;
-                    CmbArticle.SelectedItem = selectedArticle;
+            // CmbBox Customers füllen
+            foreach (var item in Customers) {
+                CmbCustomer.Items.Add((item.CustomerID + " " + item.Name + " " + item.Vorname));
+                if (item.CustomerID == SelectedOrder.CustomerID)
+                {
+                    CmbCustomer.SelectedItem = item.CustomerID + " " + item.Name + " " + item.Vorname;
                 }
             }
+            // CmbBox Article füllen
+            foreach (var item in Articles) {
+                CmbArticle.Items.Add((item.Name));
+            }
+
+            TxtQuantity.Text = Convert.ToString(Amount);
+
         }
         public MainWindow Main { get; set; }
-        public int SelectedID { get; set; }
-        public int ArticleID { get; set; }
-        public int CustomerID { get; set; }
+        public Order SelectedOrder { get; set; }
+        public List<Article> Articles { get; set; }
+        public List<Customer> Customers { get; set; }
+
+        public int Amount { get; set; }
 
         private void CmdAbCity_OnClick(object sender, RoutedEventArgs e)
         {
@@ -65,7 +62,80 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
 
         private void CmdSave_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            try {
+                double Price;
+                int Amount;
+                var PriceParsed = double.TryParse(TxtPriceTotal.Text, out Price);
+                var AmountParsed = int.TryParse(TxtQuantity.Text, out Amount);
+                // geht nur weiter, wenn beide CmbBoxen ausgefüllt sind & Preis + Anzahl gültig sind.
+                if (CmbCustomer.Text != "" && CmbArticle.Text != "" && AmountParsed && PriceParsed)
+                {
+                    var PriceTotal = Price * Amount;
+                    var customerID = CmbCustomer.Text.Split(' ');
+
+                    using (var context = new OrderContext())
+                    {
+                        if (SelectedOrder.OrderID == 0) {
+
+                            var Order = new Order() { OrderDate = DateTime.Now, CustomerID = Convert.ToInt32(customerID[0]), PriceTotal = PriceTotal };
+                            context.Orders.Add(Order);
+                            //var Position = new Position() { ArticleID = ArticleID, OrderID = Order.OrderID, Count = Amount };
+                            //context.Positions.Add(Position);
+                        }
+                        else {
+                            var Order = context.Orders
+                                .FirstOrDefault(x => x.OrderID.Equals(SelectedOrder.OrderID));
+                            Order.CustomerID = Convert.ToInt32(customerID[0]);
+                            Order.PriceTotal = Price;
+                        }
+
+                        context.SaveChanges();
+
+                        Main.UpdateGrid();
+                        Close();
+                    }
+                }
+                else {
+                    if (CmbCustomer.Text == "") {
+                        throw new ArgumentException("Bitte Kunde auswählen.");
+                    }
+                    else if (CmbArticle.Text == "") {
+                        throw new ArgumentException("Bitte Artikel auswählen.");
+                    }
+                    else if (!PriceParsed || !AmountParsed) {
+                        throw new ArgumentException("Bitte Preis & Anzahl als Zahl eingeben");
+                    }
+                }
+            }
+
+            catch (ArgumentException arg) {
+                MessageBox.Show(arg.Message);
+            }
+        }
+
+
+
+        private void CmbArticle_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int amount;
+            var amountParse = int.TryParse(TxtQuantity.Text, out amount);
+
+            if (amountParse)
+            {
+                foreach (var item in Articles)
+                {
+                    if (item.Name == CmbArticle.Text)
+                    {
+                        TxtPrice.Text = Convert.ToString(item.Price);
+                        TxtPriceTotal.Text = Convert.ToString(item.Price * Convert.ToInt32(TxtQuantity.Text));
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Bitte Anzahl als Ganzzahl angeben");
+            }
+            
         }
     }
 }

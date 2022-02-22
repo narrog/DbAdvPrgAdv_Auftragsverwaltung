@@ -129,14 +129,14 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 
         /* Bestellungen */
         private void CmdCreateOrder_OnClick(object sender, RoutedEventArgs e) {
-            var windowGroup = new EditOrder(this, 0);
+            var windowGroup = new EditOrder(this, new Order(){ Customer = new Customer(), Positions = new List<Position>()});
             windowGroup.Show();
         }
 
         private void CmdEditOrder_OnClick(object sender, RoutedEventArgs e) {
             var selected = (Order)GrdOrder.SelectedItem;
             if (selected != null) {
-                var windowCustomer = new EditOrder(this, selected.OrderID);
+                var windowCustomer = new EditOrder(this, selected);
                 windowCustomer.Show();
             }
             else {
