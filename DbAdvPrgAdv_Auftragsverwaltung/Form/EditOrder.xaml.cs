@@ -33,7 +33,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
                 // CmbBox Article füllen
                 var article = context.Articles;
                 foreach (var item in article) {
-                    CmbArticle.Items.Add((item.Bezeichnung));
+                    CmbArticle.Items.Add((item.Name));
 
                 }
 
@@ -58,7 +58,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
         public int ArticleID { get; set; }
         public int CustomerID { get; set; }
 
-        private void CmdAbCity_OnClick(object sender, RoutedEventArgs e)
+        private void CmdAbort_OnClick(object sender, RoutedEventArgs e)
         {
             Close();
         }

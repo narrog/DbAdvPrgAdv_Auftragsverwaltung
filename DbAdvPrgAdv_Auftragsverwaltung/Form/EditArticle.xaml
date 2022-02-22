@@ -7,13 +7,13 @@
         mc:Ignorable="d"
         Title="EditArticle" Height="200" Width="500">
     <Grid>
-        <TextBox x:Name="TxtBezeichnung" HorizontalAlignment="Left" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="229"/>
-        <Label Content="Bezeichnung" HorizontalAlignment="Left" Margin="10,10,0,0" Padding="0"  VerticalAlignment="Top"/>
-        <TextBox x:Name="TxtPrice" HorizontalAlignment="Left" Margin="244,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="89"/>
+        <TextBox x:Name="TxtName" Text="{Binding Path=SelectedArticle.Name}" HorizontalAlignment="Left" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="229"/>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="10,10,0,0" Padding="0"  VerticalAlignment="Top"/>
+        <TextBox x:Name="TxtPrice" Text="{Binding Path=SelectedArticle.Price}" HorizontalAlignment="Left" Margin="244,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="89"/>
         <Label Content="Preis" HorizontalAlignment="Left" Margin="244,10,0,0" Padding="0"  VerticalAlignment="Top"/>
         <Label Content="Kategorie" HorizontalAlignment="Left" Margin="341,10,0,0" Padding="0"  VerticalAlignment="Top" RenderTransformOrigin="0.587,-0.919"/>
         <ComboBox x:Name="CmbGroup" HorizontalAlignment="Left" Margin="338,38,0,0" VerticalAlignment="Top" Width="138"/>
-        <Button x:Name="CmdAbCityArticle" Content="Schliessen" HorizontalAlignment="Left" Margin="411,92,0,0" VerticalAlignment="Top" Width="65" Click="CmdAbCityArticle_OnClick"/>
+        <Button x:Name="CmdAbortArticle" Content="Schliessen" HorizontalAlignment="Left" Margin="411,92,0,0" VerticalAlignment="Top" Width="65" Click="CmdAbortArticle_OnClick"/>
         <Button x:Name="CmdSaveArticle" Content="Speichern" HorizontalAlignment="Left" Margin="341,92,0,0" VerticalAlignment="Top" Width="65" Click="CmdSaveArticle_OnClick"/>
 
     </Grid>

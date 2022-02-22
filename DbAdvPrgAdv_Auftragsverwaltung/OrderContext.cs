@@ -39,7 +39,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             modelBuilder.Entity<Group>().HasData(new Group() { GroupID = 1, Name = "Elektronik", ParentID = 0 });
             modelBuilder.Entity<Group>().HasData(new Group() { GroupID = 2, Name = "Drucker", ParentID = 1 });
 
-            modelBuilder.Entity<Article>().HasData(new Article() {ArticleID = 1, Bezeichnung = "HP LaserJet Pro M404", GroupID = 2, Price = 420.00});
+            modelBuilder.Entity<Article>().HasData(new Article() {ArticleID = 1, Name = "HP LaserJet Pro M404", GroupID = 2, Price = 420.00});
         }
     }
 }
