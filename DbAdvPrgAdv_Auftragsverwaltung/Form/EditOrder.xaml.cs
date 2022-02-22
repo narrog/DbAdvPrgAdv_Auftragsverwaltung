@@ -55,7 +55,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
 
         public int Amount { get; set; }
 
-        private void CmdAbCity_OnClick(object sender, RoutedEventArgs e)
+        private void CmdAbort_OnClick(object sender, RoutedEventArgs e)
         {
             Close();
         }

@@ -18,7 +18,7 @@
         <TextBox x:Name="TxtPriceTotal" Text="{Binding Path=SelectedOrder.PriceTotal}"  HorizontalAlignment="Left" Margin="471,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="94" IsEnabled="False"/>
         <Label Content="Preis Total" HorizontalAlignment="Left" Margin="471,6,0,0" VerticalAlignment="Top"/>
         
-        <Button x:Name="CmdAbCity" Content="Schliessen" HorizontalAlignment="Left" Margin="494,90,0,0" VerticalAlignment="Top" Width="65" Click="CmdAbCity_OnClick"/>
+        <Button x:Name="CmdAbort" Content="Schliessen" HorizontalAlignment="Left" Margin="494,90,0,0" VerticalAlignment="Top" Width="65" Click="CmdAbort_OnClick"/>
         <Button x:Name="CmdSave" Content="Speichern" HorizontalAlignment="Left" Margin="424,90,0,0" VerticalAlignment="Top" Width="65" Click="CmdSave_OnClick"/>
 
     </Grid>

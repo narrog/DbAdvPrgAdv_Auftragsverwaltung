@@ -18,7 +18,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
 
             migrationBuilder.InsertData(
                 table: "Articles",
-                columns: new[] { "ArticleID", "Bezeichnung", "GroupID", "Price" },
+                columns: new[] { "ArticleID", "Name", "GroupID", "Price" },
                 values: new object[] { 1, "HP LaserJet Pro M404", 2, 420m });
         }
 

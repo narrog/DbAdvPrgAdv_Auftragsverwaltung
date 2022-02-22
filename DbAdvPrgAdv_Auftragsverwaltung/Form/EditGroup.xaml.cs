@@ -54,8 +54,9 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
         public int SelectedID { get; set; }
         public int ParentGroupID { get; set; }
 
-        private void CmdAbCityGroup_Click(object sender, RoutedEventArgs e)
+        private void CmdAbortGroup_Click(object sender, RoutedEventArgs e)
         {
+            Main.UpdateGrid();
             Close();
         }
         

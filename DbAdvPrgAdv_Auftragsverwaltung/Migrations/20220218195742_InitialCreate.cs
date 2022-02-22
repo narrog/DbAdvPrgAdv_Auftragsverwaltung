@@ -66,7 +66,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                 {
                     ArticleID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Bezeichnung = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
                     GroupID = table.Column<int>(type: "int", nullable: false)
                 },

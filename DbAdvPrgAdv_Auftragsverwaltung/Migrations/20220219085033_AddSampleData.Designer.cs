@@ -28,7 +28,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Bezeichnung")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("GroupID")
@@ -47,7 +47,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                         new
                         {
                             ArticleID = 1,
-                            Bezeichnung = "HP LaserJet Pro M404",
+                            Name = "HP LaserJet Pro M404",
                             GroupID = 2,
                             Price = 420m
                         });

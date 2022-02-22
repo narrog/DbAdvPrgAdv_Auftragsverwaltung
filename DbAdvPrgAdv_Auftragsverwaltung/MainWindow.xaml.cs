@@ -70,7 +70,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 
         /* Article */
         private void CmdCreateArticle_OnClick(object sender, RoutedEventArgs e) {
-            var windowGroup = new EditArticle(this, 0);
+            var windowGroup = new EditArticle(this, new Article() {Group = new Group()});
             windowGroup.Show();
         }
 
@@ -78,7 +78,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             var selected = (Article)GrdArticle.SelectedItem;
 
             if (selected != null) {
-                var windowCustomer = new EditArticle(this, selected.ArticleID);
+                var windowCustomer = new EditArticle(this, selected);
                 windowCustomer.Show();
             }
             else {

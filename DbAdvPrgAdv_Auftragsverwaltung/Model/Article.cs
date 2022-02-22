@@ -11,7 +11,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Model
     public class Article
     {
         public int ArticleID { get; set; }
-        public string Bezeichnung { get; set; }
+        public string Name { get; set; }
         [Column(TypeName = "decimal(7,2)")]
         public double Price { get; set; }
         public int GroupID { get; set; }

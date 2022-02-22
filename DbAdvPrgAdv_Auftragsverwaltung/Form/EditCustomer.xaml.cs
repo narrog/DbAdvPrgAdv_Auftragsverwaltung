@@ -67,6 +67,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
         }
         private void CmdClose_Click(object sender, RoutedEventArgs e)
         {
+            Main.UpdateGrid();
             Close();
         }
 
