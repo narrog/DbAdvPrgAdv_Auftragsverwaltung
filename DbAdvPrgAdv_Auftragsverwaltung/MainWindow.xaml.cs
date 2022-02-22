@@ -51,7 +51,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
                 windowCustomer.Show();
             }
             else {
-                MessageBox.Show("Bitte Customer auswählen");
+                MessageBox.Show("Bitte Kunde auswählen");
             }
             
         }
@@ -82,7 +82,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
                 windowCustomer.Show();
             }
             else {
-                MessageBox.Show("Bitte Article auswählen");
+                MessageBox.Show("Bitte Artikel auswählen");
             }
 
             
@@ -113,7 +113,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             }
             else
             {
-                MessageBox.Show("Bitte Group auswählen");
+                MessageBox.Show("Bitte Grtuppe auswählen");
             }
         }
 
@@ -140,7 +140,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
                 windowCustomer.Show();
             }
             else {
-                MessageBox.Show("Bitte Group auswählen");
+                MessageBox.Show("Bitte Gruppe auswählen");
             }
         }
 
