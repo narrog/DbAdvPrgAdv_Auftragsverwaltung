@@ -11,6 +11,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Model
         public int GroupID { get; set; }
         public string Name { get; set; }
         public int ParentID  { get; set; }
+        public virtual Group Parent { get; set; }
 
         public virtual ICollection<Article> Articles { get; set; }
 

@@ -21,38 +21,31 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
     /// </summary>
     public partial class EditGroup : Window
     {
-        public EditGroup(MainWindow mainWindow, int selectedID)
+        public EditGroup(MainWindow mainWindow, Group selected)
         {
             InitializeComponent();
             Main = mainWindow;
-            SelectedID = selectedID;
+            SelectedGroup = selected;
+            this.DataContext = this;
 
             using (var context = new OrderContext())
             {
-                if (SelectedID != 0) {
-                    var selected = context.Groups.Find(SelectedID);
-                    TxtNameGroup.Text = selected.Name;
-                    ParentGroupID = context.Groups.Find(SelectedID).ParentID;
-                }
-                // CmbBox füllen
-                var kategorie = context.Groups;
-                foreach (var item in kategorie) {
-                    CmbGroupParent.Items.Add((item.Name));
+                Groups = context.Groups.ToList();
+            }
 
-                }
-                
-                // CmbBox Wert auswählen // gibt momentan aktuellen Wert aus
-                if (ParentGroupID != 0)
+            // CmbBox füllen & falls nötig: übergeordnete Kategorie auswählen
+            foreach (var item in Groups) {
+                CmbGroupParent.Items.Add((item.Name));
+                if (item.ParentID == SelectedGroup.ParentID && item.ParentID != 0)
                 {
-                    var parentGroup = context.Groups.Find(ParentGroupID).Name;
-                    CmbGroupParent.SelectedItem = parentGroup;
+                    CmbGroupParent.Text = Groups.FirstOrDefault(x => x.GroupID.Equals(SelectedGroup.ParentID)).Name;
                 }
             }
         }
 
         public MainWindow Main { get; set; }
-        public int SelectedID { get; set; }
-        public int ParentGroupID { get; set; }
+        public Group SelectedGroup { get; set; }
+        public List<Group> Groups { get; set; }
 
         private void CmdAbortGroup_Click(object sender, RoutedEventArgs e)
         {
@@ -63,23 +56,38 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
 
         private void CmdSaveGroup_Click(object sender, RoutedEventArgs e)
         {
+            // überprüft, ob eine übergeordnete Gruppe ausgewählt wurde, falls nicht, wird ParentID = 0
+            int parentID;
+            if (CmbGroupParent.Text != "") {
+                parentID = Groups
+                    .FirstOrDefault(x => x.Name.Equals(CmbGroupParent.Text))
+                    .GroupID;
+            }
+            else {
+                parentID = 0;
+            }
+
             using (var context = new OrderContext())
             {
-                var parentID = context.Groups.Where(x => x.Name.Equals(CmbGroupParent.Text))
-                    .FirstOrDefault()
-                    .GroupID;
-                if (SelectedID == 0)
+                // neuen Datensatz erstellen
+                if (SelectedGroup.GroupID == 0)
                 {
                     var newGroup = new Group() { Name = TxtNameGroup.Text, ParentID = parentID };
                     context.Groups.Add(newGroup);
                 }
+                // bestehnden Datensatz bearbeiten
                 else
                 {
-                    var newGroup = context.Groups.Where(x => x.GroupID.Equals(SelectedID)).FirstOrDefault();
-                    newGroup.Name = TxtNameGroup.Text;
-                    newGroup.ParentID = parentID;
+                    foreach (var item in Groups)
+                    {
+                        if (CmbGroupParent.Text == item.Name)
+                        {
+                            SelectedGroup.Parent = item;
+                        }
+                    }
+                    context.Groups.Update(SelectedGroup);
                 }
-
+                // Datensatz speichern
                 context.SaveChanges();
             }
             

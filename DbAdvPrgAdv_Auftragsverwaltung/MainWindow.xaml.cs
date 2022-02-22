@@ -100,7 +100,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 
         /* Article-Groups */
         private void CmdCreateArticleGroup_OnClick(object sender, RoutedEventArgs e) {
-            var windowGroup = new EditGroup(this, 0);
+            var windowGroup = new EditGroup(this, new Group() {Parent = new Group()});
             windowGroup.Show();
         }
 
@@ -108,12 +108,12 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             var selected = (Group)GrdArticleGroup.SelectedItem;
             if (selected != null)
             {
-                var windowCustomer = new EditGroup(this, selected.GroupID);
+                var windowCustomer = new EditGroup(this, selected);
                 windowCustomer.Show();
             }
             else
             {
-                MessageBox.Show("Bitte Grtuppe auswählen");
+                MessageBox.Show("Bitte Gruppe auswählen");
             }
         }
 
