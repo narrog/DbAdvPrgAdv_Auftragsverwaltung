@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DbAdvPrgAdv_Auftragsverwaltung.Form"
         mc:Ignorable="d"
-        Title="EditOrder" Height="250" Width="800">
+        Title="EditOrder" Height="250" Width="677">
     <Grid>
         <Label Content="Kunde" HorizontalAlignment="Left" Margin="5,6,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.587,-0.919"/>
         <ComboBox x:Name="CmbCustomer" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="120" />
@@ -13,13 +13,17 @@
         <ComboBox x:Name="CmbArticle" HorizontalAlignment="Left" Margin="148,36,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="CmbArticle_OnSelectionChanged"/>
         <TextBox x:Name="TxtPrice" HorizontalAlignment="Left" Margin="280,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="94" IsEnabled="False"/>
         <Label Content="Preis" HorizontalAlignment="Left" Margin="280,6,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="TxtQuantity" HorizontalAlignment="Left" Margin="387,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="72"/>
+        <TextBox x:Name="TxtQuantity" HorizontalAlignment="Left" Margin="387,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="72" KeyUp="TxtQuantity_KeyUp"/>
         <Label Content="Anzahl" HorizontalAlignment="Left" Margin="387,6,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="TxtPriceTotal" Text="{Binding Path=SelectedOrder.PriceTotal}"  HorizontalAlignment="Left" Margin="471,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="94" IsEnabled="False"/>
         <Label Content="Preis Total" HorizontalAlignment="Left" Margin="471,6,0,0" VerticalAlignment="Top"/>
-        
-        <Button x:Name="CmdAbort" Content="Schliessen" HorizontalAlignment="Left" Margin="494,90,0,0" VerticalAlignment="Top" Width="65" Click="CmdAbort_OnClick"/>
-        <Button x:Name="CmdSave" Content="Speichern" HorizontalAlignment="Left" Margin="424,90,0,0" VerticalAlignment="Top" Width="65" Click="CmdSave_OnClick"/>
+
+        <Button x:Name="CmdAbort" Content="Schliessen" HorizontalAlignment="Left" Margin="540,204,0,0" VerticalAlignment="Top" Width="65" Click="CmdAbort_OnClick"/>
+        <Button x:Name="CmdSave" Content="Speichern" HorizontalAlignment="Left" Margin="470,204,0,0" VerticalAlignment="Top" Width="65" Click="CmdSave_OnClick"/>
+        <Button x:Name="CmdAddPos" Content="Position hinzufügen" HorizontalAlignment="Left" Margin="453,81,0,0" VerticalAlignment="Top" Width="112" Click="CmdAddPos_Click"/>
+        <!-- <Button x:Name="CmdEditPos" Content="Position bearbeiten" HorizontalAlignment="Left" Margin="453,0,0,0" VerticalAlignment="Center" Width="112" Click="CmdEditPos_Click"/>
+        <Button x:Name="CmdDelPos" Content="Position löschen" HorizontalAlignment="Left" Margin="453,133,0,0" VerticalAlignment="Top" Width="112" Click="CmdDelPos_Click"/> -->
+        <DataGrid x:Name="GrdPositions" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10" Height="143" Width="429"/>
 
     </Grid>
 </Window>

@@ -8,7 +8,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Model
 {
     public class Position
     {
-        public int Nummer { get; set; }
+        public int Number { get; set; }
         public int OrderID { get; set; }
         public virtual Order Order { get; set; }
         public int ArticleID { get; set; }

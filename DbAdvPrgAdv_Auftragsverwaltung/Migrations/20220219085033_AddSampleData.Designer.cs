@@ -196,7 +196,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                     b.Property<int>("Count")
                         .HasColumnType("int");
 
-                    b.Property<int>("Nummer")
+                    b.Property<int>("Number")
                         .HasColumnType("int");
 
                     b.HasKey("OrderID", "ArticleID");

@@ -108,7 +108,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                 {
                     OrderID = table.Column<int>(type: "int", nullable: false),
                     ArticleID = table.Column<int>(type: "int", nullable: false),
-                    Nummer = table.Column<int>(type: "int", nullable: false),
+                    Number = table.Column<int>(type: "int", nullable: false),
                     Count = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
