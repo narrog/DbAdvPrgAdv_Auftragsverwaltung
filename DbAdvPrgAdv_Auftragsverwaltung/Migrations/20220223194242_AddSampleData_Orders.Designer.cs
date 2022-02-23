@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
 {
     [DbContext(typeof(OrderContext))]
-    [Migration("20220219085033_AddSampleData")]
-    partial class AddSampleData
+    [Migration("20220223194242_AddSampleData_Orders")]
+    partial class AddSampleData_Orders
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,11 +28,11 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("GroupID")
                         .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(7,2)");
@@ -47,9 +47,23 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                         new
                         {
                             ArticleID = 1,
-                            Name = "HP LaserJet Pro M404",
                             GroupID = 2,
+                            Name = "HP LaserJet Pro M404",
                             Price = 420m
+                        },
+                        new
+                        {
+                            ArticleID = 2,
+                            GroupID = 4,
+                            Name = "Lenovo ThinkPad L15",
+                            Price = 900m
+                        },
+                        new
+                        {
+                            ArticleID = 3,
+                            GroupID = 3,
+                            Name = "Chromstahl Felgen 19 Zoll",
+                            Price = 200m
                         });
                 });
 
@@ -75,6 +89,12 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                         {
                             CityID = 1,
                             CityName = "St. Gallen",
+                            PLZ = 9000
+                        },
+                        new
+                        {
+                            CityID = 2,
+                            CityName = "Herisau",
                             PLZ = 9000
                         });
                 });
@@ -127,6 +147,13 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                             CityID = 1,
                             Name = "Peter",
                             Vorname = "Benjamin"
+                        },
+                        new
+                        {
+                            CustomerID = 3,
+                            CityID = 2,
+                            Name = "Buser",
+                            Vorname = "Leonie"
                         });
                 });
 
@@ -140,10 +167,12 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ParentID")
+                    b.Property<int?>("ParentID")
                         .HasColumnType("int");
 
                     b.HasKey("GroupID");
+
+                    b.HasIndex("ParentID");
 
                     b.ToTable("Groups");
 
@@ -158,6 +187,18 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                         {
                             GroupID = 2,
                             Name = "Drucker",
+                            ParentID = 1
+                        },
+                        new
+                        {
+                            GroupID = 3,
+                            Name = "Autozubehör",
+                            ParentID = 0
+                        },
+                        new
+                        {
+                            GroupID = 4,
+                            Name = "Laptop",
                             ParentID = 1
                         });
                 });
@@ -183,6 +224,29 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                     b.HasIndex("CustomerID");
 
                     b.ToTable("Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            OrderID = 1,
+                            CustomerID = 1,
+                            OrderDate = new DateTime(2021, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PriceTotal = 420m
+                        },
+                        new
+                        {
+                            OrderID = 2,
+                            CustomerID = 1,
+                            OrderDate = new DateTime(2022, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PriceTotal = 840m
+                        },
+                        new
+                        {
+                            OrderID = 3,
+                            CustomerID = 2,
+                            OrderDate = new DateTime(2022, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PriceTotal = 1320m
+                        });
                 });
 
             modelBuilder.Entity("DbAdvPrgAdv_Auftragsverwaltung.Model.Position", b =>
@@ -204,6 +268,36 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                     b.HasIndex("ArticleID");
 
                     b.ToTable("Positions");
+
+                    b.HasData(
+                        new
+                        {
+                            OrderID = 1,
+                            ArticleID = 1,
+                            Count = 1,
+                            Number = 1
+                        },
+                        new
+                        {
+                            OrderID = 2,
+                            ArticleID = 1,
+                            Count = 2,
+                            Number = 2
+                        },
+                        new
+                        {
+                            OrderID = 3,
+                            ArticleID = 1,
+                            Count = 1,
+                            Number = 3
+                        },
+                        new
+                        {
+                            OrderID = 3,
+                            ArticleID = 2,
+                            Count = 1,
+                            Number = 4
+                        });
                 });
 
             modelBuilder.Entity("DbAdvPrgAdv_Auftragsverwaltung.Model.Article", b =>
@@ -226,6 +320,15 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                         .IsRequired();
 
                     b.Navigation("City");
+                });
+
+            modelBuilder.Entity("DbAdvPrgAdv_Auftragsverwaltung.Model.Group", b =>
+                {
+                    b.HasOne("DbAdvPrgAdv_Auftragsverwaltung.Model.Group", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentID");
+
+                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("DbAdvPrgAdv_Auftragsverwaltung.Model.Order", b =>
@@ -276,6 +379,8 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
             modelBuilder.Entity("DbAdvPrgAdv_Auftragsverwaltung.Model.Group", b =>
                 {
                     b.Navigation("Articles");
+
+                    b.Navigation("Children");
                 });
 
             modelBuilder.Entity("DbAdvPrgAdv_Auftragsverwaltung.Model.Order", b =>
