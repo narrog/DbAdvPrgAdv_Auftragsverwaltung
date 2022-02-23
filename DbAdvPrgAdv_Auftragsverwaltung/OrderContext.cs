@@ -18,6 +18,8 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         public DbSet<City> Cities { get; set; }
         public DbSet<Position> Positions { get; set; }
 
+        
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // Verbindung aufbauen
@@ -27,6 +29,9 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             // Logs
             optionsBuilder.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
         }
+
+        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // PK zusammen bauen aus 2 FK
@@ -64,5 +69,19 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             #endregion
 
         }
+
+        // CTE für TreeView
+        public Task<List<Group>> GroupTree() =>
+            Groups.FromSqlRaw(
+                    @";with cte as (
+	                select GroupID, Name, cast('none' as nvarchar(max)) as Parent from Groups where ParentID = 0
+	                union all
+	                select a.GroupID, a.Name, (b.Name) as Parent from Groups a
+		                inner join cte b on a.ParentID = b.GroupID
+                )
+                select * from cte;"
+                )
+                .AsNoTrackingWithIdentityResolution()
+                .ToListAsync();
     }
 }

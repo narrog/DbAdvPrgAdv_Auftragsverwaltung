@@ -127,6 +127,11 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             }
         }
 
+        private void CmdTreeViewGroup_OnClick(object sender, RoutedEventArgs e) {
+            var windowTree = new TreeViewWindow();
+            windowTree.Show();
+        }
+
         /* Bestellungen */
         private void CmdCreateOrder_OnClick(object sender, RoutedEventArgs e) {
             var windowGroup = new EditOrder(this, new Order(){ Customer = new Customer(), Positions = new List<Position>()});
@@ -170,5 +175,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             }
         }
 
+        
     }
 }
