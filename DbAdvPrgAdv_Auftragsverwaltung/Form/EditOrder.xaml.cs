@@ -16,7 +16,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
             InitializeComponent();
             Main = mainWindow;
             SelectedOrder = selected;
-            Amount = 1;
             this.DataContext = this;
 
             using (var context = new OrderContext())
@@ -31,7 +30,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
                 {
                     Number = SelectedOrder.Positions.Count + 1;
                 }
-                Articles = context.Articles.ToList();
                 Customers = context.Customers.ToList();
             }
 
@@ -43,19 +41,11 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
                     CmbCustomer.SelectedItem = item.CustomerID + " " + item.Name + " " + item.Vorname;
                 }
             }
-            // CmbBox Article füllen
-            foreach (var item in Articles) {
-                CmbArticle.Items.Add(item.Name);
-            }
-            TxtQuantity.Text = Convert.ToString(Amount);
             UpdateGrid();
         }
         public MainWindow Main { get; set; }
         public Order SelectedOrder { get; set; }
-        public List<Article> Articles { get; set; }
         public List<Customer> Customers { get; set; }
-        public Position SelectedPosition { get; set; }
-        public int Amount { get; set; }
         public int Number { get; set; }
 
         private void CmdAbort_OnClick(object sender, RoutedEventArgs e)
@@ -66,177 +56,49 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
 
         private void CmdSave_OnClick(object sender, RoutedEventArgs e)
         {
-            try 
+            using (var context = new OrderContext())
             {
-                if (CmbCustomer.Text != "")
-                {
-                    var customerID = CmbCustomer.Text.Split(' ');
-                    foreach (var item in Customers)
-                    {
-                        if (item.CustomerID == Convert.ToInt32(customerID[0]))
-                        {
-                            SelectedOrder.Customer = item;
-                        }
-                    }
-                    using (var context = new OrderContext())
-                    {
-                        context.Orders.Update(SelectedOrder);
-                        context.SaveChanges();
-                    }
-                    Main.UpdateGrid();
-                    Close();
-                }
-                else {
-                    if (CmbCustomer.Text == "") {
-                        throw new ArgumentException("Bitte Kunde auswählen.");
-                    }
-                }
+                SelectedOrder.OrderDate = DateTime.Now;
+                context.Orders.Update(SelectedOrder);
+                context.SaveChanges();
             }
-            catch (ArgumentException arg) 
-            {
-                MessageBox.Show(arg.Message);
-            }
-        }
-
-
-
-        private void CmbArticle_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            UpdatePrice();
+            Main.UpdateGrid();
+            Close();
         }
 
         private void CmdAddPos_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                double Price;
-                int Amount;
-                var PriceParsed = double.TryParse(TxtPriceTotal.Text, out Price);
-                var AmountParsed = int.TryParse(TxtQuantity.Text, out Amount);
-                // geht nur weiter, wenn beide CmbBoxen ausgefüllt sind & Preis + Anzahl gültig sind.
-                if (CmbArticle.Text != "" && AmountParsed && PriceParsed)
-                {
-                    Article selectedArticle = null;
-                    foreach (var item in Articles)
-                    {
-                        if (item.Name == CmbArticle.Text)
-                        {
-                            selectedArticle = item;
-                        }
-                    }
-
-                    if (SelectedPosition == null)
-                    {
-                        SelectedOrder.Positions.Add(new Position() { Article = selectedArticle, Count = Convert.ToInt32(TxtQuantity.Text), Number = Number++, Order = SelectedOrder });
-                    }
-                    else
-                    {
-                        var pos = new Position()
-                        {
-                            Article = selectedArticle, Count = Convert.ToInt32(TxtQuantity.Text), Order = SelectedOrder,
-                            Number = SelectedPosition.Number
-                        };
-                        foreach (var selectedOrderPosition in SelectedOrder.Positions)
-                        {
-                            if (selectedOrderPosition.Number == pos.Number)
-                            {
-                                SelectedOrder.Positions.Remove(selectedOrderPosition);
-                            }
-                        }
-                        SelectedOrder.Positions.Add(pos);
-                    }
-                    TxtQuantity.Text = "1";
-                    CmbArticle.SelectedIndex = -1;
-                    UpdateGrid();
-                }
-                else
-                {
-                    if (CmbArticle.Text == "")
-                    {
-                        throw new ArgumentException("Bitte Artikel auswählen.");
-                    }
-                    else if (!PriceParsed || !AmountParsed)
-                    {
-                        throw new ArgumentException("Bitte Preis & Anzahl als Zahl eingeben");
-                    }
-                }
-            }
-            catch (ArgumentException arg)
-            {
-                MessageBox.Show(arg.Message);
-            }
+            var windowPosition = new EditPosition(this, new Position() {Article = new Article(), Number = this.Number, Order = SelectedOrder}, true);
+            windowPosition.Show();
         }
-
-        #region Edit Positions
-        // Funktioniert aktuell noch nicht
-        private void CmdEditPos_Click(object sender, EventArgs e)
+        private void CmdEditPos_Click(object sender, RoutedEventArgs e)
         {
-            if (GrdPositions.SelectedItem == null)
+            var selected = (Position)GrdPositions.SelectedItem;
+
+            if (selected != null)
             {
-                MessageBox.Show("Bitte Position auswählen");
+                var windowPosition = new EditPosition(this, selected, false);
+                windowPosition.Show();
             }
             else
             {
-                Position selectedPosition = (Position)GrdPositions.SelectedItem;
-                foreach (var pos in SelectedOrder.Positions)
-                {
-                    if (pos.Number == selectedPosition.Number)
-                    {
-                        SelectedPosition = pos;
-                    }
-                }
-                TxtPrice.Text = Convert.ToString(SelectedPosition.Article.Price);
-                TxtQuantity.Text = Convert.ToString(SelectedPosition.Count);
-                CmbArticle.SelectedItem = SelectedPosition.Article.Name;
+                MessageBox.Show("Bitte eine Position auswählen");
             }
         }
-
         private void CmdDelPos_Click(object sender, RoutedEventArgs e)
         {
-            if (GrdPositions.SelectedItem == null)
+            using (var context = new OrderContext())
             {
-                MessageBox.Show("Bitte Position auswählen");
-            }
-            else
-            {
-                Position selected = (Position)GrdPositions.SelectedItem;
-                foreach (var selectedOrderPosition in SelectedOrder.Positions)
-                {
-                    if (selectedOrderPosition.Number == selected.Number)
-                    {
-                        SelectedOrder.Positions.Remove(selectedOrderPosition);
-                    }
-                }
+                var selected = (Position)GrdPositions.SelectedItem;
+                var toDelete = context.Positions
+                    .FirstOrDefault(x => x.ArticleID == selected.ArticleID && x.OrderID == selected.OrderID);
+                context.Positions.Remove(toDelete);
+                context.SaveChanges();
                 UpdateGrid();
             }
         }
-        #endregion
 
-        private void TxtQuantity_KeyUp(object sender, KeyEventArgs e)
-        {
-            UpdatePrice();
-        }
-
-        private void UpdatePrice()
-        {
-            var amountParse = int.TryParse(TxtQuantity.Text, out var amount);
-            if (amountParse)
-            {
-                TxtPrice.Text = "";
-                foreach (var item in Articles)
-                {
-                    if (item.Name == (string)CmbArticle.SelectedItem)
-                    {
-                        TxtPrice.Text = Convert.ToString(item.Price);
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("Bitte Anzahl als Ganzzahl angeben");
-            }
-        }
-        private void UpdateGrid()
+        public void UpdateGrid()
         {
             GrdPositions.ItemsSource = SelectedOrder.Positions.ToList();
             double sum = 0;
@@ -244,7 +106,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
             {
                 sum = sum + item.Article.Price * item.Count;
             }
-
             TxtPriceTotal.Text = Convert.ToString(sum);
         }
     }
