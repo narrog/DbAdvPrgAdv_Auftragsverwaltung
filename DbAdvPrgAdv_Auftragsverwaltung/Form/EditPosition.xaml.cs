@@ -45,7 +45,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
         {
             using (var context = new OrderContext())
             {
-                SelectedPosition.Article = Articles
+                SelectedPosition.Article = context.Articles
                     .FirstOrDefault(x => x.Name == CmbArticle.Text);
                 if (IsNew)
                 {
