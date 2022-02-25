@@ -14,12 +14,11 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
     /// </summary>
     public partial class EditPosition : Window
     {
-        public EditPosition(EditOrder main, Position selected, bool isNew)
+        public EditPosition(EditOrder main, Position selected)
         {
             InitializeComponent();
             Main = main;
             SelectedPosition = selected;
-            IsNew = isNew;
             this.DataContext = this;
             using (var context = new OrderContext())
             {
@@ -45,8 +44,9 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
         {
             using (var context = new OrderContext())
             {
-                SelectedPosition.Article = context.Articles
-                    .FirstOrDefault(x => x.Name == CmbArticle.Text);
+                SelectedPosition.ArticleID = context.Articles
+                    .FirstOrDefault(x => x.Name == CmbArticle.Text)
+                    .ArticleID;
                 if (IsNew)
                 {
                     context.Positions.Add(SelectedPosition);

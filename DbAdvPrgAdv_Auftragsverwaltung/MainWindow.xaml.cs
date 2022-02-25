@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DbAdvPrgAdv_Auftragsverwaltung.Form;
 using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using DbAdvPrgAdv_Auftragsverwaltung.ViewModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung
@@ -25,20 +26,23 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
     {
         public MainWindow()
         {
-            InitializeComponent();
-            List<Customer> cust;
+            ViewModel = new VMMain();
+            DataContext = ViewModel;
+
             // Migrate ausführen 
             using (var context = new OrderContext())
             {
                 context.Database.Migrate();
             }
-            UpdateGrid();
+            InitializeComponent();
         }
+
+        public VMMain ViewModel { get; set; }
 
         /* Customers */
         private void CmdCreateCustomer_Click(object sender, RoutedEventArgs e)
         {
-            var windowCustomer = new EditCustomer(this,new Customer() {City = new City()});
+            var windowCustomer = new EditCustomer(ViewModel,0);
             windowCustomer.Show();
         }
 
@@ -47,7 +51,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             var selected = (Customer)GrdCustomer.SelectedItem;
 
             if (selected != null) {
-                var windowCustomer = new EditCustomer(this, selected);
+                var windowCustomer = new EditCustomer(ViewModel, selected.CustomerID);
                 windowCustomer.Show();
             }
             else {

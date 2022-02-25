@@ -7,15 +7,10 @@
         mc:Ignorable="d"
         Title="Ordersverwaltung" Height="450" Width="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="63*"/>
-            <ColumnDefinition Width="142*"/>
-            <ColumnDefinition Width="595*"/>
-        </Grid.ColumnDefinitions>
         <TabControl Grid.ColumnSpan="3" Margin="0,0,0,40">
             <TabItem Header="Kunden">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="GrdCustomer" Margin="0,0,0,40" IsReadOnly="True" SelectionMode="Single" />
+                    <DataGrid x:Name="GrdCustomer" ItemsSource="{Binding Customers}" Margin="0,0,0,40" IsReadOnly="True" SelectionMode="Single" />
                     <Button x:Name="CmdDeleteCustomer" Content="Löschen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65" Click="CmdDeleteCustomer_Click"/>
                     <Button x:Name="CmdEditCustomer" Content="Bearbeiten" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65" Click="CmdEditCustomer_Click"/>
                     <Button x:Name="CmdCreateCustomer" Content="Erstellen" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="65" Click="CmdCreateCustomer_Click"/>
@@ -24,7 +19,7 @@
             </TabItem>
             <TabItem Header="Bestellungen">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="GrdOrder" Margin="0,0,0,40" IsReadOnly="True" SelectionMode="Single" />
+                    <DataGrid x:Name="GrdOrder" ItemsSource="{Binding Orders}" Margin="0,0,0,40" IsReadOnly="True" SelectionMode="Single" />
                     <Button x:Name="CmdDeleteOrder" Content="Löschen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65" Click="CmdDeleteOrder_OnClick"/>
                     <Button x:Name="CmdEditOrder" Content="Bearbeiten" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65" Click="CmdEditOrder_OnClick"/>
                     <Button x:Name="CmdCreateOrder" Content="Erstellen" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="65" Click="CmdCreateOrder_OnClick"/>
@@ -33,7 +28,7 @@
             </TabItem>
             <TabItem Header="Artikel">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="GrdArticle" Margin="0,0,0,40" IsReadOnly="True" SelectionMode="Single" />
+                    <DataGrid x:Name="GrdArticle" ItemsSource="{Binding Articles}" Margin="0,0,0,40" IsReadOnly="True" SelectionMode="Single" />
                     <Button x:Name="CmdDeleteArticle" Content="Löschen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65" Click="CmdDeleteArticle_OnClick"/>
                     <Button x:Name="CmdEditArticle" Content="Bearbeiten" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65" Click="CmdEditArticle_OnClick"/>
                     <Button x:Name="CmdCreateArticle" Content="Erstellen" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="65" Click="CmdCreateArticle_OnClick" />
@@ -42,7 +37,7 @@
             </TabItem>
             <TabItem Header="Gruppen">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="GrdArticleGroup" Margin="0,0,0,40" IsReadOnly="True" SelectionMode="Single" />
+                    <DataGrid x:Name="GrdArticleGroup" ItemsSource="{Binding Groups}" Margin="0,0,0,40" IsReadOnly="True" SelectionMode="Single" />
                     <Button x:Name="CmdDeleteArticleGroup" Content="Löschen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65" Click="CmdDeleteArticleGroup_OnClick"/>
                     <Button x:Name="CmdEditArticleGroup" Content="Bearbeiten" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65" Click="CmdEditArticleGroup_OnClick" />
                     <Button x:Name="CmdCreateArticleGroup" Content="Erstellen" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="65" Click="CmdCreateArticleGroup_OnClick"/>

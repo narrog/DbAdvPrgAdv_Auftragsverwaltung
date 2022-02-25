@@ -68,22 +68,8 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
 
         private void CmdAddPos_Click(object sender, RoutedEventArgs e)
         {
-            var windowPosition = new EditPosition(this, new Position() {Article = new Article(), Number = this.Number, Order = SelectedOrder}, true);
+            var windowPosition = new EditPosition(this, new Position() {Article = new Article(), Number = this.Number, Order = SelectedOrder});
             windowPosition.Show();
-        }
-        private void CmdEditPos_Click(object sender, RoutedEventArgs e)
-        {
-            var selected = (Position)GrdPositions.SelectedItem;
-
-            if (selected != null)
-            {
-                var windowPosition = new EditPosition(this, selected, false);
-                windowPosition.Show();
-            }
-            else
-            {
-                MessageBox.Show("Bitte eine Position auswählen");
-            }
         }
         private void CmdDelPos_Click(object sender, RoutedEventArgs e)
         {

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using DbAdvPrgAdv_Auftragsverwaltung.ViewModel;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Form
 {
@@ -12,62 +14,24 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
     /// </summary>
     public partial class EditCustomer : Window
     {
-        public EditCustomer(MainWindow mainWindow, Customer selected)
+        public EditCustomer(VMMain viewModel, int id)
         {
+            ViewModel = viewModel;
+            DataContext = ViewModel;
+            ViewModel.Contr.SelectCustomer(id);
             InitializeComponent();
-            Main = mainWindow;
-            SelectedCustomer = selected;
-            this.DataContext = this;
-            using (var context = new OrderContext())
-            {
-                Cities = context.Cities.ToList();
-            }
-            foreach (var City in Cities)
-            {
-                if (SelectedCustomer.City.PLZ == City.PLZ)
-                {
-                    TxtCity.Text = City.CityName;
-                }
-            }
         }
-        public MainWindow Main { get; set; }
-        private List<City> Cities { get; set; }
-        public Customer SelectedCustomer { get; set; }
+        public VMMain ViewModel { get; set; }
 
         private void CmdSave_Click(object sender, RoutedEventArgs e)
         {
-            using (var context = new OrderContext())
-            {
-                if (TxtPLZ.Text == "" || TxtCity.Text == "")
-                {
-                    throw new ArgumentException("Bitte einen City eingeben");
-                }
-                else
-                {
-                    SelectedCustomer.City = context.Cities
-                        .FirstOrDefault(x => x.PLZ == SelectedCustomer.City.PLZ);
-                    if (SelectedCustomer.City == null)
-                    {
-                        SelectedCustomer.City = new City() { PLZ = Convert.ToInt32(TxtPLZ.Text), CityName = TxtCity.Text };
-                    }
-
-                    if (SelectedCustomer.CustomerID == 0)
-                    {
-                        context.Customers.Add(SelectedCustomer);
-                    }
-                    else
-                    {
-                        context.Customers.Update(SelectedCustomer);
-                    }
-                }
-                context.SaveChanges();
-            }
-            Main.UpdateGrid();
+            ViewModel.Contr.SaveCustomer();
+            ViewModel.Contr.GetDatabase();
             Close();
         }
         private void CmdClose_Click(object sender, RoutedEventArgs e)
         {
-            Main.UpdateGrid();
+            ViewModel.Contr.GetDatabase();
             Close();
         }
 
@@ -75,7 +39,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
         {
             TxtCity.IsEnabled = true;
             TxtCity.Text = "";
-            foreach (var City in Cities)
+            foreach (var City in ViewModel.Contr.Cities)
             {
                 if (Convert.ToString(City.PLZ) == TxtPLZ.Text)
                 {
