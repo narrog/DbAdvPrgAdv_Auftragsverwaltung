@@ -71,17 +71,20 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         }
 
         // CTE für TreeView
-        public Task<List<Group>> GroupTree() =>
+        public List<Group> GroupTree() =>
             Groups.FromSqlRaw(
                     @";with cte as (
-	                select GroupID, Name, cast('none' as nvarchar(max)) as Parent from Groups where ParentID = 0
-	                union all
-	                select a.GroupID, a.Name, (b.Name) as Parent from Groups a
-		                inner join cte b on a.ParentID = b.GroupID
-                )
-                select * from cte;"
-                )
+	                    SELECT GroupID, Name, ParentID, cast('none' as nvarchar(max)) AS Parent 
+                        FROM Groups 
+                        WHERE ParentID = 0
+	                    UNION ALL
+	                    SELECT a.GroupID, a.Name, a.ParentID, (b.Name) AS Parent 
+                        FROM Groups a
+	                    INNER JOIN cte b 
+                            ON a.ParentID = b.GroupID
+                    )
+                    SELECT * FROM cte;")
                 .AsNoTrackingWithIdentityResolution()
-                .ToListAsync();
+                .ToList();
     }
 }
