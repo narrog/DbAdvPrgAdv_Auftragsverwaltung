@@ -47,6 +47,7 @@
                     <Button x:Name="CmdEditArticleGroup" Content="Bearbeiten" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65" Click="CmdEditArticleGroup_OnClick" />
                     <Button x:Name="CmdCreateArticleGroup" Content="Erstellen" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="65" Click="CmdCreateArticleGroup_OnClick"/>
                     <Button x:Name="CmdSearchArticleGroup" Content="Suchen" HorizontalAlignment="Right" Margin="0,0,235,10" VerticalAlignment="Bottom" Width="65" />
+                    <Button x:Name="CmdTreeViewGroup" Content="TreeView" HorizontalAlignment="Right" Margin="0,0,310,10" VerticalAlignment="Bottom" Width="65" Click="CmdTreeViewGroup_OnClick"/>
                 </Grid>
             </TabItem>
         </TabControl>
