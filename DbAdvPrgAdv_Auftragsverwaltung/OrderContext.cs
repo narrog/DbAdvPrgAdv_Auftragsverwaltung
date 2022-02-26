@@ -38,6 +38,9 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             modelBuilder.Entity<Position>()
                 .HasKey(t => new { t.OrderID, t.ArticleID});
 
+            modelBuilder.Entity<Customer>().ToTable("Customers", c => c.IsTemporal());
+            modelBuilder.Entity<Article>().ToTable("Articles", a => a.IsTemporal());
+
             #region Beispieldaten
             modelBuilder.Entity<City>().HasData(new City() { CityID = 1, PLZ = 9000, CityName = "St. Gallen" });
             modelBuilder.Entity<City>().HasData(new City() { CityID = 2, PLZ = 9000, CityName = "Herisau" });
