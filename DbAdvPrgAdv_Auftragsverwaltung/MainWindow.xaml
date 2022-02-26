@@ -29,6 +29,7 @@
                     <Button x:Name="CmdEditOrder" Content="Bearbeiten" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65" Click="CmdEditOrder_OnClick"/>
                     <Button x:Name="CmdCreateOrder" Content="Erstellen" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="65" Click="CmdCreateOrder_OnClick"/>
                     <Button x:Name="CmdSearchOrder" Content="Suchen" HorizontalAlignment="Right" Margin="0,0,235,10" VerticalAlignment="Bottom" Width="65" Click="CmdSearchOrder_OnClick"/>
+                    <Button x:Name="CmdShowBalance" Content="Bilanz" HorizontalAlignment="Right" Margin="0,0,310,10" VerticalAlignment="Bottom" Width="65" Click="CmdShowBalance_OnClick"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Artikel">

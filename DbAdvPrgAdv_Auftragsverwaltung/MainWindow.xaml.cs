@@ -159,7 +159,11 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
                 UpdateGrid();
             }
         }
-
+        private void CmdShowBalance_OnClick(object sender, RoutedEventArgs e)
+        {
+            var windowBalance = new ShowBalance();
+            windowBalance.Show();
+        }
         // Tabellen befüllen
         public void UpdateGrid()
         {
@@ -172,6 +176,5 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             }
         }
 
-        
     }
 }
