@@ -14,6 +14,5 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Model
         public int ArticleID { get; set; }
         public virtual Article Article { get; set; }
         public int Count { get; set; }
-
     }
 }

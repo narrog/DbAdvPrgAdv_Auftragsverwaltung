@@ -26,7 +26,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         public MainWindow()
         {
             InitializeComponent();
-
+            List<Customer> cust;
             // Migrate ausführen 
             using (var context = new OrderContext())
             {
@@ -53,7 +53,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             else {
                 MessageBox.Show("Bitte Kunde auswählen");
             }
-            
         }
 
         private void CmdDeleteCustomer_Click(object sender, RoutedEventArgs e)
@@ -84,8 +83,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             else {
                 MessageBox.Show("Bitte Artikel auswählen");
             }
-
-            
         }
 
         private void CmdDeleteArticle_OnClick(object sender, RoutedEventArgs e) {
