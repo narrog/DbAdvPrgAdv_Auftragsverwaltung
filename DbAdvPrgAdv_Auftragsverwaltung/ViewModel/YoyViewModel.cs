@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,16 +11,16 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.ViewModel
 {
     public class YoyViewModel : INotifyPropertyChanged
     {
-        private List<string> windowFuncResult;
+        private List<Order> windowFuncResult;
         public YoyViewModel()
         {
-            var testList = new List<string>();
-            testList.Add("first");
-            testList.Add("Second");
-            WindowFuncResult = testList;
-            Close = new CommandClose();
+            using(var context = new OrderContext())
+            {
+                WindowFuncResult = context.OrderYOY();
+                Close = new CommandClose();
+            }
         }
-        public List<string> WindowFuncResult
+        public List<Order> WindowFuncResult
         { 
             get { return windowFuncResult; }
             set

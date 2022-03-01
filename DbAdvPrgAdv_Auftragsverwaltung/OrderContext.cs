@@ -145,7 +145,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 
         // Anzahl Bestellungen
         public List<Order> OrderYOY() =>
-            Orders.FromSqlRaw(
+                Orders.FromSqlRaw(
                 @";WITH Step1 AS (
 	                SELECT YEAR(OrderDate) AS OrderYear, 
 		                MONTH(OrderDate)/4  + 1 AS OrderQtr,
@@ -158,8 +158,8 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 		                TotalSales, LAG(TotalSales,4) OVER(ORDER BY OrderYear, OrderQtr) AS LastQuarterSales
 	                FROM Step1
                 )
-                SELECT OrderYear, OrderQtr, TotalSales, 
-	                FORMAT((TotalSales - LastQuarterSales)/LastQuarterSales,'P') AS PercentChange
+                SELECT TOP 12 OrderYear AS Year, OrderQtr AS Quartal, TotalSales AS Kategorie, 
+	                FORMAT((TotalSales - LastQuarterSales)/LastQuarterSales,'P') AS Yoy
                 FROM Step2;")
             .AsNoTrackingWithIdentityResolution()
             .ToList();
@@ -182,7 +182,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 		                LAG(AnzahlArtikel,4) OVER(ORDER BY OrderYear, OrderQtr) AS LastQuarterCount
 	                FROM Step1
                 )
-                SELECT OrderYear, OrderQtr, ArtikelProBestellung,
+                SELECT TOP 12 OrderYear, OrderQtr, ArtikelProBestellung,
 	                FORMAT((ArtikelProBestellung - LastQuarterCount)/LastQuarterCount, 'P') AS PercentChange
                 FROM Step2;")
             .AsNoTrackingWithIdentityResolution()
@@ -205,7 +205,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 		                    TotalSales, LAG(TotalSales,4) OVER(ORDER BY OrderYear, OrderQtr) AS LastQuarterSales
 	                    FROM Step1
                     )
-                    SELECT OrderYear, OrderQtr, TotalSales, Customer,
+                    SELECT TOP 12 OrderYear, OrderQtr, TotalSales, Customer,
 	                    FORMAT((TotalSales - LastQuarterSales)/LastQuarterSales,'P') AS PercentChange
                     FROM Step2;")
                 .AsNoTrackingWithIdentityResolution()
@@ -226,7 +226,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 		                    TotalSales, LAG(TotalSales,4) OVER(ORDER BY OrderYear, OrderQtr) AS LastQuarterSales
 	                    FROM Step1
                     )
-                    SELECT OrderYear, OrderQtr, TotalSales, 
+                    SELECT TOP 12 OrderYear, OrderQtr, TotalSales, 
 	                    FORMAT((TotalSales - LastQuarterSales)/LastQuarterSales,'P') AS PercentChange
                     FROM Step2;")
                 .AsNoTrackingWithIdentityResolution()
@@ -246,7 +246,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 	                    SELECT StartYear, StartQtr, 
 		                    ArticlesCount, LAG(ArticlesCount,4) OVER(ORDER BY StartYear, StartQtr)  AS LastYearArticles
 	                    FROM Step1)
-                    SELECT StartYear, StartQtr, ArticlesCount,
+                    SELECT TOP 12 StartYear, StartQtr, ArticlesCount,
 	                    FORMAT((ArticlesCount - LastYearArticles)/LastYearArticles,'P') AS PercentChange
                     FROM Step2;")
                 .AsNoTrackingWithIdentityResolution()
