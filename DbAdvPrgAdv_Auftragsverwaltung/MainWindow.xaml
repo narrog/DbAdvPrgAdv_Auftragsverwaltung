@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DbAdvPrgAdv_Auftragsverwaltung"
         mc:Ignorable="d"
-        Title="Auftragsverwaltung" Height="450" Width="800">
+        Title="Ordersverwaltung" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="63*"/>
@@ -15,21 +15,40 @@
         <TabControl Grid.ColumnSpan="3" Margin="0,0,0,40">
             <TabItem Header="Kunden">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid Margin="0,0,0,40"/>
-                    <Button x:Name="CmdDeleteCustomer" Content="Löschen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65"/>
-                    <Button x:Name="CmdEditCustomer" Content="Bearbeiten" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65"/>
+                    <DataGrid x:Name="GrdCustomer" Margin="0,0,0,40" IsReadOnly="True" SelectionMode="Single" />
+                    <Button x:Name="CmdDeleteCustomer" Content="Löschen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65" Click="CmdDeleteCustomer_Click"/>
+                    <Button x:Name="CmdEditCustomer" Content="Bearbeiten" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65" Click="CmdEditCustomer_Click"/>
                     <Button x:Name="CmdCreateCustomer" Content="Erstellen" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="65" Click="CmdCreateCustomer_Click"/>
                     <Button x:Name="CmdSearchCustomer" Content="Suchen" HorizontalAlignment="Right" Margin="0,0,235,10" VerticalAlignment="Bottom" Width="65"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Aufträge">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem Header="Bestellungen">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="GrdOrder" Margin="0,0,0,40" IsReadOnly="True" SelectionMode="Single" />
+                    <Button x:Name="CmdDeleteOrder" Content="Löschen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65" Click="CmdDeleteOrder_OnClick"/>
+                    <Button x:Name="CmdEditOrder" Content="Bearbeiten" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65" Click="CmdEditOrder_OnClick"/>
+                    <Button x:Name="CmdCreateOrder" Content="Erstellen" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="65" Click="CmdCreateOrder_OnClick"/>
+                    <Button x:Name="CmdSearchOrder" Content="Suchen" HorizontalAlignment="Right" Margin="0,0,235,10" VerticalAlignment="Bottom" Width="65" Click="CmdSearchOrder_OnClick"/>
+                </Grid>
             </TabItem>
             <TabItem Header="Artikel">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="GrdArticle" Margin="0,0,0,40" IsReadOnly="True" SelectionMode="Single" />
+                    <Button x:Name="CmdDeleteArticle" Content="Löschen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65" Click="CmdDeleteArticle_OnClick"/>
+                    <Button x:Name="CmdEditArticle" Content="Bearbeiten" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65" Click="CmdEditArticle_OnClick"/>
+                    <Button x:Name="CmdCreateArticle" Content="Erstellen" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="65" Click="CmdCreateArticle_OnClick" />
+                    <Button x:Name="CmdSearchArticle" Content="Suchen" HorizontalAlignment="Right" Margin="0,0,235,10" VerticalAlignment="Bottom" Width="65"/>
+                </Grid>
             </TabItem>
-            <TabItem Header="Artikelgruppen">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem Header="Gruppen">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="GrdArticleGroup" Margin="0,0,0,40" IsReadOnly="True" SelectionMode="Single" />
+                    <Button x:Name="CmdDeleteArticleGroup" Content="Löschen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65" Click="CmdDeleteArticleGroup_OnClick"/>
+                    <Button x:Name="CmdEditArticleGroup" Content="Bearbeiten" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65" Click="CmdEditArticleGroup_OnClick" />
+                    <Button x:Name="CmdCreateArticleGroup" Content="Erstellen" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="65" Click="CmdCreateArticleGroup_OnClick"/>
+                    <Button x:Name="CmdSearchArticleGroup" Content="Suchen" HorizontalAlignment="Right" Margin="0,0,235,10" VerticalAlignment="Bottom" Width="65" />
+                    <Button x:Name="CmdTreeViewGroup" Content="TreeView" HorizontalAlignment="Right" Margin="0,0,310,10" VerticalAlignment="Bottom" Width="65" Click="CmdTreeViewGroup_OnClick"/>
+                </Grid>
             </TabItem>
         </TabControl>
 

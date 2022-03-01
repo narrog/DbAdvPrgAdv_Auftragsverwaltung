@@ -8,15 +8,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Model
 {
-    public class Artikel
+    public class Article
     {
-        public int ArtikelID { get; set; }
-        public string Bezeichnung { get; set; }
+        public int ArticleID { get; set; }
+        public string Name { get; set; }
         [Column(TypeName = "decimal(7,2)")]
-        public double Preis { get; set; }
-        public int Gruppe_ID { get; set; }
-        public virtual Gruppe Gruppe { get; set; }
+        public double Price { get; set; }
+        public int GroupID { get; set; }
+        public virtual Group Group { get; set; }
 
-        public virtual ICollection<Position> Positionen { get; set; }
+        public virtual ICollection<Position> Positions { get; set; }
     }
 }

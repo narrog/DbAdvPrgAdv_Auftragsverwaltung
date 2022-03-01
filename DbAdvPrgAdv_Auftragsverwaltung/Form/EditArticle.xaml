@@ -1,0 +1,20 @@
+﻿<Window x:Class="DbAdvPrgAdv_Auftragsverwaltung.Form.EditArticle"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DbAdvPrgAdv_Auftragsverwaltung.Form"
+        mc:Ignorable="d"
+        Title="EditArticle" Height="200" Width="500">
+    <Grid>
+        <TextBox x:Name="TxtName" Text="{Binding Path=SelectedArticle.Name}" HorizontalAlignment="Left" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="229"/>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="10,10,0,0" Padding="0"  VerticalAlignment="Top"/>
+        <TextBox x:Name="TxtPrice" Text="{Binding Path=SelectedArticle.Price}" HorizontalAlignment="Left" Margin="244,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="89"/>
+        <Label Content="Preis" HorizontalAlignment="Left" Margin="244,10,0,0" Padding="0"  VerticalAlignment="Top"/>
+        <Label Content="Kategorie" HorizontalAlignment="Left" Margin="341,10,0,0" Padding="0"  VerticalAlignment="Top" RenderTransformOrigin="0.587,-0.919"/>
+        <ComboBox x:Name="CmbGroup" HorizontalAlignment="Left" Margin="338,38,0,0" VerticalAlignment="Top" Width="138"/>
+        <Button x:Name="CmdAbortArticle" Content="Schliessen" HorizontalAlignment="Left" Margin="411,92,0,0" VerticalAlignment="Top" Width="65" Click="CmdAbortArticle_OnClick"/>
+        <Button x:Name="CmdSaveArticle" Content="Speichern" HorizontalAlignment="Left" Margin="341,92,0,0" VerticalAlignment="Top" Width="65" Click="CmdSaveArticle_OnClick"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,22 @@
+﻿<Window x:Class="DbAdvPrgAdv_Auftragsverwaltung.Form.EditOrder"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DbAdvPrgAdv_Auftragsverwaltung.Form"
+        mc:Ignorable="d"
+        Title="EditOrder" Height="250" Width="677">
+    <Grid>
+        <Label Content="Kunde" HorizontalAlignment="Left" Margin="5,6,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.587,-0.919"/>
+        <ComboBox x:Name="CmbCustomer" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="TxtPriceTotal" Text="{Binding Path=SelectedOrder.PriceTotal}"  HorizontalAlignment="Left" Margin="161,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="94" IsEnabled="False"/>
+        <Label Content="Preis Total" HorizontalAlignment="Left" Margin="161,6,0,0" VerticalAlignment="Top"/>
+
+        <Button x:Name="CmdAbort" Content="Schliessen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65" Click="CmdAbort_OnClick"/>
+        <Button x:Name="CmdSave" Content="Speichern" HorizontalAlignment="Right" Margin="0,0,92,10" VerticalAlignment="Bottom" Width="65" Click="CmdSave_OnClick"/>
+        <Button x:Name="CmdAddPos" Content="Position hinzufügen" HorizontalAlignment="Left" Margin="453,81,0,0" VerticalAlignment="Top" Width="112" Click="CmdAddPos_Click"/>
+        <Button x:Name="CmdDelPos" Content="Position löschen" HorizontalAlignment="Left" Margin="453,117,0,0" VerticalAlignment="Top" Width="112" Click="CmdDelPos_Click"/>
+        <DataGrid x:Name="GrdPositions" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,81,0,0" Height="143" Width="429"/>
+
+    </Grid>
+</Window>

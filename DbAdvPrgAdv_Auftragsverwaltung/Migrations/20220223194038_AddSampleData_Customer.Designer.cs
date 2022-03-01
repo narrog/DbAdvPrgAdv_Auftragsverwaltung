@@ -4,14 +4,16 @@ using DbAdvPrgAdv_Auftragsverwaltung;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
 {
     [DbContext(typeof(OrderContext))]
-    partial class OrderContextModelSnapshot : ModelSnapshot
+    [Migration("20220223194038_AddSampleData_Customer")]
+    partial class AddSampleData_Customer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,29 +42,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                     b.HasIndex("GroupID");
 
                     b.ToTable("Articles");
-
-                    b.HasData(
-                        new
-                        {
-                            ArticleID = 1,
-                            GroupID = 2,
-                            Name = "HP LaserJet Pro M404",
-                            Price = 420m
-                        },
-                        new
-                        {
-                            ArticleID = 2,
-                            GroupID = 4,
-                            Name = "Lenovo ThinkPad L15",
-                            Price = 900m
-                        },
-                        new
-                        {
-                            ArticleID = 3,
-                            GroupID = 3,
-                            Name = "Chromstahl Felgen 19 Zoll",
-                            Price = 200m
-                        });
                 });
 
             modelBuilder.Entity("DbAdvPrgAdv_Auftragsverwaltung.Model.City", b =>
@@ -173,32 +152,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                     b.HasIndex("ParentID");
 
                     b.ToTable("Groups");
-
-                    b.HasData(
-                        new
-                        {
-                            GroupID = 1,
-                            Name = "Elektronik",
-                            ParentID = 0
-                        },
-                        new
-                        {
-                            GroupID = 2,
-                            Name = "Drucker",
-                            ParentID = 1
-                        },
-                        new
-                        {
-                            GroupID = 3,
-                            Name = "Autozubehör",
-                            ParentID = 0
-                        },
-                        new
-                        {
-                            GroupID = 4,
-                            Name = "Laptop",
-                            ParentID = 1
-                        });
                 });
 
             modelBuilder.Entity("DbAdvPrgAdv_Auftragsverwaltung.Model.Order", b =>
@@ -222,29 +175,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                     b.HasIndex("CustomerID");
 
                     b.ToTable("Orders");
-
-                    b.HasData(
-                        new
-                        {
-                            OrderID = 1,
-                            CustomerID = 1,
-                            OrderDate = new DateTime(2021, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceTotal = 420m
-                        },
-                        new
-                        {
-                            OrderID = 2,
-                            CustomerID = 1,
-                            OrderDate = new DateTime(2022, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceTotal = 840m
-                        },
-                        new
-                        {
-                            OrderID = 3,
-                            CustomerID = 2,
-                            OrderDate = new DateTime(2022, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceTotal = 1320m
-                        });
                 });
 
             modelBuilder.Entity("DbAdvPrgAdv_Auftragsverwaltung.Model.Position", b =>
@@ -266,36 +196,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                     b.HasIndex("ArticleID");
 
                     b.ToTable("Positions");
-
-                    b.HasData(
-                        new
-                        {
-                            OrderID = 1,
-                            ArticleID = 1,
-                            Count = 1,
-                            Number = 1
-                        },
-                        new
-                        {
-                            OrderID = 2,
-                            ArticleID = 1,
-                            Count = 2,
-                            Number = 2
-                        },
-                        new
-                        {
-                            OrderID = 3,
-                            ArticleID = 1,
-                            Count = 1,
-                            Number = 3
-                        },
-                        new
-                        {
-                            OrderID = 3,
-                            ArticleID = 2,
-                            Count = 1,
-                            Number = 4
-                        });
                 });
 
             modelBuilder.Entity("DbAdvPrgAdv_Auftragsverwaltung.Model.Article", b =>

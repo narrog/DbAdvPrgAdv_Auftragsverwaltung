@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Model
 {
-    public class Ort
+    public class City
     {
-        public int OrtID { get; set; }
+        public int CityID { get; set; }
         public int PLZ { get; set; }
-        public string Ortschaft { get; set; }
-
-        public virtual ICollection<Kunde> Kunden { get; set; }
+        public string CityName { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
 
     }
 }
