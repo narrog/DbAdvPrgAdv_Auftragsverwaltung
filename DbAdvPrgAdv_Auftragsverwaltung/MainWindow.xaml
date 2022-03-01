@@ -7,11 +7,6 @@
         mc:Ignorable="d"
         Title="Ordersverwaltung" Height="450" Width="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="63*"/>
-            <ColumnDefinition Width="142*"/>
-            <ColumnDefinition Width="595*"/>
-        </Grid.ColumnDefinitions>
         <TabControl Grid.ColumnSpan="3" Margin="0,0,0,40">
             <TabItem Header="Kunden">
                 <Grid Background="#FFE5E5E5">
