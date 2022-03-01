@@ -161,8 +161,8 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         }
         private void CmdShowBalance_OnClick(object sender, RoutedEventArgs e)
         {
-            var windowBalance = new ShowBalance();
-            windowBalance.Show();
+            var windowYoy = new YoyWindow();
+            windowYoy.Show();
         }
         // Tabellen befüllen
         public void UpdateGrid()
