@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -53,7 +54,12 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
 
         private void CmdSetFilter_OnClick(object sender, RoutedEventArgs e)
         {
-            InvoiceWindow.UpdateGrid();
+            Invoice.CustomerName  = TxtNameCustomer.Text;
+            Invoice.Group = CmbGroup.Text;
+            Invoice.Article = CmbArticle.Text;
+            Invoice.DateFrom = DatePickerFrom.Text;
+            Invoice.DateTo = DatePickerTo.Text;
+            //InvoiceWindow.UpdateGrid();
             Close();
         }
 

@@ -7,24 +7,10 @@
         mc:Ignorable="d"
         Title="Rechnungen" Height="450" Width="800">
     <Grid>
-        <DataGrid x:Name="GrdInvoice" ItemsSource="{Binding}"  Margin="0,0,0,40" IsReadOnly="True" SelectionMode="Single">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="KndNr." Binding="{Binding CustomerID}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Name" Binding="{Binding CustomerName}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Strasse" Binding="{Binding CustomerStreet}"></DataGridTextColumn>
-                <DataGridTextColumn Header="PLZ" Binding="{Binding CustomerZIP}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Ort" Binding="{Binding CustomerCity}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Land" Binding="{Binding CustomerCountry}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Datum" Binding="{Binding InvoiceDate}"></DataGridTextColumn>
-                <DataGridTextColumn Header="R-Nr." Binding="{Binding InvoiceID}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Netto" Binding="{Binding InvoiceNet}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Brutto" Binding="{Binding InvoiceGross}"></DataGridTextColumn>
-            </DataGrid.Columns>
+        <DataGrid x:Name="GrdInvoice" Margin="0,0,0,40" IsReadOnly="True" SelectionMode="Single">
+           
         </DataGrid>
         <Button x:Name="CmdClose" Content="Schliessen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65" Click="CmdClose_OnClick"/>
         <Button x:Name="CmdFilter" Content="Filter" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65" Click="CmdFilter_OnClick"/>
-
-
-
-</Grid>
+    </Grid>
 </Window>

@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Form
 {
@@ -21,21 +23,18 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
     {
         public Invoice()
         {
+            this.DataContext = this;
             InitializeComponent();
 
-
+            UpdateGrid();
         }
 
-        public int CustomerID { get; set; }
-        public string CustomerName { get; set; }
-        public string CustomerStreet { get; set; }
-        public int CustomerZIP { get; set; }
-        public string CustomerCity { get; set; }
-        public string CustomerCountry { get; set; }
-        public DateTime InvoiceDate { get; set; }
-        public int InvoiceID { get; set; }
-        public double InvoiceNet { get; set; }
-        public double InvoiceGross { get; set; }
+        private List<Order> Orders { get; set; }
+        public static string CustomerName { get; set; }
+        public static string Group { get; set; }
+        public static string Article { get; set; }
+        public static string DateFrom { get; set; }
+        public static string DateTo { get; set; }
 
 
         private void CmdFilter_OnClick(object sender, RoutedEventArgs e)
@@ -48,13 +47,20 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
         {
             Close();
         }
+
+        // Tabelle befüllen
         public void UpdateGrid()
         {
-            
             using (var context = new OrderContext())
             {
-                
+                Orders = context.Orders.ToList();
+            }
+
+            foreach (var item in Orders)
+            {
+                   
             }
         }
+
     }
 }
