@@ -7,10 +7,21 @@
         mc:Ignorable="d"
         Title="Rechnungen" Height="450" Width="800">
     <Grid>
-        <DataGrid x:Name="GrdInvoice" Margin="0,0,0,40" IsReadOnly="True" SelectionMode="Single">
-           
+        <Label Content="Name Kunde" HorizontalAlignment="Left" Margin="30,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TxtNameCustomer" Text="" HorizontalAlignment="Left" Margin="30,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Gruppe" HorizontalAlignment="Left" Margin="160,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.587,-0.919"/>
+        <ComboBox x:Name="CmbGroup" HorizontalAlignment="Left" Margin="165,40,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Artikel" HorizontalAlignment="Left" Margin="295,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.587,-0.919"/>
+        <ComboBox x:Name="CmbArticle" HorizontalAlignment="Left" Margin="300,40,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Datum von" HorizontalAlignment="Left" Margin="430,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.587,-0.919"/>
+        <DatePicker x:Name="DatePickerFrom" HorizontalAlignment="Left" Margin="435,40,0,0" VerticalAlignment="Top"/>
+        <Label Content="Datum bis" HorizontalAlignment="Left" Margin="575,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.587,-0.919"/>
+        <DatePicker x:Name="DatePickerTo" HorizontalAlignment="Left" Margin="580,40,0,0" VerticalAlignment="Top"/>
+
+        <DataGrid x:Name="GrdInvoice"  ItemsSource="{Binding OrderList}" Margin="0,80,0,40" IsReadOnly="True" SelectionMode="Single">
+
         </DataGrid>
         <Button x:Name="CmdClose" Content="Schliessen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65" Click="CmdClose_OnClick"/>
-        <Button x:Name="CmdFilter" Content="Filter" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65" Click="CmdFilter_OnClick"/>
+        <Button x:Name="CmdFilter" Content="Filter" HorizontalAlignment="Right" Margin="0,0,10,373" VerticalAlignment="Bottom" Width="65" Click="CmdFilter_OnClick"/>
     </Grid>
 </Window>
