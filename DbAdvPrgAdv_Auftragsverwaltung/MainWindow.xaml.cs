@@ -164,6 +164,14 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             var windowYoy = new YoyWindow();
             windowYoy.Show();
         }
+
+
+        private void CmdShowInvoice_OnClick(object sender, RoutedEventArgs e)
+        {
+            var windowInvoice = new Invoice();
+            windowInvoice.Show();
+        }
+
         // Tabellen befüllen
         public void UpdateGrid()
         {
