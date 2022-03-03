@@ -168,7 +168,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 
         private void CmdShowInvoice_OnClick(object sender, RoutedEventArgs e)
         {
-            var windowInvoice = new Invoice();
+            var windowInvoice = new InvoiceWindow();
             windowInvoice.Show();
         }
 
