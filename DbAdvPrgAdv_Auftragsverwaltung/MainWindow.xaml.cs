@@ -33,6 +33,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
                 context.Database.Migrate();
             }
             UpdateGrid();
+            
         }
 
         /* Customers */
@@ -164,6 +165,14 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             var windowYoy = new YoyWindow();
             windowYoy.Show();
         }
+
+
+        private void CmdShowInvoice_OnClick(object sender, RoutedEventArgs e)
+        {
+            var windowInvoice = new InvoiceWindow();
+            windowInvoice.Show();
+        }
+
         // Tabellen befüllen
         public void UpdateGrid()
         {
@@ -173,6 +182,8 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
                 GrdOrder.ItemsSource = context.Orders.Include("Customer").Include("Positions").ToList();
                 GrdArticle.ItemsSource = context.Articles.Include("Group").Include("Positions").ToList();
                 GrdArticleGroup.ItemsSource = context.Groups.Include("Articles").ToList();
+
+                
             }
         }
 

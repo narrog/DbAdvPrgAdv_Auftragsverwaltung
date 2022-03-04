@@ -34,11 +34,13 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
             }
 
             // CmbBox füllen & falls nötig: übergeordnete Kategorie auswählen
+            CmbGroupParent.Items.Add("");
             foreach (var item in Groups) {
                 CmbGroupParent.Items.Add((item.Name));
                 if (item.ParentID == SelectedGroup.ParentID && item.ParentID != 0)
                 {
-                    CmbGroupParent.Text = Groups.FirstOrDefault(x => x.GroupID.Equals(SelectedGroup.ParentID)).Name;
+                    ParentName = Groups.FirstOrDefault(x => x.GroupID.Equals(SelectedGroup.ParentID)).Name;
+                    //CmbGroupParent.Text = Groups.FirstOrDefault(x => x.GroupID.Equals(SelectedGroup.ParentID)).Name;
                 }
             }
         }
@@ -46,6 +48,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
         public MainWindow Main { get; set; }
         public Group SelectedGroup { get; set; }
         public List<Group> Groups { get; set; }
+        public string ParentName { get; set; }
 
         private void CmdAbortGroup_Click(object sender, RoutedEventArgs e)
         {
@@ -75,16 +78,13 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
                     var newGroup = new Group() { Name = TxtNameGroup.Text, ParentID = parentID };
                     context.Groups.Add(newGroup);
                 }
+
                 // bestehnden Datensatz bearbeiten
                 else
                 {
-                    foreach (var item in Groups)
-                    {
-                        if (CmbGroupParent.Text == item.Name)
-                        {
-                            SelectedGroup.Parent = item;
-                        }
-                    }
+                    SelectedGroup = context.Groups.Find(SelectedGroup.GroupID);
+
+                    SelectedGroup.ParentID = parentID;
                     context.Groups.Update(SelectedGroup);
                 }
                 // Datensatz speichern

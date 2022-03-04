@@ -44,33 +44,23 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             modelBuilder.Entity<Article>().ToTable("Articles", a => a.IsTemporal());
 
             #region Beispieldaten
+            modelBuilder.Entity<City>().HasData(new City() { CityID = 1, PLZ = 9000, CityName = "St. Gallen" });
+            modelBuilder.Entity<City>().HasData(new City() { CityID = 2, PLZ = 9100, CityName = "Herisau" });
+            modelBuilder.Entity<Customer>().HasData(new Customer() { CustomerID = 1, Vorname = "Hans", Name = "Muster", CityID = 1 });
+            modelBuilder.Entity<Customer>().HasData(new Customer() { CustomerID = 2, Vorname = "Benjamin", Name = "Peter", CityID = 1 });
+            modelBuilder.Entity<Customer>().HasData(new Customer() { CustomerID = 3, Vorname = "Leonie", Name = "Buser", CityID = 2 });
 
-            modelBuilder.Entity<City>().HasData(new City() {CityID = 1, PLZ = 9000, CityName = "St. Gallen"});
-            modelBuilder.Entity<City>().HasData(new City() {CityID = 2, PLZ = 9000, CityName = "Herisau"});
-            modelBuilder.Entity<Customer>().HasData(new Customer()
-                {CustomerID = 1, Vorname = "Hans", Name = "Muster", CityID = 1});
-            modelBuilder.Entity<Customer>().HasData(new Customer()
-                {CustomerID = 2, Vorname = "Benjamin", Name = "Peter", CityID = 1});
-            modelBuilder.Entity<Customer>().HasData(new Customer()
-                {CustomerID = 3, Vorname = "Leonie", Name = "Buser", CityID = 2});
+            modelBuilder.Entity<Group>().HasData(new Group() { GroupID = 1, Name = "Elektronik", ParentID = 0 });
+            modelBuilder.Entity<Group>().HasData(new Group() { GroupID = 2, Name = "Drucker", ParentID = 1 });
+            modelBuilder.Entity<Group>().HasData(new Group() { GroupID = 3, Name = "Autozubehör", ParentID = 0 });
+            modelBuilder.Entity<Group>().HasData(new Group() { GroupID = 4, Name = "Laptop", ParentID = 1 });
 
-            modelBuilder.Entity<Group>().HasData(new Group() {GroupID = 1, Name = "Elektronik", ParentID = 0});
-            modelBuilder.Entity<Group>().HasData(new Group() {GroupID = 2, Name = "Drucker", ParentID = 1});
-            modelBuilder.Entity<Group>().HasData(new Group() {GroupID = 3, Name = "Autozubehör", ParentID = 0});
-            modelBuilder.Entity<Group>().HasData(new Group() {GroupID = 4, Name = "Laptop", ParentID = 1});
-
-            modelBuilder.Entity<Article>().HasData(new Article()
-                {ArticleID = 1, Name = "HP LaserJet Pro M404", GroupID = 2, Price = 420.00});
-            modelBuilder.Entity<Article>().HasData(new Article()
-                {ArticleID = 2, Name = "Lenovo ThinkPad L15", GroupID = 4, Price = 900.00});
-            modelBuilder.Entity<Article>().HasData(new Article()
-                {ArticleID = 3, Name = "Chromstahl Felgen 19 Zoll", GroupID = 3, Price = 200.00});
-            modelBuilder.Entity<Article>().HasData(new Article()
-                {ArticleID = 4, Name = "HP EliteBook G8", GroupID = 4, Price = 1600.00});
-            modelBuilder.Entity<Article>().HasData(new Article()
-                {ArticleID = 5, Name = "MacBook Air 2020", GroupID = 4, Price = 1000});
-            modelBuilder.Entity<Article>().HasData(new Article()
-                {ArticleID = 6, Name = "Canon Pixma", GroupID = 2, Price = 60});
+            modelBuilder.Entity<Article>().HasData(new Article() { ArticleID = 1, Name = "HP LaserJet Pro M404", GroupID = 2, Price = 420.00 });
+            modelBuilder.Entity<Article>().HasData(new Article() { ArticleID = 2, Name = "Lenovo ThinkPad L15", GroupID = 4, Price = 900.00 });
+            modelBuilder.Entity<Article>().HasData(new Article() { ArticleID = 3, Name = "Chromstahl Felgen 19 Zoll", GroupID = 3, Price = 200.00 });
+            modelBuilder.Entity<Article>().HasData(new Article() { ArticleID = 4, Name = "HP EliteBook G8", GroupID = 4, Price = 1600.00});
+            modelBuilder.Entity<Article>().HasData(new Article() { ArticleID = 5, Name = "MacBook Air 2020", GroupID = 4, Price = 1000 });
+            modelBuilder.Entity<Article>().HasData(new Article() { ArticleID = 6, Name = "Canon Pixma", GroupID = 2, Price = 60});
 
             // Bestellungen
             modelBuilder.Entity<Order>().HasData(new Order()
