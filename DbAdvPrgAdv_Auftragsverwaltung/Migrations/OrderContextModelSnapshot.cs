@@ -140,7 +140,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                         {
                             CityID = 2,
                             CityName = "Herisau",
-                            PLZ = 9000
+                            PLZ = 9100
                         });
                 });
 
