@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
     /// <summary>
@@ -23,8 +24,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
                 if (SelectedOrder.OrderID == 0)
                 {
                     Number = 1;
-                    context.Orders.Add(SelectedOrder);
-                    context.SaveChanges();
                 }
                 else
                 {
@@ -35,7 +34,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
 
             // CmbBox Customers füllen
             foreach (var item in Customers) {
-                CmbCustomer.Items.Add((item.CustomerID + " " + item.Name + " " + item.Vorname));
+                CmbCustomer.Items.Add(item.CustomerID + " " + item.Name + " " + item.Vorname);
                 if (item.CustomerID == SelectedOrder.CustomerID)
                 {
                     CmbCustomer.SelectedItem = item.CustomerID + " " + item.Name + " " + item.Vorname;
@@ -68,22 +67,24 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
 
         private void CmdAddPos_Click(object sender, RoutedEventArgs e)
         {
-            var windowPosition = new EditPosition(this, new Position() {Article = new Article(), Number = this.Number, Order = SelectedOrder}, true);
+            using (var context = new OrderContext())
+            {
+                SelectedOrder.OrderDate = DateTime.Now;
+                var id = Convert.ToInt32(CmbCustomer.Text.Split()[0]);
+                SelectedOrder.Customer = context.Customers.Find(id);
+                if (SelectedOrder.OrderID == 0)
+                {
+                    context.Orders.Add(SelectedOrder);
+                }
+                else
+                {
+                    context.Orders.Update(SelectedOrder);
+                }
+                context.SaveChanges();
+                SelectedOrder = context.Orders.Find(SelectedOrder.OrderID);
+            }
+            var windowPosition = new EditPosition(this, new Position() {Article = new Article(), Number = this.Number, Order = SelectedOrder, OrderID = SelectedOrder.OrderID}, true);
             windowPosition.Show();
-        }
-        private void CmdEditPos_Click(object sender, RoutedEventArgs e)
-        {
-            var selected = (Position)GrdPositions.SelectedItem;
-
-            if (selected != null)
-            {
-                var windowPosition = new EditPosition(this, selected, false);
-                windowPosition.Show();
-            }
-            else
-            {
-                MessageBox.Show("Bitte eine Position auswählen");
-            }
         }
         private void CmdDelPos_Click(object sender, RoutedEventArgs e)
         {
@@ -94,19 +95,29 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
                     .FirstOrDefault(x => x.ArticleID == selected.ArticleID && x.OrderID == selected.OrderID);
                 context.Positions.Remove(toDelete);
                 context.SaveChanges();
+                SelectedOrder = context.Orders.Find(SelectedOrder.OrderID);
                 UpdateGrid();
             }
         }
 
         public void UpdateGrid()
         {
-            GrdPositions.ItemsSource = SelectedOrder.Positions.ToList();
-            double sum = 0;
-            foreach (var item in SelectedOrder.Positions)
+            using (var context = new OrderContext())
             {
-                sum = sum + item.Article.Price * item.Count;
+                SelectedOrder = context.Orders
+                    .Include("Positions")
+                    .FirstOrDefault(x => x.OrderID == SelectedOrder.OrderID);
+
+                GrdPositions.ItemsSource = SelectedOrder.Positions.ToList();
+                double sum = 0;
+                foreach (var item in SelectedOrder.Positions)
+                {
+                    sum = sum + item.Article.Price * item.Count;
+                }
+                SelectedOrder.PriceTotal = sum;
+                TxtPriceTotal.Text = SelectedOrder.PriceTotal.ToString();
+                context.Orders.Update(SelectedOrder);
             }
-            TxtPriceTotal.Text = Convert.ToString(sum);
         }
     }
 }

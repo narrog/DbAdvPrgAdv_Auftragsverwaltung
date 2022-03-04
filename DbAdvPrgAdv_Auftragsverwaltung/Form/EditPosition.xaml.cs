@@ -47,14 +47,8 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
             {
                 SelectedPosition.Article = context.Articles
                     .FirstOrDefault(x => x.Name == CmbArticle.Text);
-                if (IsNew)
-                {
-                    context.Positions.Add(SelectedPosition);
-                }
-                else
-                {
-                    context.Positions.Update(SelectedPosition);
-                }
+                SelectedPosition.Order = context.Orders.Find(SelectedPosition.OrderID);
+                context.Positions.Add(SelectedPosition);
                 context.SaveChanges();
             }
             Main.UpdateGrid();

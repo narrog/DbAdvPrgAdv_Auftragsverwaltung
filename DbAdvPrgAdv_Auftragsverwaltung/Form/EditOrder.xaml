@@ -15,8 +15,7 @@
         <Button x:Name="CmdAbort" Content="Schliessen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65" Click="CmdAbort_OnClick"/>
         <Button x:Name="CmdSave" Content="Speichern" HorizontalAlignment="Right" Margin="0,0,92,10" VerticalAlignment="Bottom" Width="65" Click="CmdSave_OnClick"/>
         <Button x:Name="CmdAddPos" Content="Position hinzufügen" HorizontalAlignment="Left" Margin="453,81,0,0" VerticalAlignment="Top" Width="112" Click="CmdAddPos_Click"/>
-        <Button x:Name="CmdEditPos" Content="Position bearbeiten" HorizontalAlignment="Left" Margin="453,106,0,0" VerticalAlignment="Top" Width="112" Click="CmdEditPos_Click"/>
-        <Button x:Name="CmdDelPos" Content="Position löschen" HorizontalAlignment="Left" Margin="453,133,0,0" VerticalAlignment="Top" Width="112" Click="CmdDelPos_Click"/>
+        <Button x:Name="CmdDelPos" Content="Position löschen" HorizontalAlignment="Left" Margin="453,117,0,0" VerticalAlignment="Top" Width="112" Click="CmdDelPos_Click"/>
         <DataGrid x:Name="GrdPositions" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,81,0,0" Height="143" Width="429"/>
 
     </Grid>
