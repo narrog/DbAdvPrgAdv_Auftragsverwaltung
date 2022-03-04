@@ -9,7 +9,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
             migrationBuilder.InsertData(
                 table: "Cities",
                 columns: new[] { "CityID", "CityName", "PLZ" },
-                values: new object[] { 2, "Herisau", 9000 });
+                values: new object[] { 2, "Herisau", 9100 });
 
             migrationBuilder.InsertData(
                 table: "Customers",

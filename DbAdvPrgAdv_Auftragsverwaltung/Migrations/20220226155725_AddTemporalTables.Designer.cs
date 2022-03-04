@@ -4,6 +4,7 @@ using DbAdvPrgAdv_Auftragsverwaltung;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
 {
     [DbContext(typeof(OrderContext))]
-    partial class OrderContextModelSnapshot : ModelSnapshot
+    [Migration("20220226155725_AddTemporalTables")]
+    partial class AddTemporalTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,27 +89,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                             GroupID = 3,
                             Name = "Chromstahl Felgen 19 Zoll",
                             Price = 200m
-                        },
-                        new
-                        {
-                            ArticleID = 4,
-                            GroupID = 4,
-                            Name = "HP EliteBook G8",
-                            Price = 1600m
-                        },
-                        new
-                        {
-                            ArticleID = 5,
-                            GroupID = 4,
-                            Name = "MacBook Air 2020",
-                            Price = 1000m
-                        },
-                        new
-                        {
-                            ArticleID = 6,
-                            GroupID = 2,
-                            Name = "Canon Pixma",
-                            Price = 60m
                         });
                 });
 
@@ -315,125 +296,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                             CustomerID = 2,
                             OrderDate = new DateTime(2022, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PriceTotal = 1320m
-                        },
-                        new
-                        {
-                            OrderID = 4,
-                            CustomerID = 1,
-                            OrderDate = new DateTime(2022, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceTotal = 1600m
-                        },
-                        new
-                        {
-                            OrderID = 5,
-                            CustomerID = 1,
-                            OrderDate = new DateTime(2022, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceTotal = 60m
-                        },
-                        new
-                        {
-                            OrderID = 6,
-                            CustomerID = 1,
-                            OrderDate = new DateTime(2021, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceTotal = 420m
-                        },
-                        new
-                        {
-                            OrderID = 7,
-                            CustomerID = 1,
-                            OrderDate = new DateTime(2021, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceTotal = 420m
-                        },
-                        new
-                        {
-                            OrderID = 8,
-                            CustomerID = 1,
-                            OrderDate = new DateTime(2021, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceTotal = 420m
-                        },
-                        new
-                        {
-                            OrderID = 9,
-                            CustomerID = 1,
-                            OrderDate = new DateTime(2020, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceTotal = 420m
-                        },
-                        new
-                        {
-                            OrderID = 10,
-                            CustomerID = 1,
-                            OrderDate = new DateTime(2020, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceTotal = 420m
-                        },
-                        new
-                        {
-                            OrderID = 11,
-                            CustomerID = 1,
-                            OrderDate = new DateTime(2020, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceTotal = 420m
-                        },
-                        new
-                        {
-                            OrderID = 12,
-                            CustomerID = 1,
-                            OrderDate = new DateTime(2019, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceTotal = 420m
-                        },
-                        new
-                        {
-                            OrderID = 13,
-                            CustomerID = 1,
-                            OrderDate = new DateTime(2019, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceTotal = 420m
-                        },
-                        new
-                        {
-                            OrderID = 14,
-                            CustomerID = 1,
-                            OrderDate = new DateTime(2019, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceTotal = 420m
-                        },
-                        new
-                        {
-                            OrderID = 15,
-                            CustomerID = 1,
-                            OrderDate = new DateTime(2019, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceTotal = 420m
-                        },
-                        new
-                        {
-                            OrderID = 16,
-                            CustomerID = 1,
-                            OrderDate = new DateTime(2018, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceTotal = 420m
-                        },
-                        new
-                        {
-                            OrderID = 17,
-                            CustomerID = 1,
-                            OrderDate = new DateTime(2018, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceTotal = 420m
-                        },
-                        new
-                        {
-                            OrderID = 18,
-                            CustomerID = 1,
-                            OrderDate = new DateTime(2018, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceTotal = 420m
-                        },
-                        new
-                        {
-                            OrderID = 19,
-                            CustomerID = 1,
-                            OrderDate = new DateTime(2018, 3, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceTotal = 420m
-                        },
-                        new
-                        {
-                            OrderID = 20,
-                            CustomerID = 1,
-                            OrderDate = new DateTime(2020, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceTotal = 420m
                         });
                 });
 
@@ -485,125 +347,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Migrations
                             ArticleID = 2,
                             Count = 1,
                             Number = 4
-                        },
-                        new
-                        {
-                            OrderID = 4,
-                            ArticleID = 4,
-                            Count = 1,
-                            Number = 5
-                        },
-                        new
-                        {
-                            OrderID = 5,
-                            ArticleID = 6,
-                            Count = 1,
-                            Number = 6
-                        },
-                        new
-                        {
-                            OrderID = 6,
-                            ArticleID = 1,
-                            Count = 1,
-                            Number = 7
-                        },
-                        new
-                        {
-                            OrderID = 7,
-                            ArticleID = 1,
-                            Count = 1,
-                            Number = 8
-                        },
-                        new
-                        {
-                            OrderID = 8,
-                            ArticleID = 1,
-                            Count = 1,
-                            Number = 9
-                        },
-                        new
-                        {
-                            OrderID = 9,
-                            ArticleID = 1,
-                            Count = 1,
-                            Number = 10
-                        },
-                        new
-                        {
-                            OrderID = 10,
-                            ArticleID = 1,
-                            Count = 1,
-                            Number = 11
-                        },
-                        new
-                        {
-                            OrderID = 11,
-                            ArticleID = 1,
-                            Count = 1,
-                            Number = 12
-                        },
-                        new
-                        {
-                            OrderID = 12,
-                            ArticleID = 1,
-                            Count = 1,
-                            Number = 13
-                        },
-                        new
-                        {
-                            OrderID = 13,
-                            ArticleID = 1,
-                            Count = 1,
-                            Number = 14
-                        },
-                        new
-                        {
-                            OrderID = 14,
-                            ArticleID = 1,
-                            Count = 1,
-                            Number = 15
-                        },
-                        new
-                        {
-                            OrderID = 15,
-                            ArticleID = 1,
-                            Count = 1,
-                            Number = 16
-                        },
-                        new
-                        {
-                            OrderID = 16,
-                            ArticleID = 1,
-                            Count = 1,
-                            Number = 17
-                        },
-                        new
-                        {
-                            OrderID = 17,
-                            ArticleID = 1,
-                            Count = 1,
-                            Number = 18
-                        },
-                        new
-                        {
-                            OrderID = 18,
-                            ArticleID = 1,
-                            Count = 1,
-                            Number = 19
-                        },
-                        new
-                        {
-                            OrderID = 19,
-                            ArticleID = 1,
-                            Count = 1,
-                            Number = 20
-                        },
-                        new
-                        {
-                            OrderID = 20,
-                            ArticleID = 1,
-                            Count = 1,
-                            Number = 21
                         });
                 });
 
