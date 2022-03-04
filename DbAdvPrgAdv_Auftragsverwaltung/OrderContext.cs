@@ -43,7 +43,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 
             #region Beispieldaten
             modelBuilder.Entity<City>().HasData(new City() { CityID = 1, PLZ = 9000, CityName = "St. Gallen" });
-            modelBuilder.Entity<City>().HasData(new City() { CityID = 2, PLZ = 9000, CityName = "Herisau" });
+            modelBuilder.Entity<City>().HasData(new City() { CityID = 2, PLZ = 9100, CityName = "Herisau" });
             modelBuilder.Entity<Customer>().HasData(new Customer() { CustomerID = 1, Vorname = "Hans", Name = "Muster", CityID = 1 });
             modelBuilder.Entity<Customer>().HasData(new Customer() { CustomerID = 2, Vorname = "Benjamin", Name = "Peter", CityID = 1 });
             modelBuilder.Entity<Customer>().HasData(new Customer() { CustomerID = 3, Vorname = "Leonie", Name = "Buser", CityID = 2 });
