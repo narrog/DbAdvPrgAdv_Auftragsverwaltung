@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,22 +11,69 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.ViewModel
 {
     public class YoyViewModel : INotifyPropertyChanged
     {
-        private List<string> windowFuncResult;
+        private List<Yoy> yoySales;
+        private List<Yoy> yoyArticlePer;
+        private List<Yoy> yoySum;
+        private List<YoyCustomer> yoyCustomers;
+        private List<Yoy> yoySumArticles;
         public YoyViewModel()
         {
-            var testList = new List<string>();
-            testList.Add("first");
-            testList.Add("Second");
-            WindowFuncResult = testList;
-            Close = new CommandClose();
+            using(var context = new OrderContext())
+            {
+                YoySales = context.SoldArticlesYoy();
+                YoyArticlePer = context.GetArticlesYoy();
+                YoySum = context.GetSumYoy();
+                YoyCustomers = context.GetSumCustomer();
+                YoySumArticles = context.GetSumArticles();
+                Close = new CommandClose();
+            }
         }
-        public List<string> WindowFuncResult
-        { 
-            get { return windowFuncResult; }
+        public List<Yoy> YoySales
+        {
+            get { return yoySales; }
             set
             {
-                windowFuncResult = value;
-                OnProptertyChanged(nameof(WindowFuncResult));
+                yoySales = value;
+                OnProptertyChanged(nameof(YoySales));
+            }
+        }
+        public List<Yoy> YoyArticlePer
+        {
+            get { return yoyArticlePer; }
+            set
+            {
+                yoyArticlePer = value;
+                OnProptertyChanged(nameof(YoyArticlePer));
+            }
+        }
+
+        public List<Yoy> YoySum
+        {
+            get { return yoySum; }
+            set
+            {
+                yoySum = value;
+                OnProptertyChanged(nameof(YoySum));
+            }
+        }
+
+        public List<YoyCustomer> YoyCustomers
+        {
+            get { return yoyCustomers; }
+            set
+            {
+                yoyCustomers = value;
+                OnProptertyChanged(nameof(YoyCustomers));
+            }
+        }
+
+        public List<Yoy> YoySumArticles
+        {
+            get { return yoySumArticles; }
+            set
+            {
+                yoySumArticles = value;
+                OnProptertyChanged(nameof(YoySumArticles));
             }
         }
         public ICommand Close { get; set; }
