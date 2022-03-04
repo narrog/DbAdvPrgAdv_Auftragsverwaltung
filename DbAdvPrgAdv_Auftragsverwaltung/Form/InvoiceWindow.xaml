@@ -7,21 +7,15 @@
         mc:Ignorable="d"
         Title="Rechnungen" Height="450" Width="1024">
     <Grid>
-        <Label Content="Name Kunde" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="TxtNameCustomer" Text="" HorizontalAlignment="Left" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Gruppe" HorizontalAlignment="Left" Margin="140,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.587,-0.919"/>
-        <ComboBox x:Name="CmbGroup" HorizontalAlignment="Left" Margin="145,40,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Artikel" HorizontalAlignment="Left" Margin="275,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.587,-0.919"/>
-        <ComboBox x:Name="CmbArticle" HorizontalAlignment="Left" Margin="280,40,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Datum von" HorizontalAlignment="Left" Margin="410,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.587,-0.919"/>
-        <DatePicker x:Name="DatePickerFrom" HorizontalAlignment="Left" Margin="415,40,0,0" VerticalAlignment="Top"/>
-        <Label Content="Datum bis" HorizontalAlignment="Left" Margin="555,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.587,-0.919"/>
-        <DatePicker x:Name="DatePickerTo" HorizontalAlignment="Left" Margin="560,40,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="CmdFilter" Content="Filter" HorizontalAlignment="Left" Margin="720,40,0,0" VerticalAlignment="Top" Width="65" Click="CmdFilter_OnClick"/>
 
-        <DataGrid x:Name="GrdInvoice"  ItemsSource="{Binding Invoices}" Margin="0,80,0,40" IsReadOnly="True" SelectionMode="Single">
+        <DataGrid x:Name="GrdInvoice"  ItemsSource="{Binding Invoices}" Margin="0,0,0,65" IsReadOnly="True" SelectionMode="Single" />
 
-        </DataGrid>
+        <Label Content="Datum von" HorizontalAlignment="Right" Margin="0,0,410,40" VerticalAlignment="Bottom" RenderTransformOrigin="0.587,-0.919"/>
+        <DatePicker x:Name="DatePickerFrom" HorizontalAlignment="Right" Margin="0,0,350,10" VerticalAlignment="Bottom"/>
+        <Label Content="Datum bis" HorizontalAlignment="Right" Margin="555,0,245,40" VerticalAlignment="Bottom" RenderTransformOrigin="0.587,-0.919"/>
+        <DatePicker x:Name="DatePickerTo" HorizontalAlignment="Right" Margin="0,0,180,10" VerticalAlignment="Bottom"/>
+
+        <Button x:Name="CmdFilter" Content="Filter" HorizontalAlignment="Right" Margin="0,40,85,10" VerticalAlignment="Bottom" Width="65" Click="CmdFilter_OnClick"/>
         <Button x:Name="CmdClose" Content="Schliessen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65" Click="CmdClose_OnClick"/>
 
     </Grid>

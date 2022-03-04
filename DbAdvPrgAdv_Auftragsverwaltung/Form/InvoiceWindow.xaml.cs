@@ -35,15 +35,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
                 Articles = context.Articles.ToList();
             }
 
-            // CmbBox füllen
-            foreach (var item in Groups)
-            {
-                CmbGroup.Items.Add((item.Name));
-            }
-            foreach (var item in Articles)
-            {
-                CmbArticle.Items.Add((item.Name));
-            }
 
             DatePickerFrom.DisplayDateEnd = DateTime.Now;
             DatePickerTo.SelectedDate = DateTime.Now;
@@ -65,11 +56,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
 
         private void CmdFilter_OnClick(object sender, RoutedEventArgs e)
         {
-            CustomerName = TxtNameCustomer.Text;
-            Group = CmbGroup.Text;
-            Article = CmbArticle.Text;
-            
-            
             DateTo = Convert.ToDateTime(DatePickerTo.Text);
 
             
@@ -90,10 +76,9 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
                 }
             }
             //Invoices.Clear();
-            Invoices = GetInvoices(name: CustomerName, group: Group, article: Article, dateFrom: DateFrom, dateTo: DateTo);
+            Invoices = GetInvoices(dateFrom: DateFrom, dateTo: DateTo);
             GrdInvoice.ItemsSource = Invoices;
 
-            //MessageBox.Show(CustomerName + " " + Group + " " + Article + " " + DateFrom + " " + DateTo + " ");
         }
 
         private void CmdClose_OnClick(object sender, RoutedEventArgs e)
@@ -131,7 +116,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
 
             return invoice;
         }
-        public List<Invoice> GetInvoices(DateTime dateFrom, DateTime dateTo, string name = "", string group = "", string article = "")
+        public List<Invoice> GetInvoices(DateTime dateFrom, DateTime dateTo)
         {
             var invoice = new List<Invoice>();
             using (var context = new OrderContext())
@@ -162,14 +147,5 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
 
             return invoice;
         }
-
-
-        // Tabelle befüllen
-        public void UpdateGrid()
-        {
-
-
-        }
-
     }
 }
