@@ -6,11 +6,16 @@ using System.Threading.Tasks;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Model
 {
-    public class OutputWindowFunc
+    public class Yoy
     {
-        public int Year { get; set; }
-        public int Quartal { get; set; }
+        public Yoy(string quartal, string kat, string yoy)
+        {
+            Quartal = quartal;
+            Kategorie = kat;
+            YoyPercent = yoy;
+        }
+        public string Quartal { get; set; }
         public string Kategorie { get; set; }
-        public double Yoy { get; set; }
+        public string YoyPercent { get; set; }
     }
 }

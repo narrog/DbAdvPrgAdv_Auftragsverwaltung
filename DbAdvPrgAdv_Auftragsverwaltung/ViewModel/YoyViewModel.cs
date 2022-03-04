@@ -11,22 +11,23 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.ViewModel
 {
     public class YoyViewModel : INotifyPropertyChanged
     {
-        private List<Order> windowFuncResult;
+        private List<Yoy> yoySales;
         public YoyViewModel()
         {
             using(var context = new OrderContext())
             {
-                WindowFuncResult = context.OrderYOY();
+                YoySales = context.Test();
+                context.Test();
                 Close = new CommandClose();
             }
         }
-        public List<Order> WindowFuncResult
+        public List<Yoy> YoySales
         { 
-            get { return windowFuncResult; }
+            get { return yoySales; }
             set
             {
-                windowFuncResult = value;
-                OnProptertyChanged(nameof(WindowFuncResult));
+                yoySales = value;
+                OnProptertyChanged(nameof(YoySales));
             }
         }
         public ICommand Close { get; set; }

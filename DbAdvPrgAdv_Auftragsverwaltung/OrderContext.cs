@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using DbAdvPrgAdv_Auftragsverwaltung.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -124,6 +125,41 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 
             #endregion
 
+        }
+
+        public List<Yoy> Test()
+        {
+            var list = new List<Yoy>();
+            using(var context = new OrderContext())
+            {
+                using (var command = context.Database.GetDbConnection().CreateCommand())
+                {
+                    command.CommandText =
+                        @";WITH Step1 AS (
+	                        SELECT CONCAT(YEAR(OrderDate),' Q',MONTH(OrderDate)/4  + 1) AS OrderQrt, 
+		                        Count(PriceTotal) AS TotalSales
+	                        FROM Orders
+	                        GROUP By OrderDate
+                        ),
+                        Step2 AS (
+	                        SELECT OrderQrt, 
+		                        TotalSales, LAG(TotalSales,4) OVER(ORDER BY OrderQrt) AS LastQuarterSales
+	                        FROM Step1
+                        )
+                        SELECT TOP 12 OrderQrt AS Quartal, TotalSales, 
+	                        FORMAT((TotalSales - LastQuarterSales)/LastQuarterSales,'P') AS Yoy
+                        FROM Step2 ORDER BY OrderQrt desc;";
+                    context.Database.OpenConnection();
+                    using (var result = command.ExecuteReader())
+                    {
+                        while (result.Read())
+                        {
+                            list.Add(new Yoy(result["Quartal"].ToString(), result["TotalSales"].ToString(), result["Yoy"].ToString()));
+                        }
+                    }
+                }
+            }
+            return list;
         }
 
         // CTE für TreeView

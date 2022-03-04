@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="YoyWindow" Height="450" Width="800">
     <Grid>
-        <DataGrid x:Name="GrdBalance" ItemsSource="{Binding WindowFuncResult}" Margin="0,0,0,40" IsReadOnly="True" SelectionMode="Single" />
+        <DataGrid x:Name="GrdBalance" ItemsSource="{Binding YoySales}" Margin="0,0,0,48" IsReadOnly="True" SelectionMode="Single" />
         <Button x:Name="CmdClose" Content="Schliessen" Command="{Binding Close}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65"/>
     </Grid>
 </Window>
