@@ -29,6 +29,11 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
                     TxtCity.Text = City.CityName;
                 }
             }
+
+            if (SelectedCustomer.CustomerID != 0)
+            {
+                PwdPassword.Password = SelectedCustomer.Password;
+            } 
         }
         public MainWindow Main { get; set; }
         private List<City> Cities { get; set; }
@@ -38,28 +43,60 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
         {
             using (var context = new OrderContext())
             {
-                if (TxtPLZ.Text == "" || TxtCity.Text == "")
+                try
                 {
-                    throw new ArgumentException("Bitte einen City eingeben");
-                }
-                else
-                {
-                    SelectedCustomer.City = context.Cities
-                        .FirstOrDefault(x => x.PLZ == SelectedCustomer.City.PLZ);
-                    if (SelectedCustomer.City == null)
+                    if (TxtPLZ.Text == "" || TxtCity.Text == "")
                     {
-                        SelectedCustomer.City = new City() { PLZ = Convert.ToInt32(TxtPLZ.Text), CityName = TxtCity.Text };
-                    }
-
-                    if (SelectedCustomer.CustomerID == 0)
-                    {
-                        context.Customers.Add(SelectedCustomer);
+                        throw new ArgumentException("Bitte einen Ort eingeben");
                     }
                     else
                     {
-                        context.Customers.Update(SelectedCustomer);
+                        // Kontrolle ob Ortschaft bereits vorhanden ist
+                        SelectedCustomer.City = context.Cities
+                            .FirstOrDefault(x => x.PLZ == SelectedCustomer.City.PLZ);
+                        // -> Falls nicht, wird eine neue Ortschaft erstellt
+                        if (SelectedCustomer.City == null)
+                        {
+                            SelectedCustomer.City = new City() { PLZ = Convert.ToInt32(TxtPLZ.Text), CityName = TxtCity.Text };
+                        }
+
+  
+
+                        if (SelectedCustomer.CustomerID == 0)
+                        {
+                            context.Customers.Add(SelectedCustomer);
+                        }
+                        else
+                        {
+                            SelectedCustomer = context.Customers.Find(SelectedCustomer.CustomerID);
+
+                            var existsCity = context.Cities
+                                .FirstOrDefault(x => x.PLZ == Convert.ToInt32(TxtPLZ.Text));
+                            if (existsCity == null)
+                            {
+                                SelectedCustomer.City = new City() { PLZ = Convert.ToInt32(TxtPLZ.Text), CityName = TxtCity.Text };
+                            }
+                            else
+                            {
+                                SelectedCustomer.CityID = existsCity.CityID;
+                            }
+
+                            SelectedCustomer.Name = TxtName.Text;
+                            SelectedCustomer.Vorname = TxtVorname.Text;
+                            SelectedCustomer.Adress = TxtAdress.Text;
+                            SelectedCustomer.Email = TxtEMail.Text;
+                            SelectedCustomer.Website = TxtWebsite.Text;
+                            SelectedCustomer.Password = PwdPassword.Password;
+
+                            context.Customers.Update(SelectedCustomer);
+                        }
                     }
                 }
+                catch (ArgumentException arg)
+                {
+                    MessageBox.Show(arg.Message);
+                }
+                
                 context.SaveChanges();
             }
             Main.UpdateGrid();
