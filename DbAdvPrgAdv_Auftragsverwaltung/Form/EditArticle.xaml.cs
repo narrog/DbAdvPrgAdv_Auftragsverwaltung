@@ -45,6 +45,9 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
                 double Price;
                 var PriceParsed = double.TryParse(TxtPrice.Text, out Price);
                 if (CmbGroup.Text != "" && PriceParsed ) {
+                    var groupID = Groups
+                        .FirstOrDefault(x => x.Name.Equals(CmbGroup.Text))
+                        .GroupID;
                     using (var context = new OrderContext())
                     {
                         SelectedArticle.Group = context.Groups
@@ -55,6 +58,10 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
                         }
                         else
                         {
+                            SelectedArticle = context.Articles.Find(SelectedArticle.ArticleID);
+                            SelectedArticle.GroupID = groupID;
+                            SelectedArticle.Name = TxtName.Text;
+                            SelectedArticle.Price = Convert.ToDouble(TxtPrice.Text);
                             context.Articles.Update(SelectedArticle);
                         }
                         context.SaveChanges();
@@ -66,7 +73,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
                 {
                     if (!PriceParsed)
                     {
-                        throw new ArgumentException("Bitte Price als Zahl eingeben");
+                        throw new ArgumentException("Bitte Preis als Zahl eingeben");
                     }
                     else {
                         throw new ArgumentException("Bitte Kategorie auswählen.");
