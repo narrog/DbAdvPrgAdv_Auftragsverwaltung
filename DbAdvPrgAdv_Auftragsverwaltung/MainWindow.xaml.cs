@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Castle.Core.Internal;
 using DbAdvPrgAdv_Auftragsverwaltung.Form;
 using DbAdvPrgAdv_Auftragsverwaltung.Model;
 using Microsoft.EntityFrameworkCore;
@@ -76,7 +77,23 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             }
             
         }
+        private void CmdSearchCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            var searchList = new List<Customer>();
 
+            using (var context = new OrderContext())
+            {
+                foreach (var item in context.Customers)
+                {
+                    if (item.Name.Contains(TxtCustomerSearch.Text) || item.Vorname.Contains(TxtCustomerSearch.Text))
+                    {
+                        searchList.Add(item);
+                    }
+                }
+            }
+            GrdCustomer.ItemsSource = searchList;
+        }
+        
         /* Article */
         private void CmdCreateArticle_OnClick(object sender, RoutedEventArgs e) {
             var windowGroup = new EditArticle(this, new Article() {Group = new Group()});
@@ -113,6 +130,22 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
                 MessageBox.Show("Bitte Artikel auswählen");
             }
             
+        }
+        private void CmdSearchArticle_Click(object sender, RoutedEventArgs e)
+        {
+            var searchList = new List<Article>();
+
+            using (var context = new OrderContext())
+            {
+                foreach (var item in context.Articles)
+                {
+                    if (item.Name.Contains(TxtArticleSearch.Text))
+                    {
+                        searchList.Add(item);
+                    }
+                }
+            }
+            GrdArticle.ItemsSource = searchList;
         }
 
         /* Article-Groups */
@@ -152,7 +185,24 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
                 MessageBox.Show("Bitte Gruppe auswählen");
             }
         }
+        private void CmdSearchArticleGroup_Click(object sender, RoutedEventArgs e)
+        {
+            var searchList = new List<Group>();
 
+            using (var context = new OrderContext())
+            {
+                foreach (var item in context.Groups)
+                {
+                    if (item.Name.Contains(TxtGroupSearch.Text))
+                    {
+                        searchList.Add(item);
+                    }
+                }
+            }
+            GrdArticleGroup.ItemsSource = searchList;
+        }
+
+        
         private void CmdTreeViewGroup_OnClick(object sender, RoutedEventArgs e) {
             var windowTree = new TreeViewWindow();
             windowTree.Show();
@@ -190,6 +240,39 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             else
             {
                 MessageBox.Show("Bitte Bestellung auswählen");
+            }
+            
+        }
+        private void CmdSearchOrder_Click(object sender, RoutedEventArgs e)
+        {
+            var searchList = new List<Order>();
+            int searchID;
+            
+            using (var context = new OrderContext())
+            {
+                if (TxtOrderSearch.Text.IsNullOrEmpty())
+                {
+                    GrdOrder.ItemsSource = context.Orders.Include("Customer").Include("Positions").ToList();
+                }
+                else
+                {
+                    if (int.TryParse(TxtOrderSearch.Text, out searchID))
+                    {
+                        foreach (var item in context.Orders)
+                        {
+                            if (item.OrderID == Convert.ToInt32(TxtOrderSearch.Text))
+                            {
+                                searchList.Add(item);
+                            }
+                        }
+                        GrdOrder.ItemsSource = searchList;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Bitte gültige Zahl eingaben");
+                    }
+                }
+                
             }
             
         }
