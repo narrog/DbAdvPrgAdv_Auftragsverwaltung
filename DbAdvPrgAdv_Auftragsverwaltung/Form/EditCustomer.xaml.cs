@@ -41,11 +41,11 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
 
         private void CmdSave_Click(object sender, RoutedEventArgs e)
         {
-            using (var context = new OrderContext())
-            {
                 try
                 {
-                    int PLZ;
+                    using (var context = new OrderContext())
+                    {
+                        int PLZ;
                     var PlzParsed = Int32.TryParse(TxtPLZ.Text, out PLZ);
                     if (!PlzParsed || TxtPLZ.Text.Length < 4)
                     {
@@ -97,16 +97,17 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
                             context.Customers.Update(SelectedCustomer);
                         }
                     }
+
+                    context.SaveChanges();
+                    }
+                    Main.UpdateGrid();
+                    Close();
                 }
                 catch (ArgumentException arg)
                 {
                     MessageBox.Show(arg.Message);
                 }
 
-                context.SaveChanges();
-            }
-            Main.UpdateGrid();
-            Close();
         }
         private void CmdClose_Click(object sender, RoutedEventArgs e)
         {
