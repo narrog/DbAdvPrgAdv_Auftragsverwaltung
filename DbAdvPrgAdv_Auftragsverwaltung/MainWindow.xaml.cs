@@ -58,14 +58,23 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
 
         private void CmdDeleteCustomer_Click(object sender, RoutedEventArgs e)
         {
-            using (var context = new OrderContext())
+            var selected = (Customer)GrdCustomer.SelectedItem;
+
+            if (selected != null)
             {
-                var selected = (Customer)GrdCustomer.SelectedItem;
-                var toDelete = context.Customers.Find(selected.CustomerID);
-                context.Customers.Remove(toDelete);
-                context.SaveChanges();
-                UpdateGrid();
+                using (var context = new OrderContext())
+                {
+                    var toDelete = context.Customers.Find(selected.CustomerID);
+                    context.Customers.Remove(toDelete);
+                    context.SaveChanges();
+                    UpdateGrid();
+                }
             }
+            else
+            {
+                MessageBox.Show("Bitte Kunde auswählen");
+            }
+            
         }
 
         /* Article */
@@ -87,13 +96,23 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         }
 
         private void CmdDeleteArticle_OnClick(object sender, RoutedEventArgs e) {
-            using (var context = new OrderContext()) {
-                var selected = (Article)GrdArticle.SelectedItem;
-                var toDelete = context.Articles.Find(selected.ArticleID);
-                context.Articles.Remove(toDelete);
-                context.SaveChanges();
-                UpdateGrid();
+            var selected = (Article)GrdArticle.SelectedItem;
+
+            if (selected != null)
+            {
+                using (var context = new OrderContext())
+                {
+                    var toDelete = context.Articles.Find(selected.ArticleID);
+                    context.Articles.Remove(toDelete);
+                    context.SaveChanges();
+                    UpdateGrid();
+                }
             }
+            else
+            {
+                MessageBox.Show("Bitte Artikel auswählen");
+            }
+            
         }
 
         /* Article-Groups */
@@ -116,12 +135,21 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         }
 
         private void CmdDeleteArticleGroup_OnClick(object sender, RoutedEventArgs e) {
-            using (var context = new OrderContext()) {
-                var selected = (Group)GrdArticleGroup.SelectedItem;
-                var toDelete = context.Groups.Find(selected.GroupID);
-                context.Groups.Remove(toDelete);
-                context.SaveChanges();
-                UpdateGrid();
+            var selected = (Group)GrdArticleGroup.SelectedItem;
+
+            if (selected != null)
+            {
+                using (var context = new OrderContext())
+                {
+                    var toDelete = context.Groups.Find(selected.GroupID);
+                    context.Groups.Remove(toDelete);
+                    context.SaveChanges();
+                    UpdateGrid();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Bitte Gruppe auswählen");
             }
         }
 
@@ -143,22 +171,27 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
                 windowCustomer.Show();
             }
             else {
-                MessageBox.Show("Bitte Gruppe auswählen");
+                MessageBox.Show("Bitte Bestellung auswählen");
             }
-        }
-
-        private void CmdSearchOrder_OnClick(object sender, RoutedEventArgs e) {
-            throw new NotImplementedException();
         }
 
         private void CmdDeleteOrder_OnClick(object sender, RoutedEventArgs e) {
-            using (var context = new OrderContext()) {
-                var selected = (Order)GrdOrder.SelectedItem;
-                var toDelete = context.Orders.Find(selected.OrderID);
-                context.Orders.Remove(toDelete);
-                context.SaveChanges();
-                UpdateGrid();
+            var selected = (Order)GrdOrder.SelectedItem;
+            if (selected != null)
+            {
+                using (var context = new OrderContext())
+                {
+                    var toDelete = context.Orders.Find(selected.OrderID);
+                    context.Orders.Remove(toDelete);
+                    context.SaveChanges();
+                    UpdateGrid();
+                }
             }
+            else
+            {
+                MessageBox.Show("Bitte Bestellung auswählen");
+            }
+            
         }
         private void CmdShowBalance_OnClick(object sender, RoutedEventArgs e)
         {

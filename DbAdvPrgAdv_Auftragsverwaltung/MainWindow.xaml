@@ -23,7 +23,7 @@
                     <Button x:Name="CmdDeleteOrder" Content="Löschen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65" Click="CmdDeleteOrder_OnClick"/>
                     <Button x:Name="CmdEditOrder" Content="Bearbeiten" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65" Click="CmdEditOrder_OnClick"/>
                     <Button x:Name="CmdCreateOrder" Content="Erstellen" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="65" Click="CmdCreateOrder_OnClick"/>
-                    <Button x:Name="CmdSearchOrder" Content="Suchen" HorizontalAlignment="Right" Margin="0,0,235,10" VerticalAlignment="Bottom" Width="65" Click="CmdSearchOrder_OnClick"/>
+                    <Button x:Name="CmdSearchOrder" Content="Suchen" HorizontalAlignment="Right" Margin="0,0,235,10" VerticalAlignment="Bottom" Width="65"/>
                     <Button x:Name="CmdShowBalance" Content="Bilanz" HorizontalAlignment="Right" Margin="0,0,310,10" VerticalAlignment="Bottom" Width="65" Click="CmdShowBalance_OnClick"/>
                     <Button x:Name="CmdShowInvoice" Content="Rechnungen" HorizontalAlignment="Right" Margin="0,0,385,10" VerticalAlignment="Bottom" Width="75" Click="CmdShowInvoice_OnClick"/>
                 </Grid>
