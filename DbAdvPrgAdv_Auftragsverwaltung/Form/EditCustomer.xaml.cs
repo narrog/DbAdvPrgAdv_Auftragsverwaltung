@@ -33,7 +33,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
             if (SelectedCustomer.CustomerID != 0)
             {
                 PwdPassword.Password = SelectedCustomer.Password;
-            } 
+            }
         }
         public MainWindow Main { get; set; }
         private List<City> Cities { get; set; }
@@ -45,7 +45,13 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
             {
                 try
                 {
-                    if (TxtPLZ.Text == "" || TxtCity.Text == "")
+                    int PLZ;
+                    var PlzParsed = Int32.TryParse(TxtPLZ.Text, out PLZ);
+                    if (!PlzParsed || TxtPLZ.Text.Length < 4)
+                    {
+                        throw new ArgumentException("Bitte PLZ überprüfen");
+                    }
+                    else if (PlzParsed && (TxtPLZ.Text == "" || TxtCity.Text == ""))
                     {
                         throw new ArgumentException("Bitte einen Ort eingeben");
                     }
@@ -60,7 +66,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
                             SelectedCustomer.City = new City() { PLZ = Convert.ToInt32(TxtPLZ.Text), CityName = TxtCity.Text };
                         }
 
-  
+
 
                         if (SelectedCustomer.CustomerID == 0)
                         {
@@ -96,7 +102,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
                 {
                     MessageBox.Show(arg.Message);
                 }
-                
+
                 context.SaveChanges();
             }
             Main.UpdateGrid();
