@@ -29,6 +29,11 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
                     TxtCity.Text = City.CityName;
                 }
             }
+
+            if (SelectedCustomer.CustomerID != 0)
+            {
+                PwdPassword.Password = SelectedCustomer.Password;
+            }
         }
         public MainWindow Main { get; set; }
         private List<City> Cities { get; set; }
@@ -36,34 +41,73 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
 
         private void CmdSave_Click(object sender, RoutedEventArgs e)
         {
-            using (var context = new OrderContext())
-            {
-                if (TxtPLZ.Text == "" || TxtCity.Text == "")
+                try
                 {
-                    throw new ArgumentException("Bitte einen City eingeben");
-                }
-                else
-                {
-                    SelectedCustomer.City = context.Cities
-                        .FirstOrDefault(x => x.PLZ == SelectedCustomer.City.PLZ);
-                    if (SelectedCustomer.City == null)
+                    using (var context = new OrderContext())
                     {
-                        SelectedCustomer.City = new City() { PLZ = Convert.ToInt32(TxtPLZ.Text), CityName = TxtCity.Text };
+                        int PLZ;
+                    var PlzParsed = Int32.TryParse(TxtPLZ.Text, out PLZ);
+                    if (!PlzParsed || TxtPLZ.Text.Length < 4)
+                    {
+                        throw new ArgumentException("Bitte PLZ überprüfen");
                     }
-
-                    if (SelectedCustomer.CustomerID == 0)
+                    else if (PlzParsed && (TxtPLZ.Text == "" || TxtCity.Text == ""))
                     {
-                        context.Customers.Add(SelectedCustomer);
+                        throw new ArgumentException("Bitte einen Ort eingeben");
                     }
                     else
                     {
-                        context.Customers.Update(SelectedCustomer);
+                        // Kontrolle ob Ortschaft bereits vorhanden ist
+                        SelectedCustomer.City = context.Cities
+                            .FirstOrDefault(x => x.PLZ == SelectedCustomer.City.PLZ);
+                        // -> Falls nicht, wird eine neue Ortschaft erstellt
+                        if (SelectedCustomer.City == null)
+                        {
+                            SelectedCustomer.City = new City() { PLZ = Convert.ToInt32(TxtPLZ.Text), CityName = TxtCity.Text };
+                        }
+
+
+
+                        if (SelectedCustomer.CustomerID == 0)
+                        {
+                            context.Customers.Add(SelectedCustomer);
+                        }
+                        else
+                        {
+                            SelectedCustomer = context.Customers.Find(SelectedCustomer.CustomerID);
+
+                            var existsCity = context.Cities
+                                .FirstOrDefault(x => x.PLZ == Convert.ToInt32(TxtPLZ.Text));
+                            if (existsCity == null)
+                            {
+                                SelectedCustomer.City = new City() { PLZ = Convert.ToInt32(TxtPLZ.Text), CityName = TxtCity.Text };
+                            }
+                            else
+                            {
+                                SelectedCustomer.CityID = existsCity.CityID;
+                            }
+
+                            SelectedCustomer.Name = TxtName.Text;
+                            SelectedCustomer.Vorname = TxtVorname.Text;
+                            SelectedCustomer.Adress = TxtAdress.Text;
+                            SelectedCustomer.Email = TxtEMail.Text;
+                            SelectedCustomer.Website = TxtWebsite.Text;
+                            SelectedCustomer.Password = PwdPassword.Password;
+
+                            context.Customers.Update(SelectedCustomer);
+                        }
                     }
+
+                    context.SaveChanges();
+                    }
+                    Main.UpdateGrid();
+                    Close();
                 }
-                context.SaveChanges();
-            }
-            Main.UpdateGrid();
-            Close();
+                catch (ArgumentException arg)
+                {
+                    MessageBox.Show(arg.Message);
+                }
+
         }
         private void CmdClose_Click(object sender, RoutedEventArgs e)
         {

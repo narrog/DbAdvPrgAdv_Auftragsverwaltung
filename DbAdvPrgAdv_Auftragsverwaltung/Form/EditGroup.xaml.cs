@@ -34,18 +34,22 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
             }
 
             // CmbBox füllen & falls nötig: übergeordnete Kategorie auswählen
+            CmbGroupParent.Items.Add("");
             foreach (var item in Groups) {
                 CmbGroupParent.Items.Add((item.Name));
                 if (item.ParentID == SelectedGroup.ParentID && item.ParentID != 0)
                 {
-                    CmbGroupParent.Text = Groups.FirstOrDefault(x => x.GroupID.Equals(SelectedGroup.ParentID)).Name;
+                    ParentName = Groups.FirstOrDefault(x => x.GroupID.Equals(SelectedGroup.ParentID)).Name;
                 }
             }
+            // Entfernen des aktuellen Items (Verhindert, dass Gruppe 1 die ParentGruppe 1 bekommt)
+            CmbGroupParent.Items.Remove(SelectedGroup.Name);
         }
 
         public MainWindow Main { get; set; }
         public Group SelectedGroup { get; set; }
         public List<Group> Groups { get; set; }
+        public string ParentName { get; set; }
 
         private void CmdAbortGroup_Click(object sender, RoutedEventArgs e)
         {
@@ -56,44 +60,56 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
 
         private void CmdSaveGroup_Click(object sender, RoutedEventArgs e)
         {
-            // überprüft, ob eine übergeordnete Gruppe ausgewählt wurde, falls nicht, wird ParentID = 0
-            int parentID;
-            if (CmbGroupParent.Text != "") {
-                parentID = Groups
-                    .FirstOrDefault(x => x.Name.Equals(CmbGroupParent.Text))
-                    .GroupID;
-            }
-            else {
-                parentID = 0;
-            }
-
-            using (var context = new OrderContext())
+            try
             {
-                // neuen Datensatz erstellen
-                if (SelectedGroup.GroupID == 0)
+                // überprüft, ob eine übergeordnete Gruppe ausgewählt wurde, falls nicht, wird ParentID = 0
+                int parentID;
+                if (CmbGroupParent.Text != "")
                 {
-                    var newGroup = new Group() { Name = TxtNameGroup.Text, ParentID = parentID };
-                    context.Groups.Add(newGroup);
+                    parentID = Groups
+                        .FirstOrDefault(x => x.Name.Equals(CmbGroupParent.Text))
+                        .GroupID;
+                    int grandParentID = Convert.ToInt32(Groups
+                        .FirstOrDefault(x => x.GroupID.Equals(parentID))
+                        .ParentID);
+                    if (grandParentID > 0)
+                    {
+                         throw new ArgumentException("Bitte Gruppe aus oberster Ebene wählen");
+                    }
                 }
-                // bestehnden Datensatz bearbeiten
                 else
                 {
-                    foreach (var item in Groups)
-                    {
-                        if (CmbGroupParent.Text == item.Name)
-                        {
-                            SelectedGroup.Parent = item;
-                        }
-                    }
-                    context.Groups.Update(SelectedGroup);
+                    parentID = 0;
                 }
-                // Datensatz speichern
-                context.SaveChanges();
-            }
-            
-            Main.UpdateGrid();
-            Close();
-        }
 
+                using (var context = new OrderContext())
+                {
+                    // neuen Datensatz erstellen
+                    if (SelectedGroup.GroupID == 0)
+                    {
+                        var newGroup = new Group() { Name = TxtNameGroup.Text, ParentID = parentID };
+                        context.Groups.Add(newGroup);
+                    }
+
+                    // bestehnden Datensatz bearbeiten
+                    else
+                    {
+                        SelectedGroup = context.Groups.Find(SelectedGroup.GroupID);
+
+                        SelectedGroup.ParentID = parentID;
+                        context.Groups.Update(SelectedGroup);
+                    }
+                    // Datensatz speichern
+                    context.SaveChanges();
+                }
+
+                Main.UpdateGrid();
+                Close();
+            }
+            catch (ArgumentException arg)
+            {
+                MessageBox.Show(arg.Message);
+            }
+        }
     }
 }

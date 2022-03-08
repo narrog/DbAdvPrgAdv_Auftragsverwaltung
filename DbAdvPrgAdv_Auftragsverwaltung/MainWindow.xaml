@@ -6,12 +6,34 @@
         xmlns:local="clr-namespace:DbAdvPrgAdv_Auftragsverwaltung"
         mc:Ignorable="d"
         Title="Ordersverwaltung" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="MyWaterMarkStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <Border Background="White" BorderBrush="#FF7D8683" BorderThickness="1" Height="25" />
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Center" />
+                            <Label Margin="5,0,0,0" x:Name="WaterMarkLabel" Content="{TemplateBinding Tag}" Height="25" VerticalAlignment="Center"
+                                   Visibility="Collapsed" Foreground="Gray" FontFamily="Segoe UI"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Text" Value=""/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Visibility" TargetName="WaterMarkLabel" Value="Visible"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="DimGray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="63*"/>
-            <ColumnDefinition Width="142*"/>
-            <ColumnDefinition Width="595*"/>
-        </Grid.ColumnDefinitions>
         <TabControl Grid.ColumnSpan="3" Margin="0,0,0,40">
             <TabItem Header="Kunden">
                 <Grid Background="#FFE5E5E5">
@@ -19,7 +41,8 @@
                     <Button x:Name="CmdDeleteCustomer" Content="Löschen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65" Click="CmdDeleteCustomer_Click"/>
                     <Button x:Name="CmdEditCustomer" Content="Bearbeiten" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65" Click="CmdEditCustomer_Click"/>
                     <Button x:Name="CmdCreateCustomer" Content="Erstellen" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="65" Click="CmdCreateCustomer_Click"/>
-                    <Button x:Name="CmdSearchCustomer" Content="Suchen" HorizontalAlignment="Right" Margin="0,0,235,10" VerticalAlignment="Bottom" Width="65"/>
+                    <Button x:Name="CmdSearchCustomer" Content="Suchen" HorizontalAlignment="left" Margin="140,0,0,10" VerticalAlignment="Bottom" Width="65" Click="CmdSearchCustomer_Click"/>
+                    <TextBox x:Name="TxtCustomerSearch" Style="{StaticResource MyWaterMarkStyle}" Tag="Name" HorizontalAlignment="Left" Margin="10,0,0,10" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120"></TextBox>
                 </Grid>
             </TabItem>
             <TabItem Header="Bestellungen">
@@ -28,7 +51,10 @@
                     <Button x:Name="CmdDeleteOrder" Content="Löschen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65" Click="CmdDeleteOrder_OnClick"/>
                     <Button x:Name="CmdEditOrder" Content="Bearbeiten" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65" Click="CmdEditOrder_OnClick"/>
                     <Button x:Name="CmdCreateOrder" Content="Erstellen" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="65" Click="CmdCreateOrder_OnClick"/>
-                    <Button x:Name="CmdSearchOrder" Content="Suchen" HorizontalAlignment="Right" Margin="0,0,235,10" VerticalAlignment="Bottom" Width="65" Click="CmdSearchOrder_OnClick"/>
+                    <Button x:Name="CmdShowBalance" Content="Bilanz" HorizontalAlignment="Right" Margin="0,0,235,10" VerticalAlignment="Bottom" Width="65" Click="CmdShowBalance_OnClick"/>
+                    <Button x:Name="CmdShowInvoice" Content="Rechnungen" HorizontalAlignment="Right" Margin="0,0,310,10" VerticalAlignment="Bottom" Width="75" Click="CmdShowInvoice_OnClick"/>
+                    <Button x:Name="CmdSearchOrder" Content="Suchen" HorizontalAlignment="Left" Margin="140,0,0,10" VerticalAlignment="Bottom" Width="65" Click="CmdSearchOrder_Click"/>
+                    <TextBox x:Name="TxtOrderSearch" Style="{StaticResource MyWaterMarkStyle}" Tag="Bestell-Nr." HorizontalAlignment="Left" Margin="10,0,470,10" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Artikel">
@@ -37,7 +63,8 @@
                     <Button x:Name="CmdDeleteArticle" Content="Löschen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65" Click="CmdDeleteArticle_OnClick"/>
                     <Button x:Name="CmdEditArticle" Content="Bearbeiten" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65" Click="CmdEditArticle_OnClick"/>
                     <Button x:Name="CmdCreateArticle" Content="Erstellen" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="65" Click="CmdCreateArticle_OnClick" />
-                    <Button x:Name="CmdSearchArticle" Content="Suchen" HorizontalAlignment="Right" Margin="0,0,235,10" VerticalAlignment="Bottom" Width="65"/>
+                    <Button x:Name="CmdSearchArticle" Content="Suchen" HorizontalAlignment="Left" Margin="140,0,0,10" VerticalAlignment="Bottom" Width="65" Click="CmdSearchArticle_Click"/>
+                    <TextBox x:Name="TxtArticleSearch" Style="{StaticResource MyWaterMarkStyle}" Tag="Artikel" HorizontalAlignment="Left" Margin="10,0,0,10" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Gruppen">
@@ -46,11 +73,13 @@
                     <Button x:Name="CmdDeleteArticleGroup" Content="Löschen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="65" Click="CmdDeleteArticleGroup_OnClick"/>
                     <Button x:Name="CmdEditArticleGroup" Content="Bearbeiten" HorizontalAlignment="Right" Margin="0,0,85,10" VerticalAlignment="Bottom" Width="65" Click="CmdEditArticleGroup_OnClick" />
                     <Button x:Name="CmdCreateArticleGroup" Content="Erstellen" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="65" Click="CmdCreateArticleGroup_OnClick"/>
-                    <Button x:Name="CmdSearchArticleGroup" Content="Suchen" HorizontalAlignment="Right" Margin="0,0,235,10" VerticalAlignment="Bottom" Width="65" />
-                    <Button x:Name="CmdTreeViewGroup" Content="TreeView" HorizontalAlignment="Right" Margin="0,0,310,10" VerticalAlignment="Bottom" Width="65" Click="CmdTreeViewGroup_OnClick"/>
+                    <Button x:Name="CmdTreeViewGroup" Content="TreeView" HorizontalAlignment="Right" Margin="0,0,235,10" VerticalAlignment="Bottom" Width="65" Click="CmdTreeViewGroup_OnClick"/>
+                    <Button x:Name="CmdSearchArticleGroup" Content="Suchen" HorizontalAlignment="left" Margin="140,0,0,10" VerticalAlignment="Bottom" Width="65" Click="CmdSearchArticleGroup_Click" />
+                    <TextBox x:Name="TxtGroupSearch" Style="{StaticResource MyWaterMarkStyle}" Tag="Gruppe" HorizontalAlignment="Left" Margin="10,0,385,10" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120"/>
                 </Grid>
             </TabItem>
         </TabControl>
+        
 
     </Grid>
 </Window>
