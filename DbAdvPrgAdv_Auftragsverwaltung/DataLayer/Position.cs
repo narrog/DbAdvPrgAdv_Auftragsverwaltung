@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DbAdvPrgAdv_Auftragsverwaltung.Model
+namespace DbAdvPrgAdv_Auftragsverwaltung
 {
     public class Position
     {

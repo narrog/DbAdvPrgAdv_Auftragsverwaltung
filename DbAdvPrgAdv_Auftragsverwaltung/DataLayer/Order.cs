@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DbAdvPrgAdv_Auftragsverwaltung.Model
+namespace DbAdvPrgAdv_Auftragsverwaltung
 {
     public class Order
     {

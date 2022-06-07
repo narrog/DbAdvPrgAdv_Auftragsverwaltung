@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
-namespace DbAdvPrgAdv_Auftragsverwaltung.Model
-{ 
-    public class Customer 
+namespace DbAdvPrgAdv_Auftragsverwaltung
+{
+    public class Customer
     {
         public int CustomerID { get; set; }
         public string Name { get; set; }
@@ -20,7 +21,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Model
         public virtual City City { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
-        public DbAdvPrgAdv_Auftragsverwaltung.Customer LoadOne(int id)
+        public Customer LoadOne(int id)
         {
             using (var context = new OrderContext())
             {

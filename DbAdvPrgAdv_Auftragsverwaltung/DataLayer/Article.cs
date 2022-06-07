@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DbAdvPrgAdv_Auftragsverwaltung.Model
+namespace DbAdvPrgAdv_Auftragsverwaltung
 {
     public class Article
     {
