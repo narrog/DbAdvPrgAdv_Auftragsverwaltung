@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using DbAdvPrgAdv_Auftragsverwaltung.DataLayer;
+using DbAdvPrgAdv_Auftragsverwaltung.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung
 {
-    class OrderContext : DbContext, IRepositoryBase
+    class OrderContext : DbContext
     {
         // DBs "erstellen"
         public DbSet<Article> Articles { get; set; }
