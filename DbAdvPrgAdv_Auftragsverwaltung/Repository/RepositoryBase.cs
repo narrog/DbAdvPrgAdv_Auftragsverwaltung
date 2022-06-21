@@ -41,17 +41,44 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
 
         public List<T> GetAll(string whereCondition, Dictionary<string, object> parameterValues)
         {
-            throw new NotImplementedException();
+            using (var conn = new SqlConnection(this.ConnectionString))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = $"select * from @table where {whereCondition} like '%{parameterValues}%'";
+                    cmd.Parameters.Add("@table", SqlDbType.NVarChar).Value = this.TableName;
+                    return (List<T>)cmd.ExecuteScalar();
+                }
+            }
         }
 
         public List<T> GetAll()
         {
-            throw new NotImplementedException();
+            using (var conn = new SqlConnection(this.ConnectionString))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = $"select * from @table";
+                    cmd.Parameters.Add("@table", SqlDbType.NVarChar).Value = this.TableName;
+                    return (List<T>)cmd.ExecuteScalar();
+                }
+            }
         }
 
         public long Count(string whereCondition, Dictionary<string, object> parameterValues)
         {
-            throw new NotImplementedException();
+            using (var conn = new SqlConnection(this.ConnectionString))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = $"select count(*) from @table where {whereCondition} like '%{parameterValues}%'";
+                    cmd.Parameters.Add("@table", SqlDbType.NVarChar).Value = this.TableName;
+                    return (long)cmd.ExecuteScalar();
+                }
+            }
         }
 
         public long Count()
