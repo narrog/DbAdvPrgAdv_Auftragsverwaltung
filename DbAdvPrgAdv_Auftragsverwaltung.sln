@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31911.196
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbAdvPrgAdv_Auftragsverwaltung", "DbAdvPrgAdv_Auftragsverwaltung\DbAdvPrgAdv_Auftragsverwaltung.csproj", "{D3B4BFA0-62EB-4DA1-8CE2-DC447CC5FC39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbAdvPrgAdv_Auftragsverwaltung", "DbAdvPrgAdv_Auftragsverwaltung\DbAdvPrgAdv_Auftragsverwaltung.csproj", "{D3B4BFA0-62EB-4DA1-8CE2-DC447CC5FC39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbAdvPrgAdv_Auftragsverwaltung.Testing", "DbAdvPrgAdv_Auftragsverwaltung.Testing\DbAdvPrgAdv_Auftragsverwaltung.Testing.csproj", "{B82BB59F-6CA4-4935-9FA5-2242BFB76EBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{D3B4BFA0-62EB-4DA1-8CE2-DC447CC5FC39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3B4BFA0-62EB-4DA1-8CE2-DC447CC5FC39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3B4BFA0-62EB-4DA1-8CE2-DC447CC5FC39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B82BB59F-6CA4-4935-9FA5-2242BFB76EBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B82BB59F-6CA4-4935-9FA5-2242BFB76EBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B82BB59F-6CA4-4935-9FA5-2242BFB76EBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B82BB59F-6CA4-4935-9FA5-2242BFB76EBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
