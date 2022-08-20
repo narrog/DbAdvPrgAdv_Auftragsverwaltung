@@ -1,6 +1,6 @@
-namespace DbAdvPrgAdv_Auftragsverwaltung.Testing
+namespace DbAdvProgAdv_Test2
 {
-    public class Person_Test
+    public class UnitTest1
     {
         [Fact]
         public void Test1()
