@@ -64,6 +64,15 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
                     {
                         throw new ArgumentException("Bitte Webseite überprüfen");
                     }
+
+                    else if (RegEx_Password(PwdPassword.Password) == false)
+                    {
+                        throw new ArgumentException("Passwort-Richtlinien \r\n" +
+                            "min. 8 Zeichen \r\n" +
+                            "min. 1 Buchstaben \r\n" +
+                            "min. 1 Zahl \r\n" +
+                            "min. 1 Sonderzeichen");
+                    }
                     else
                     {
                         // Kontrolle ob Ortschaft bereits vorhanden ist
@@ -142,7 +151,28 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
             }
             else
             {
-                string pattern = @"^(http|https|ftp|)\://|[a-zA-Z0-9\-\.]+\.[a-zA-Z](:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*[^\.\,\)\(\s]$";
+                string pattern = @"^(http|https|)\://|[a-zA-Z0-9\-\.]+\.[a-zA-Z](:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*[^\.\,\)\(\s]$";
+
+                Regex rgx = new Regex(pattern, RegexOptions.IgnoreCase);
+                MatchCollection matches = rgx.Matches(input);
+
+                if (matches.Count > 0)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+        private bool RegEx_Password(string input)
+        {
+            if (input == "")
+            {
+                return false;
+            }
+            else
+            {
+                string pattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
 
                 Regex rgx = new Regex(pattern, RegexOptions.IgnoreCase);
                 MatchCollection matches = rgx.Matches(input);

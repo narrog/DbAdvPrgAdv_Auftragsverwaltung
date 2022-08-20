@@ -6,6 +6,7 @@ namespace DbAdvPrgAdv_Test
 {
     public class EditCustomer_Test
     {
+        /**** TESTS REGEX MAIL PASSED ****/
         //[Fact]
         //public void AddValidMail1_Test()
         //{
@@ -32,6 +33,9 @@ namespace DbAdvPrgAdv_Test
         //        output.Should().BeSameAs(true);
         //    }
         //}
+
+
+        /**** TESTS REGEX MAIL FAIL ****/
         //[Fact]
         //public void AddInvalidMail1_Test()
         //{
@@ -73,6 +77,7 @@ namespace DbAdvPrgAdv_Test
         //}
 
 
+        /**** TESTS REGEX WEB PASSED ****/
         //[Fact]
         //public void AddHTTPSWeb_Test()
         //{
@@ -125,7 +130,6 @@ namespace DbAdvPrgAdv_Test
         //        output.Should().BeSameAs(true);
         //    }
         //}
-
         //[Fact]
         //public void Add_WebWithParam_Test()
         //{
@@ -139,8 +143,8 @@ namespace DbAdvPrgAdv_Test
         //        output.Should().BeSameAs(true);
         //    }
         //}
-    
 
+        /**** TESTS REGEX WEB FAIL ****/
         //[Fact]
         //public void AddWeb_Invalid_Test1()
         //{
@@ -163,6 +167,75 @@ namespace DbAdvPrgAdv_Test
         //        var web = "google123";
 
         //        var output = customer.RegEx_Web(web);
+
+        //        output.Should().BeSameAs(false);
+        //    }
+        //}
+
+        /**** TESTS REGEX PASSWORD PASSED ****/
+        //[Fact]
+        //public void AddMail_Valid_Test()
+        //{
+        //    public void RegExMail_mailValid_ReturnTrue()
+        //    {
+        //        var customer = new EditCustomer();
+        //        var password = "muster12!";
+
+        //        var output = customer.RegEx_Web(password);
+
+        //        output.Should().BeSameAs(true);
+        //    }
+        //}
+
+        /**** TESTS REGEX PASSWORD FAIL ****/
+        //[Fact]
+        //public void AddMail_InvalidCount_Test()
+        //{
+        //    public void RegExMail_mailInvalidCount_ReturnFalse()
+        //    {
+        //        var customer = new EditCustomer();
+        //        var password = "muster12";
+
+        //        var output = customer.RegEx_Web(password);
+
+        //        output.Should().BeSameAs(false);
+        //    }
+        //}
+        //[Fact]
+        //public void AddMail_InvalidDigit_Test()
+        //{
+        //    public void RegExMail_mailInvalidDigit_ReturnFalse()
+        //    {
+        //        var customer = new EditCustomer();
+        //        var password = "muster!!!";
+
+        //        var output = customer.RegEx_Web(password);
+
+        //        output.Should().BeSameAs(false);
+        //    }
+        //}
+        //[Fact]
+        //public void AddMail_InvalidSpecial_Test()
+        //{
+        //    public void RegExMail_mailInvalidSpecial_ReturnFalse()
+        //    {
+        //        var customer = new EditCustomer();
+        //        var password = "muster123";
+
+        //        var output = customer.RegEx_Web(password);
+
+        //        output.Should().BeSameAs(false);
+        //    }
+        //}
+        //[Fact]
+        //public void AddMail_InvalidLetter_Test()
+        //{
+        //    public void RegExMail_mailInvalidLetter_ReturnFalse()
+        //    {
+        //        var customer = new EditCustomer();
+        //        var password = "12345!!!";
+
+        //        var output = customer.RegEx_Web(password);
 
         //        output.Should().BeSameAs(false);
         //    }
