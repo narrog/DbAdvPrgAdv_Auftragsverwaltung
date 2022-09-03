@@ -8,32 +8,34 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
 {
-    internal class OrderRepository : RepositoryBase<Order>
+    internal class ArticleRepository : RepositoryBase<Article>
     {
-        public override List<Order> GetAll()
+        public override List<Article> GetAll()
         {
             using (var context = new OrderContext())
             {
-                return context.Orders.Include("Customer").Include("Positions").ToList();
+                return context.Articles.Include("Group").Include("Positions").ToList();
             }
         }
-
-        public override Order GetById(int id)
+        public override Article GetById(int id)
         {
             using (var context = new OrderContext())
             {
-                return context.Orders.FirstOrDefault(x => x.OrderID == id);
+                return context.Articles.FirstOrDefault(x => x.ArticleID == id);
             }
         }
-        public override List<Order> SearchByName(string name)
+        public override List<Article> SearchByName(string name)
         {
-            throw new NotImplementedException();
+            using (var context = new OrderContext())
+            {
+                return context.Articles.Where(x => x.Name.Contains(name)).ToList();
+            }
         }
         public override void DeleteById(int id)
         {
             using (var context = new OrderContext())
             {
-                context.Orders.Remove(GetById(id));
+                context.Articles.Remove(GetById(id));
                 context.SaveChanges();
             }
         }

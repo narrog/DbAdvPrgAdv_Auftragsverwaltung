@@ -8,7 +8,9 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
 {
     internal interface IRepositoryBase<T> where T : class
     {
-        public T GetById(int ID);
         public List<T> GetAll();
+        public T GetById(int id);
+        public List<T> SearchByName(string name);
+        public void DeleteById(int id);
     }
 }

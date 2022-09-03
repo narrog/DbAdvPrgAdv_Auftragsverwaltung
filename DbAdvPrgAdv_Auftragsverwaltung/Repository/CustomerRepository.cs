@@ -25,5 +25,20 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
                 return context.Customers.FirstOrDefault(x => x.CustomerID == ID);
             }
         }
+        public override List<Customer> SearchByName(string name)
+        {
+            using (var context = new OrderContext())
+            {
+                return context.Customers.Where(x => x.Name.Contains(name) || x.Vorname.Contains(name)).ToList();
+            }
+        }
+        public override void DeleteById(int id)
+        {
+            using (var context = new OrderContext())
+            {
+                context.Customers.Remove(GetById(id));
+                context.SaveChanges();
+            }
+        }
     }
 }
