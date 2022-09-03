@@ -1,20 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Castle.Core.Internal;
 using DbAdvPrgAdv_Auftragsverwaltung.Form;
 using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using DbAdvPrgAdv_Auftragsverwaltung.ViewModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung
@@ -24,9 +15,11 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly MainVM _vm;
         public MainWindow()
         {
             InitializeComponent();
+            _vm = new MainVM();
             List<Customer> cust;
             // Migrate ausführen 
             using (var context = new OrderContext())
@@ -34,7 +27,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
                 context.Database.Migrate();
             }
             UpdateGrid();
-            
         }
 
         /* Customers */
@@ -292,14 +284,12 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         // Tabellen befüllen
         public void UpdateGrid()
         {
+            GrdCustomer.ItemsSource = _vm.GetCustomers();
+            GrdOrder.ItemsSource = _vm.GetOrders();
             using (var context = new OrderContext())
             {
-                GrdCustomer.ItemsSource = context.Customers.Include("City").ToList();
-                GrdOrder.ItemsSource = context.Orders.Include("Customer").Include("Positions").ToList();
                 GrdArticle.ItemsSource = context.Articles.Include("Group").Include("Positions").ToList();
                 GrdArticleGroup.ItemsSource = context.Groups.Include("Articles").ToList();
-
-                
             }
         }
 
