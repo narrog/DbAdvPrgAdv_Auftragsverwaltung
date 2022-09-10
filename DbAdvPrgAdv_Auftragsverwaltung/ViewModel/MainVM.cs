@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using DbAdvPrgAdv_Auftragsverwaltung.Repository;
 using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using Autofac;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.ViewModel
 {

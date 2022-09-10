@@ -20,7 +20,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         {
             InitializeComponent();
             _vm = new MainVM();
-            List<Customer> cust;
             // Migrate ausführen 
             // **************************************************************************************************
             //using (var context = new OrderContext())
