@@ -39,7 +39,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
         public MainWindow Main { get; set; }
         private List<City> Cities { get; set; }
         public Customer SelectedCustomer { get; set; }
-
         private void CmdSave_Click(object sender, RoutedEventArgs e)
         {
                 try
@@ -185,7 +184,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
                 return false;
             }
         }
-
         private void CmdClose_Click(object sender, RoutedEventArgs e)
         {
             Main.UpdateGrid();
