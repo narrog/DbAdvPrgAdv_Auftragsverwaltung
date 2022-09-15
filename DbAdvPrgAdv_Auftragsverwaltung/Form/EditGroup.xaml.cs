@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Input;
 using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using DbAdvPrgAdv_Auftragsverwaltung.ViewModel;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Form
 {
@@ -21,17 +22,17 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
     /// </summary>
     public partial class EditGroup : Window
     {
+        private readonly GroupVM _groupVM;
         public EditGroup(MainWindow mainWindow, Group selected)
         {
             InitializeComponent();
             Main = mainWindow;
             SelectedGroup = selected;
             this.DataContext = this;
+            _groupVM = new GroupVM();
 
-            using (var context = new OrderContext())
-            {
-                Groups = context.Groups.ToList();
-            }
+            Groups = _groupVM.GetGroups();
+
 
             // CmbBox füllen & falls nötig: übergeordnete Kategorie auswählen
             CmbGroupParent.Items.Add("");
@@ -82,25 +83,21 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
                     parentID = 0;
                 }
 
-                using (var context = new OrderContext())
+                
+                // neuen Datensatz erstellen
+                if (SelectedGroup.GroupID == 0)
                 {
-                    // neuen Datensatz erstellen
-                    if (SelectedGroup.GroupID == 0)
-                    {
-                        var newGroup = new Group() { Name = TxtNameGroup.Text, ParentID = parentID };
-                        context.Groups.Add(newGroup);
-                    }
+                    var newGroup = new Group() { Name = TxtNameGroup.Text, ParentID = parentID };
+                    _groupVM.AddGroup(newGroup);
+                }
 
-                    // bestehnden Datensatz bearbeiten
-                    else
-                    {
-                        SelectedGroup = context.Groups.Find(SelectedGroup.GroupID);
+                // bestehnden Datensatz bearbeiten
+                else
+                {
+                    SelectedGroup = _groupVM.GetGroupByID(SelectedGroup.GroupID);
 
-                        SelectedGroup.ParentID = parentID;
-                        context.Groups.Update(SelectedGroup);
-                    }
-                    // Datensatz speichern
-                    context.SaveChanges();
+                    SelectedGroup.ParentID = parentID;
+                    _groupVM.UpdateGroup(SelectedGroup);
                 }
 
                 Main.UpdateGrid();
