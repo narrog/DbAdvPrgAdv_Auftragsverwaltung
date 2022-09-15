@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using Autofac;
 using Castle.Core.Internal;
 using DbAdvPrgAdv_Auftragsverwaltung.Form;
 using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using DbAdvPrgAdv_Auftragsverwaltung.Repository;
 using DbAdvPrgAdv_Auftragsverwaltung.ViewModel;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +21,8 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         public MainWindow()
         {
             InitializeComponent();
-            _vm = new MainVM();
+            var container = BuildAutofacContainer();
+            _vm = container.Resolve<MainVM>();
             // Migrate ausführen 
             // **************************************************************************************************
             //using (var context = new OrderContext())
@@ -29,8 +32,20 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             // **************************************************************************************************
             UpdateGrid();
         }
-        /* Customers */
-        private void CmdCreateCustomer_Click(object sender, RoutedEventArgs e)
+
+        private static IContainer BuildAutofacContainer()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<CustomerRepository>().As<CustomerRepository>();
+            builder.RegisterType<OrderRepository>().As<OrderRepository>();
+            builder.RegisterType<ArticleRepository>().As<ArticleRepository>();
+            builder.RegisterType<GroupRepository>().As<GroupRepository>();
+            builder.RegisterType<MainVM>();
+            return builder.Build();
+        }
+
+            /* Customers */
+            private void CmdCreateCustomer_Click(object sender, RoutedEventArgs e)
         {
             var windowCustomer = new EditCustomer(this,new Customer() {City = new City()});
             windowCustomer.Show();

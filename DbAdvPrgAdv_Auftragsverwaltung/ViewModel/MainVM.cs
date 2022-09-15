@@ -11,12 +11,16 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.ViewModel
         private readonly OrderRepository _orderRep;
         private readonly ArticleRepository _articleRep;
         private readonly GroupRepository _groupRep;
-        public MainVM()
+        public MainVM(
+            CustomerRepository custRepo,
+            OrderRepository ordRepo, 
+            ArticleRepository artRepo,
+            GroupRepository grpRepo)
         {
-            _customerRep = new CustomerRepository();
-            _orderRep = new OrderRepository(); 
-            _articleRep = new ArticleRepository();
-            _groupRep = new GroupRepository();
+            _customerRep = custRepo;
+            _orderRep = ordRepo; 
+            _articleRep = artRepo;
+            _groupRep = grpRepo;
         }
         public List<Customer> GetCustomers()
         {
