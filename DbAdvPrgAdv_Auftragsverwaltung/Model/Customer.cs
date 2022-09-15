@@ -80,7 +80,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Model
             {
                 string pattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
 
-                Regex rgx = new Regex(pattern, RegexOptions.IgnoreCase);
+                Regex rgx = new Regex(pattern);
                 MatchCollection matches = rgx.Matches(input);
 
                 if (matches.Count > 0)

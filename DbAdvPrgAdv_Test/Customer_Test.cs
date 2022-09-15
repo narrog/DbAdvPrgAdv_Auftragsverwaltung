@@ -162,6 +162,15 @@ namespace DbAdvPrgAdv_Test
             output.Should().BeFalse();
         }
         [Fact]
+        public void RegExPassword_passwordInvalidCapital_ReturnFalse() {
+            var customer = new Customer();
+            var password = "muster12!";
+
+            var output = customer.RegEx_Password(password);
+
+            output.Should().BeFalse();
+        }
+        [Fact]
         public void RegExPassword_passwordInvalidDigit_ReturnFalse()
         {
             var customer = new Customer();
