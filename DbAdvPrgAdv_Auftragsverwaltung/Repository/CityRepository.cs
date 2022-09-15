@@ -1,50 +1,57 @@
-﻿using System;
+﻿using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DbAdvPrgAdv_Auftragsverwaltung.Model;
-using Microsoft.EntityFrameworkCore;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
 {
-    internal class ArticleRepository : RepositoryBase<Article>
+    internal class CityRepository : RepositoryBase<City>
     {
-        public override List<Article> GetAll()
+        public override List<City> GetAll()
         {
             using (var context = new OrderContext())
             {
-                return context.Articles.Include("Group").Include("Positions").ToList();
+                return context.Cities.ToList();
             }
         }
-        public override Article GetById(int id)
+
+        public override City GetById(int ID)
         {
             using (var context = new OrderContext())
             {
-                return context.Articles.FirstOrDefault(x => x.ArticleID == id);
+                return context.Cities.FirstOrDefault(x => x.CityID == ID);
             }
         }
-        public override List<Article> SearchByName(string name)
+        public City GetByPLZ(int plz)
         {
             using (var context = new OrderContext())
             {
-                return context.Articles.Where(x => x.Name.Contains(name)).ToList();
+                return context.Cities.FirstOrDefault(x =>x.PLZ == plz);
             }
         }
-        public override void Add(Article entity)
+        public override List<City> SearchByName(string name)
         {
             using (var context = new OrderContext())
             {
-                context.Articles.Add(entity);
+                return context.Cities.Where(x => x.CityName.Contains(name)).ToList();
+            }
+        }
+        public override void Add(City entity)
+        {
+            using (var context = new OrderContext())
+            {
+                context.Cities.Add(entity);
                 context.SaveChanges();
             }
         }
 
-        public override void Update(Article entity)
+        public override void Update(City entity)
         {
             using (var context = new OrderContext())
             {
-                context.Articles.Update(entity);
+                context.Cities.Update(entity);
                 context.SaveChanges();
             }
         }
@@ -52,7 +59,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
         {
             using (var context = new OrderContext())
             {
-                context.Articles.Remove(GetById(id));
+                context.Cities.Remove(GetById(id));
                 context.SaveChanges();
             }
         }

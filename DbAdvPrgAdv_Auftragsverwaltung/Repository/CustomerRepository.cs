@@ -32,6 +32,23 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
                 return context.Customers.Where(x => x.Name.Contains(name) || x.Vorname.Contains(name)).ToList();
             }
         }
+        public override void Add(Customer entity)
+        {
+            using (var context = new OrderContext())
+            {
+                context.Customers.Add(entity);
+                context.SaveChanges();
+            }
+        }
+
+        public override void Update(Customer entity)
+        {
+            using (var context = new OrderContext())
+            {
+                context.Customers.Update(entity);
+                context.SaveChanges();
+            }
+        }
         public override void DeleteById(int id)
         {
             using (var context = new OrderContext())

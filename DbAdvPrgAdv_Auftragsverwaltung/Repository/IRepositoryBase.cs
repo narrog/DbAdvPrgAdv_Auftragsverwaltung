@@ -11,6 +11,8 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
         public List<T> GetAll();
         public T GetById(int id);
         public List<T> SearchByName(string name);
+        public void Add(T entity);
+        public void Update(T entity);
         public void DeleteById(int id);
     }
 }

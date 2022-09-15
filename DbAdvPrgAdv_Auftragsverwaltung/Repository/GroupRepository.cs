@@ -32,6 +32,23 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
                 return context.Groups.Where(x => x.Name.Contains(name)).ToList();
             }
         }
+        public override void Add(Group entity)
+        {
+            using (var context = new OrderContext())
+            {
+                context.Groups.Add(entity);
+                context.SaveChanges();
+            }
+        }
+
+        public override void Update(Group entity)
+        {
+            using (var context = new OrderContext())
+            {
+                context.Groups.Update(entity);
+                context.SaveChanges();
+            }
+        }
         public override void DeleteById(int id)
         {
             using (var context = new OrderContext())

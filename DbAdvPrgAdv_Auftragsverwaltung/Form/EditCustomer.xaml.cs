@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using DbAdvPrgAdv_Auftragsverwaltung.ViewModel;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Form
 {
@@ -13,16 +14,15 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
     /// </summary>
     public partial class EditCustomer : Window
     {
+        private readonly CustomerVM _customerVM;
         public EditCustomer(MainWindow mainWindow, Customer selected)
         {
             InitializeComponent();
             Main = mainWindow;
             SelectedCustomer = selected;
             this.DataContext = this;
-            using (var context = new OrderContext())
-            {
-                Cities = context.Cities.ToList();
-            }
+            _customerVM = new CustomerVM();
+            Cities = _customerVM.GetCities();
             foreach (var City in Cities)
             {
                 if (SelectedCustomer.City.PLZ == City.PLZ)
@@ -41,90 +41,62 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
         public Customer SelectedCustomer { get; set; }
         private void CmdSave_Click(object sender, RoutedEventArgs e)
         {
-                try
+            try
+            {
+                int PLZ;
+                var PlzParsed = Int32.TryParse(TxtPLZ.Text, out PLZ);
+                if (!PlzParsed || TxtPLZ.Text.Length < 4)
                 {
-                    using (var context = new OrderContext())
-                    {
-                        int PLZ;
-                    var PlzParsed = Int32.TryParse(TxtPLZ.Text, out PLZ);
-                    if (!PlzParsed || TxtPLZ.Text.Length < 4)
-                    {
-                        throw new ArgumentException("Bitte PLZ überprüfen");
-                    }
-                    else if (PlzParsed && (TxtPLZ.Text == "" || TxtCity.Text == ""))
-                    {
-                        throw new ArgumentException("Bitte einen Ort eingeben");
-                    }
-                    else if (RegEx_Mail(TxtEMail.Text) == false)
-                    {
-                        throw new ArgumentException("Bitte E-Mail-Adresse überprüfen");
-                    }
-                    else if (RegEx_Web(TxtWebsite.Text) == false)
-                    {
-                        throw new ArgumentException("Bitte Webseite überprüfen");
-                    }
+                    throw new ArgumentException("Bitte PLZ überprüfen");
+                }
+                else if (PlzParsed && (TxtPLZ.Text == "" || TxtCity.Text == ""))
+                {
+                    throw new ArgumentException("Bitte einen Ort eingeben");
+                }
+                else if (RegEx_Mail(TxtEMail.Text) == false)
+                {
+                    throw new ArgumentException("Bitte E-Mail-Adresse überprüfen");
+                }
+                else if (RegEx_Web(TxtWebsite.Text) == false)
+                {
+                    throw new ArgumentException("Bitte Webseite überprüfen");
+                }
 
-                    else if (RegEx_Password(PwdPassword.Password) == false)
+                else if (RegEx_Password(PwdPassword.Password) == false)
+                {
+                    throw new ArgumentException("Passwort-Richtlinien \r\n" +
+                        "min. 8 Zeichen \r\n" +
+                        "min. 1 Buchstaben \r\n" +
+                        "min. 1 Zahl \r\n" +
+                        "min. 1 Sonderzeichen");
+                }
+                else
+                {
+                    var city = _customerVM.GetCityByPLZ(Convert.ToInt32(TxtPLZ.Text));
+                    if (city == null)
                     {
-                        throw new ArgumentException("Passwort-Richtlinien \r\n" +
-                            "min. 8 Zeichen \r\n" +
-                            "min. 1 Buchstaben \r\n" +
-                            "min. 1 Zahl \r\n" +
-                            "min. 1 Sonderzeichen");
+                        SelectedCustomer.City = new City() { PLZ = Convert.ToInt32(TxtPLZ.Text), CityName = TxtCity.Text };
                     }
                     else
                     {
-                        // Kontrolle ob Ortschaft bereits vorhanden ist
-                        SelectedCustomer.City = context.Cities
-                            .FirstOrDefault(x => x.PLZ == SelectedCustomer.City.PLZ);
-                        // -> Falls nicht, wird eine neue Ortschaft erstellt
-                        if (SelectedCustomer.City == null)
-                        {
-                            SelectedCustomer.City = new City() { PLZ = Convert.ToInt32(TxtPLZ.Text), CityName = TxtCity.Text };
-                        }
-
-
-
-                        if (SelectedCustomer.CustomerID == 0)
-                        {
-                            context.Customers.Add(SelectedCustomer);
-                        }
-                        else
-                        {
-                            SelectedCustomer = context.Customers.Find(SelectedCustomer.CustomerID);
-
-                            var existsCity = context.Cities
-                                .FirstOrDefault(x => x.PLZ == Convert.ToInt32(TxtPLZ.Text));
-                            if (existsCity == null)
-                            {
-                                SelectedCustomer.City = new City() { PLZ = Convert.ToInt32(TxtPLZ.Text), CityName = TxtCity.Text };
-                            }
-                            else
-                            {
-                                SelectedCustomer.CityID = existsCity.CityID;
-                            }
-
-
-                            SelectedCustomer.Name = TxtName.Text;
-                            SelectedCustomer.Vorname = TxtVorname.Text;
-                            SelectedCustomer.Adress = TxtAdress.Text;
-                            SelectedCustomer.Email = TxtEMail.Text;
-                            SelectedCustomer.Website = TxtWebsite.Text;
-                            SelectedCustomer.Password = PwdPassword.Password;
-
-                            context.Customers.Update(SelectedCustomer);
-                        }
+                        SelectedCustomer.City = _customerVM.GetCityByPLZ(Convert.ToInt32(TxtPLZ.Text));
                     }
-
-                    context.SaveChanges();
+                    if (SelectedCustomer.CustomerID == 0)
+                    {
+                        _customerVM.AddCustomer(SelectedCustomer);
                     }
-                    Main.UpdateGrid();
-                    Close();
+                    else
+                    {
+                        _customerVM.UpdateCustomer(SelectedCustomer);
+                    }
                 }
-                catch (ArgumentException arg)
-                {
-                    MessageBox.Show(arg.Message);
-                }
+                Main.UpdateGrid();
+                Close();
+            }
+            catch (ArgumentException arg)
+            {
+                MessageBox.Show(arg.Message);
+            }
 
         }
         private bool RegEx_Mail(string input)

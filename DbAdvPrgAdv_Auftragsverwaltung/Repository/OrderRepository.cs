@@ -29,6 +29,23 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
         {
             throw new NotImplementedException();
         }
+        public override void Add(Order entity)
+        {
+            using (var context = new OrderContext())
+            {
+                context.Orders.Add(entity);
+                context.SaveChanges();
+            }
+        }
+
+        public override void Update(Order entity)
+        {
+            using (var context = new OrderContext())
+            {
+                context.Orders.Update(entity);
+                context.SaveChanges();
+            }
+        }
         public override void DeleteById(int id)
         {
             using (var context = new OrderContext())
