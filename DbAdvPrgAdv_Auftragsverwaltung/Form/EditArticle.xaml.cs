@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using DbAdvPrgAdv_Auftragsverwaltung.ViewModel;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
     /// <summary>
     /// Interaction logic for EditArticle.xaml
     /// </summary>
     public partial class EditArticle : Window {
+        private readonly ArticleVM _articleVM;
         public EditArticle(MainWindow mainWindow, Article selected) {
             InitializeComponent();
             Main = mainWindow;
             SelectedArticle = selected;
             this.DataContext = this;
-            using (var context = new OrderContext())
-            {
-                Groups = context.Groups.ToList();
-            }
+            _articleVM = new ArticleVM();
+
+            Groups = _articleVM.GetGroups();
 
             // CmbBox füllen
             foreach (var item in Groups) {
@@ -44,34 +45,33 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
             {
                 double Price;
                 var PriceParsed = double.TryParse(TxtPrice.Text, out Price);
-                if (CmbGroup.Text != "" && PriceParsed ) {
-                    var groupID = Groups
-                        .FirstOrDefault(x => x.Name.Equals(CmbGroup.Text))
-                        .GroupID;
-                    using (var context = new OrderContext())
+                if (TxtName.Text != "" && CmbGroup.Text != "" && PriceParsed ) {
+
+                    var groupID = _articleVM.GetGroupByName(CmbGroup.Text).GroupID;
+                    SelectedArticle.Group = _articleVM.GetGroupByID(groupID);
+                 
+                    if (SelectedArticle.ArticleID == 0)
                     {
-                        SelectedArticle.Group = context.Groups
-                            .FirstOrDefault(x => x.Name.Equals(CmbGroup.Text));
-                        if (SelectedArticle.ArticleID == 0)
-                        {
-                            context.Articles.Add(SelectedArticle);
-                        }
-                        else
-                        {
-                            SelectedArticle = context.Articles.Find(SelectedArticle.ArticleID);
-                            SelectedArticle.GroupID = groupID;
-                            SelectedArticle.Name = TxtName.Text;
-                            SelectedArticle.Price = Convert.ToDouble(TxtPrice.Text);
-                            context.Articles.Update(SelectedArticle);
-                        }
-                        context.SaveChanges();
+                        _articleVM.AddArticle(SelectedArticle);
                     }
+                    else
+                    {
+                        SelectedArticle = _articleVM.GetArticleByID(SelectedArticle.ArticleID);
+                        SelectedArticle.GroupID = groupID;
+                        SelectedArticle.Name = TxtName.Text;
+                        SelectedArticle.Price = Convert.ToDouble(TxtPrice.Text);
+                        _articleVM.UpdateArticle(SelectedArticle);
+                    }
+
                     Main.UpdateGrid();
                     Close();
                 }
                 else
                 {
-                    if (!PriceParsed)
+                    if (TxtName.Text == "") {
+                        throw new ArgumentException("Bitte Name eingeben");
+                    }
+                    else if (!PriceParsed)
                     {
                         throw new ArgumentException("Bitte Preis als Zahl eingeben");
                     }

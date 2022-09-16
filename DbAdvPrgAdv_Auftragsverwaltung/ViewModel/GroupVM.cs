@@ -20,10 +20,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.ViewModel
         {
             return _groupRep.GetAll();
         }
-        public List<Group> SearchGroupByName(string name)
-        {
-            return _groupRep.SearchByName(name);
-        }
         public Group GetGroupByID(int id) {
             return _groupRep.GetById(id);
         }
@@ -35,10 +31,5 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.ViewModel
         {
             _groupRep.Update(group);
         }
-        public void DeleteGroupById(int id)
-        {
-            _groupRep.DeleteById(id);
-        }
-
     }
 }

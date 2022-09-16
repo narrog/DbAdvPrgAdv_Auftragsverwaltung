@@ -25,6 +25,11 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
                 return context.Groups.FirstOrDefault(x => x.GroupID == ID);
             }
         }
+        public Group GetByName(string name) {
+            using (var context = new OrderContext()) {
+                return context.Groups.FirstOrDefault(x => x.Name.Equals(name));
+            }
+        }
         public override List<Group> SearchByName(string name)
         {
             using (var context = new OrderContext())
