@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Autofac;
 using Castle.Core.Internal;
 using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using DbAdvPrgAdv_Auftragsverwaltung.Repository;
+using DbAdvPrgAdv_Auftragsverwaltung.ViewModel;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Form
 {
@@ -14,6 +16,8 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
     /// </summary>
     public partial class EditPosition : Window
     {
+        private readonly PositionVM _positionVM;
+
         public EditPosition(EditOrder main, Position selected, bool isNew)
         {
             InitializeComponent();
@@ -21,10 +25,10 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
             SelectedPosition = selected;
             IsNew = isNew;
             this.DataContext = this;
-            using (var context = new OrderContext())
-            {
-                Articles = context.Articles.ToList();
-            }
+            var container = BuildAutofacContainer();
+            _positionVM = container.Resolve<PositionVM>();
+
+            Articles = _positionVM.GetAllArticles();
 
             // CmbBox Articles füllen
             foreach (var item in Articles)
@@ -40,17 +44,31 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
         public Position SelectedPosition { get; set; }
         public List<Article> Articles { get; set; }
         public bool IsNew { get; set; }
-
+        private static IContainer BuildAutofacContainer()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<PositionRepository>().As<IPositionRepository>();
+            builder.RegisterType<ArticleRepository>().As<IArticleRepository>();
+            builder.RegisterType<OrderRepository>().As<IOrderRepository>();
+            builder.RegisterType<PositionVM>();
+            return builder.Build();
+        }
         private void CmdSave_Click(object sender, RoutedEventArgs e)
         {
-            using (var context = new OrderContext())
+            SelectedPosition.Article = _positionVM.GetArticleById(Articles.FirstOrDefault(x => x.Name == CmbArticle.Text).ArticleID);
+            SelectedPosition.Order = _positionVM.GetOrderById(SelectedPosition.OrderID);
+            SelectedPosition.ArticleID = SelectedPosition.Article.ArticleID;
+            SelectedPosition.OrderID = SelectedPosition.Order.OrderID;
+            
+            if (IsNew)
             {
-                SelectedPosition.Article = context.Articles
-                    .FirstOrDefault(x => x.Name == CmbArticle.Text);
-                SelectedPosition.Order = context.Orders.Find(SelectedPosition.OrderID);
-                context.Positions.Add(SelectedPosition);
-                context.SaveChanges();
+                _positionVM.AddPosition(SelectedPosition);
             }
+            else
+            {
+                _positionVM.UpdatePosition(SelectedPosition);
+            }
+
             Main.UpdateGrid();
             Close();
         }

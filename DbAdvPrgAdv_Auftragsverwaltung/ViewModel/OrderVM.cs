@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.ViewModel {
     internal class OrderVM {
-        private readonly OrderRepository _orderRep;
-        private readonly CustomerRepository _customerRep;
+        private readonly IOrderRepository _orderRep;
+        private readonly ICustomerRepository _customerRep;
+        private readonly IPositionRepository _positionRep;
 
-        public OrderVM() {
-            _orderRep = new OrderRepository();
-            _customerRep = new CustomerRepository();
+        public OrderVM(IOrderRepository ordRepo,ICustomerRepository custRepo, IPositionRepository posRepo) {
+            _orderRep = ordRepo;
+            _customerRep = custRepo;
+            _positionRep = posRepo;
         }
         public List<Customer> GetAllCustomers() {
             return _customerRep.GetAll();
@@ -28,7 +30,11 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.ViewModel {
             _orderRep.Add(order);
         }
         public void UpdateOrder(Order order) {
-            _orderRep.Add(order);
+            _orderRep.Update(order);
+        }
+        public void DeletePosition(int orderId, int articleId)
+        {
+            _positionRep.DeleteByCombinedId(orderId, articleId);
         }
     }
 }
