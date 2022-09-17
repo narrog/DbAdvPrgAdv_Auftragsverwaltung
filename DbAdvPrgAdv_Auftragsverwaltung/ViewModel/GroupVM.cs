@@ -10,11 +10,11 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.ViewModel
 {
     internal class GroupVM
     {
-        private readonly GroupRepository _groupRep;
+        private readonly IGroupRepository _groupRep;
 
-        public GroupVM()
+        public GroupVM(IGroupRepository grpRepo)
         {
-            _groupRep = new GroupRepository();
+            _groupRep = grpRepo;
         }
         public List<Group> GetGroups()
         {

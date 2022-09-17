@@ -1,19 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Windows.Input;
 using DbAdvPrgAdv_Auftragsverwaltung.Model;
 using DbAdvPrgAdv_Auftragsverwaltung.ViewModel;
+using DbAdvPrgAdv_Auftragsverwaltung.Repository;
+using Autofac;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Form
 {
@@ -29,7 +21,8 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
             Main = mainWindow;
             SelectedGroup = selected;
             this.DataContext = this;
-            _groupVM = new GroupVM();
+            var container = BuildAutofacContainer();
+            _groupVM = container.Resolve<GroupVM>();
 
             Groups = _groupVM.GetGroups();
 
@@ -51,7 +44,12 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
         public Group SelectedGroup { get; set; }
         public List<Group> Groups { get; set; }
         public string ParentName { get; set; }
-
+        private static IContainer BuildAutofacContainer() {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<GroupRepository>().As<IGroupRepository>();
+            builder.RegisterType<GroupVM>();
+            return builder.Build();
+        }
         private void CmdAbortGroup_Click(object sender, RoutedEventArgs e)
         {
             Main.UpdateGrid();
