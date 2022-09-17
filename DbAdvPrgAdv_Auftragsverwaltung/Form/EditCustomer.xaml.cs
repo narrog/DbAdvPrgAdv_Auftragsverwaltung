@@ -64,16 +64,16 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
                 {
                     throw new ArgumentException("Bitte einen Ort eingeben");
                 }
-                else if (RegEx_Mail(TxtEMail.Text) == false)
+                else if (SelectedCustomer.RegEx_Mail(TxtEMail.Text) == false)
                 {
                     throw new ArgumentException("Bitte E-Mail-Adresse überprüfen");
                 }
-                else if (RegEx_Web(TxtWebsite.Text) == false)
+                else if (SelectedCustomer.RegEx_Web(TxtWebsite.Text) == false)
                 {
                     throw new ArgumentException("Bitte Webseite überprüfen");
                 }
 
-                else if (RegEx_Password(PwdPassword.Password) == false)
+                else if (SelectedCustomer.RegEx_Password(PwdPassword.Password) == false)
                 {
                     throw new ArgumentException("Passwort-Richtlinien \r\n" +
                         "min. 8 Zeichen \r\n" +
@@ -110,63 +110,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
             }
 
         }
-        private bool RegEx_Mail(string input)
-        {
-            // string pattern = @"(?:[a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*|(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*)@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/i";
-            string pattern = @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";
-
-            Regex rgx = new Regex(pattern, RegexOptions.IgnoreCase);
-            MatchCollection matches = rgx.Matches(input);
-            
-            if (matches.Count > 0)
-            {
-                return true;
-            }       
-
-            return false;
-        }
-        private bool RegEx_Web(string input)
-        {
-            if (input == "")
-            {
-                return true;
-            }
-            else
-            {
-                string pattern = @"^(http|https|)\://|[a-zA-Z0-9\-\.]+\.[a-zA-Z](:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*[^\.\,\)\(\s]$";
-
-                Regex rgx = new Regex(pattern, RegexOptions.IgnoreCase);
-                MatchCollection matches = rgx.Matches(input);
-
-                if (matches.Count > 0)
-                {
-                    return true;
-                }
-
-                return false;
-            }
-        }
-        private bool RegEx_Password(string input)
-        {
-            if (input == "")
-            {
-                return false;
-            }
-            else
-            {
-                string pattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
-
-                Regex rgx = new Regex(pattern, RegexOptions.IgnoreCase);
-                MatchCollection matches = rgx.Matches(input);
-
-                if (matches.Count > 0)
-                {
-                    return true;
-                }
-
-                return false;
-            }
-        }
+       
         private void CmdClose_Click(object sender, RoutedEventArgs e)
         {
             Main.UpdateGrid();
