@@ -10,13 +10,13 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.ViewModel
 {
     internal class CustomerVM
     {
-        private readonly CustomerRepository _customerRep;
-        private readonly CityRepository _cityRep;
+        private readonly ICustomerRepository _customerRep;
+        private readonly ICityRepository _cityRep;
 
-        public CustomerVM()
+        public CustomerVM(ICustomerRepository custRepo, ICityRepository cityRepo)
         {
-            _customerRep = new CustomerRepository();
-            _cityRep = new CityRepository();
+            _customerRep = custRepo;
+            _cityRep = cityRepo;
         }
         public List<Customer> GetCustomers()
         {

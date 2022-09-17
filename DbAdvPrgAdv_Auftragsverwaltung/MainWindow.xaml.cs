@@ -36,10 +36,10 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         private static IContainer BuildAutofacContainer()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<CustomerRepository>().As<CustomerRepository>();
-            builder.RegisterType<OrderRepository>().As<OrderRepository>();
-            builder.RegisterType<ArticleRepository>().As<ArticleRepository>();
-            builder.RegisterType<GroupRepository>().As<GroupRepository>();
+            builder.RegisterType<CustomerRepository>().As<ICustomerRepository>();
+            builder.RegisterType<OrderRepository>().As<IOrderRepository>();
+            builder.RegisterType<ArticleRepository>().As<IArticleRepository>();
+            builder.RegisterType<GroupRepository>().As<IGroupRepository>();
             builder.RegisterType<MainVM>();
             return builder.Build();
         }
