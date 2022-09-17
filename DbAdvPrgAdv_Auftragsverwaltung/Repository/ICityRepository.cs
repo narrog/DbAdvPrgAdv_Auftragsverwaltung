@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
 {
-    internal interface ICityRepository
+    interface ICityRepository
     {
         public List<City> GetAll();
         public City GetById(int id);

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
 {
-    internal class ArticleRepository : RepositoryBase<Article>, IArticleRepository
+    public class ArticleRepository : RepositoryBase<Article>, IArticleRepository
     {
         public override List<Article> GetAll()
         {

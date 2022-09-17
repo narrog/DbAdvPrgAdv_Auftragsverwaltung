@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
 {
-    internal interface IGroupRepository
+    interface IGroupRepository
     {
         public List<Group> GetAll();
         public Group GetById(int id);

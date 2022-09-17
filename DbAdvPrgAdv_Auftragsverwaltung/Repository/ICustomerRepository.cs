@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
 {
-    internal interface ICustomerRepository
+    interface ICustomerRepository
     {
         public List<Customer> GetAll();
         public Customer GetById(int id);

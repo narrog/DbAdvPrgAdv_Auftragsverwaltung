@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
 {
-    internal interface IArticleRepository
+    interface IArticleRepository
     {
         public abstract List<Article> GetAll();
         public abstract Article GetById(int id);

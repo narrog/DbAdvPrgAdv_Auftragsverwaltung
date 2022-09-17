@@ -1,6 +1,7 @@
 using FluentAssertions;
-using DbAdvPrgAdv_Auftragsverwaltung;
 using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using DbAdvPrgAdv_Auftragsverwaltung.Repository;
+using Moq;
 
 namespace DbAdvPrgAdv_Test
 {
@@ -190,6 +191,43 @@ namespace DbAdvPrgAdv_Test
             var output = customer.RegEx_Password(password);
 
             output.Should().BeFalse();
+        }
+
+        /**** Methoden Tests ****/
+        [Fact]
+        public void CallGetAll() {
+            var mock = new Mock<CustomerRepository>();
+            mock.Setup(c => c.GetAll());
+        }
+        [Fact]
+        public void CallGetById() {
+            var mock = new Mock<CustomerRepository>();
+            var customer = new Customer().CustomerID;
+            mock.Setup(c => c.GetById(customer));
+        }
+        [Fact]
+        public void CallGetByName() {
+            var mock = new Mock<CustomerRepository>();
+            var customer = new Customer().Name;
+            mock.Setup(c => c.SearchByName(customer));
+        }
+        [Fact]
+        public void CallAdd() {
+            var mock = new Mock<CustomerRepository>();
+            var customer = new Customer();
+            mock.Setup(c => c.Add(customer));
+        }
+        [Fact]
+        public void CallUpdate() {
+            var mock = new Mock<CustomerRepository>();
+            var customer = new Customer();
+            mock.Setup(c => c.Update(customer));
+        }
+        [Fact]
+        public void CallDelete() {
+            var mock = new Mock<CustomerRepository>();
+            var customer = new Customer().CustomerID;
+            mock.Setup(c => c.DeleteById(customer));
         }
     }
 }

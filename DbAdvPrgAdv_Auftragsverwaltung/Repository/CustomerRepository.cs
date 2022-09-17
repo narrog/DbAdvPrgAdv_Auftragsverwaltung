@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
 {
-    internal class CustomerRepository : RepositoryBase<Customer>,ICustomerRepository
+    public class CustomerRepository : RepositoryBase<Customer>,ICustomerRepository
     {
         public override List<Customer> GetAll()
         {
