@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
 {
-    internal class GroupRepository : RepositoryBase<Group>
+    internal class GroupRepository : RepositoryBase<Group>,IGroupRepository
     {
         public override List<Group> GetAll()
         {
@@ -23,11 +23,6 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
             using (var context = new OrderContext())
             {
                 return context.Groups.FirstOrDefault(x => x.GroupID == ID);
-            }
-        }
-        public Group GetByName(string name) {
-            using (var context = new OrderContext()) {
-                return context.Groups.FirstOrDefault(x => x.Name.Equals(name));
             }
         }
         public override List<Group> SearchByName(string name)

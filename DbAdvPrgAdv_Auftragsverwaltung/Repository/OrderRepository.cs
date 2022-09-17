@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
 {
-    internal class OrderRepository : RepositoryBase<Order>
+    internal class OrderRepository : RepositoryBase<Order>,IOrderRepository
     {
         public override List<Order> GetAll()
         {

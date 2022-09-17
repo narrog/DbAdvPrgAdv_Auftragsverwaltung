@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using Autofac;
 using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using DbAdvPrgAdv_Auftragsverwaltung.Repository;
 using DbAdvPrgAdv_Auftragsverwaltung.ViewModel;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Form
@@ -21,7 +23,8 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
             Main = mainWindow;
             SelectedCustomer = selected;
             this.DataContext = this;
-            _customerVM = new CustomerVM();
+            var container = BuildAutofacContainer();
+            _customerVM = container.Resolve<CustomerVM>();
             Cities = _customerVM.GetCities();
             foreach (var City in Cities)
             {
@@ -39,6 +42,14 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
         public MainWindow Main { get; set; }
         private List<City> Cities { get; set; }
         public Customer SelectedCustomer { get; set; }
+        private static IContainer BuildAutofacContainer()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<CustomerRepository>().As<ICustomerRepository>();
+            builder.RegisterType<CityRepository>().As<ICityRepository>();
+            builder.RegisterType<CustomerVM>();
+            return builder.Build();
+        }
         private void CmdSave_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -72,15 +83,15 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
                 }
                 else
                 {
+                    
                     var city = _customerVM.GetCityByPLZ(Convert.ToInt32(TxtPLZ.Text));
                     if (city == null)
                     {
                         SelectedCustomer.City = new City() { PLZ = Convert.ToInt32(TxtPLZ.Text), CityName = TxtCity.Text };
+                        _customerVM.AddCity(SelectedCustomer.City);
                     }
-                    else
-                    {
-                        SelectedCustomer.City = _customerVM.GetCityByPLZ(Convert.ToInt32(TxtPLZ.Text));
-                    }
+                    SelectedCustomer.City = _customerVM.GetCityByPLZ(Convert.ToInt32(TxtPLZ.Text));
+                    SelectedCustomer.CityID = SelectedCustomer.City.CityID;
                     if (SelectedCustomer.CustomerID == 0)
                     {
                         _customerVM.AddCustomer(SelectedCustomer);

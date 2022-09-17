@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using Autofac;
 using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using DbAdvPrgAdv_Auftragsverwaltung.Repository;
 using DbAdvPrgAdv_Auftragsverwaltung.ViewModel;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
@@ -16,7 +18,8 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
             Main = mainWindow;
             SelectedArticle = selected;
             this.DataContext = this;
-            _articleVM = new ArticleVM();
+            var container = BuildAutofacContainer();
+            _articleVM = container.Resolve<ArticleVM>();
 
             Groups = _articleVM.GetGroups();
 
@@ -32,7 +35,14 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
         public MainWindow Main { get; set; }
         private List<Group> Groups { get; set; }
         public Article SelectedArticle { get; set; }
-
+        private static IContainer BuildAutofacContainer()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<ArticleRepository>().As<IArticleRepository>();
+            builder.RegisterType<GroupRepository>().As<IGroupRepository>();
+            builder.RegisterType<ArticleVM>();
+            return builder.Build();
+        }
         private void CmdAbortArticle_OnClick(object sender, RoutedEventArgs e)
         {
             Main.UpdateGrid();
@@ -46,9 +56,9 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
                 double Price;
                 var PriceParsed = double.TryParse(TxtPrice.Text, out Price);
                 if (TxtName.Text != "" && CmbGroup.Text != "" && PriceParsed ) {
-
-                    var groupID = _articleVM.GetGroupByName(CmbGroup.Text).GroupID;
-                    SelectedArticle.Group = _articleVM.GetGroupByID(groupID);
+                    SelectedArticle.Group = _articleVM
+                        .GetGroupByID(Groups.FirstOrDefault(x => x.Name == CmbGroup.SelectedItem).GroupID);
+                    SelectedArticle.GroupID = SelectedArticle.Group.GroupID;
                  
                     if (SelectedArticle.ArticleID == 0)
                     {
@@ -56,13 +66,8 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form {
                     }
                     else
                     {
-                        SelectedArticle = _articleVM.GetArticleByID(SelectedArticle.ArticleID);
-                        SelectedArticle.GroupID = groupID;
-                        SelectedArticle.Name = TxtName.Text;
-                        SelectedArticle.Price = Convert.ToDouble(TxtPrice.Text);
                         _articleVM.UpdateArticle(SelectedArticle);
                     }
-
                     Main.UpdateGrid();
                     Close();
                 }

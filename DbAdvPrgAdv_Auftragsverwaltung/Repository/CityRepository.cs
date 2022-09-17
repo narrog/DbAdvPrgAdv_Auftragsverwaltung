@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
 {
-    internal class CityRepository : RepositoryBase<City>
+    internal class CityRepository : RepositoryBase<City>,ICityRepository
     {
         public override List<City> GetAll()
         {

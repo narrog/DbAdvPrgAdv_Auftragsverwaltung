@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
 {
-    internal class CustomerRepository : RepositoryBase<Customer>
+    internal class CustomerRepository : RepositoryBase<Customer>,ICustomerRepository
     {
         public override List<Customer> GetAll()
         {
@@ -36,6 +36,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
         {
             using (var context = new OrderContext())
             {
+                entity.City = null;
                 context.Customers.Add(entity);
                 context.SaveChanges();
             }

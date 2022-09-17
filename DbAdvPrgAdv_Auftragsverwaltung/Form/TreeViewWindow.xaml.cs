@@ -13,7 +13,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Autofac;
 using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using DbAdvPrgAdv_Auftragsverwaltung.Repository;
+using DbAdvPrgAdv_Auftragsverwaltung.ViewModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Form
@@ -23,13 +26,14 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
     /// </summary>
     public partial class TreeViewWindow : Window
     {
+        private readonly TreeViewVM _treeViewVM;
         public TreeViewWindow() 
         {
             this.DataContext = this;
             InitializeComponent();
-
-            var context = new OrderContext();
-            var groups = context.GroupTree();
+            var container = BuildAutofacContainer();
+            _treeViewVM = container.Resolve<TreeViewVM>();
+            var groups = _treeViewVM.GetTreeView();
 
             
             List<TreeNodes> groupList = new List<TreeNodes>();
@@ -46,10 +50,15 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
                 groupList.Add(temp);
             }
             trvMenu.ItemsSource = groupList;
-
+        }
+        private static IContainer BuildAutofacContainer()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<TreeViewRepository>().As<ITreeViewRepository>();
+            builder.RegisterType<TreeViewVM>();
+            return builder.Build();
         }
     }
-
     public class TreeNodes {
         public TreeNodes() {
             this.Child = new ObservableCollection<TreeChildNodes>();
