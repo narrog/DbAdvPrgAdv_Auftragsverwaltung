@@ -11,8 +11,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Autofac;
 using Castle.Core.Internal;
 using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using DbAdvPrgAdv_Auftragsverwaltung.Repository;
+using DbAdvPrgAdv_Auftragsverwaltung.ViewModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Form
@@ -22,19 +25,17 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
     /// </summary>
     public partial class InvoiceWindow : Window
     {
+        private readonly InvoiceVM _invoiceVM;
         public InvoiceWindow()
         {
             
             InitializeComponent();
             this.DataContext = this;
-            Invoices = GetInvoices();
-
-            using (var context = new OrderContext())
-            {
-                Groups = context.Groups.ToList();
-                Articles = context.Articles.ToList();
-            }
-
+            var container = BuildAutofacContainer();
+            _invoiceVM = container.Resolve<InvoiceVM>();
+            Invoices = _invoiceVM.GetInvoices();
+            Groups = _invoiceVM.GetGroups();
+            Articles = _invoiceVM.GetArticles();
 
             DatePickerFrom.DisplayDateEnd = DateTime.Now;
             DatePickerTo.SelectedDate = DateTime.Now;
@@ -52,7 +53,15 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
         private string Article { get; set; }
         private DateTime DateFrom { get; set; }
         private DateTime DateTo { get; set; }
-
+        private static IContainer BuildAutofacContainer()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<InvoiceRepository>().As<IInvoiceRepository>();
+            builder.RegisterType<GroupRepository>().As<IGroupRepository>();
+            builder.RegisterType<ArticleRepository>().As<IArticleRepository>();
+            builder.RegisterType<InvoiceVM>();
+            return builder.Build();
+        }
 
         private void CmdFilter_OnClick(object sender, RoutedEventArgs e)
         {
@@ -76,76 +85,13 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
                 }
             }
             //Invoices.Clear();
-            Invoices = GetInvoices(dateFrom: DateFrom, dateTo: DateTo);
+            Invoices = _invoiceVM.GetInvoicesByDates(dateFrom: DateFrom, dateTo: DateTo);
             GrdInvoice.ItemsSource = Invoices;
 
         }
-
         private void CmdClose_OnClick(object sender, RoutedEventArgs e)
         {
             Close();
-        }
-
-        public List<Invoice> GetInvoices()
-        {
-            var invoice = new List<Invoice>();
-            using (var context = new OrderContext())
-            {
-                var orders = context.Orders.ToList();
-
-                foreach (var item in orders)
-                {
-                    var customer = item.Customer;
-                    var invoiceItem = new Invoice()
-                    {
-                        CustomerID = customer.CustomerID,
-                        CustomerName = customer.Name + customer.Vorname,
-                        CustomerStreet = customer.Adress, 
-                        CustomerZIP = customer.City.PLZ,
-                        CustomerCity = customer.City.CityName,
-                        CustomerCountry = "Schweiz",
-                        InvoiceDate = item.OrderDate,
-                        InvoiceID = item.OrderID,
-                        InvoiceNet = item.PriceTotal,
-                        InvoiceGross = item.PriceTotal * 1.08
-                    };
-                    invoice.Add(invoiceItem);
-                }
-
-            }
-
-            return invoice;
-        }
-        public List<Invoice> GetInvoices(DateTime dateFrom, DateTime dateTo)
-        {
-            var invoice = new List<Invoice>();
-            using (var context = new OrderContext())
-            {
-                var orders = context.Orders.ToList().Where(x => x.OrderDate > dateFrom).Where(x => x.OrderDate < dateTo);
-
-                foreach (var item in orders)
-                {
-                    var customer = item.Customer;
-
-                    var invoiceItem = new Invoice()
-                    {
-                        CustomerID = customer.CustomerID,
-                        CustomerName = customer.Name + " " + customer.Vorname,
-                        CustomerStreet = customer.Adress,
-                        CustomerZIP = customer.City.PLZ,
-                        CustomerCity = customer.City.CityName,
-                        CustomerCountry = "Schweiz",
-                        InvoiceDate = item.OrderDate,
-                        InvoiceID = item.OrderID,
-                        InvoiceNet = item.PriceTotal,
-                        InvoiceGross = item.PriceTotal * 1.08
-                    };
-                    invoice.Add(invoiceItem);
-                }
-
-            }
-
-            return invoice;
         }
     }
 }
