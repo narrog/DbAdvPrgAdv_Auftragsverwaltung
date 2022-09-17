@@ -35,6 +35,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
         {
             using (var context = new OrderContext())
             {
+                entity.Group = null;
                 context.Articles.Add(entity);
                 context.SaveChanges();
             }

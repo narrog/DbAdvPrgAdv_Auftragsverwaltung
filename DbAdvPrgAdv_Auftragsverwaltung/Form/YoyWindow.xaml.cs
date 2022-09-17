@@ -1,4 +1,6 @@
-﻿using DbAdvPrgAdv_Auftragsverwaltung.ViewModel;
+﻿using Autofac;
+using DbAdvPrgAdv_Auftragsverwaltung.Repository;
+using DbAdvPrgAdv_Auftragsverwaltung.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,8 +24,16 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
     {
         public YoyWindow()
         {
-            DataContext = new YoyViewModel();
+            var container = BuildAutofacContainer();
+            DataContext = container.Resolve<YoyViewModel>();
             InitializeComponent();
+        }
+        private static IContainer BuildAutofacContainer()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<YoyRepository>().As<IYoyRepository>();
+            builder.RegisterType<YoyViewModel>();
+            return builder.Build();
         }
     }
 }

@@ -83,15 +83,15 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
                 }
                 else
                 {
+                    
                     var city = _customerVM.GetCityByPLZ(Convert.ToInt32(TxtPLZ.Text));
                     if (city == null)
                     {
                         SelectedCustomer.City = new City() { PLZ = Convert.ToInt32(TxtPLZ.Text), CityName = TxtCity.Text };
+                        _customerVM.AddCity(SelectedCustomer.City);
                     }
-                    else
-                    {
-                        SelectedCustomer.City = _customerVM.GetCityByPLZ(Convert.ToInt32(TxtPLZ.Text));
-                    }
+                    SelectedCustomer.City = _customerVM.GetCityByPLZ(Convert.ToInt32(TxtPLZ.Text));
+                    SelectedCustomer.CityID = SelectedCustomer.City.CityID;
                     if (SelectedCustomer.CustomerID == 0)
                     {
                         _customerVM.AddCustomer(SelectedCustomer);

@@ -8,21 +8,18 @@ using System.Threading.Tasks;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.ViewModel {
     internal class ArticleVM {
-        private readonly ArticleRepository _articleRep;
-        private readonly GroupRepository _groupRep;
+        private readonly IArticleRepository _articleRep;
+        private readonly IGroupRepository _groupRep;
 
-        public ArticleVM() {
-            _articleRep = new ArticleRepository();
-            _groupRep = new GroupRepository();
+        public ArticleVM(IArticleRepository artRepo, IGroupRepository grpRepo) {
+            _articleRep = artRepo;
+            _groupRep = grpRepo;
         }
         public List<Group> GetGroups() {
             return _groupRep.GetAll();
         }
         public Group GetGroupByID(int id) {
             return _groupRep.GetById(id);
-        }
-        public Group GetGroupByName(string name) {
-            return _groupRep.GetByName(name);
         }
         public Article GetArticleByID(int id) {
             return _articleRep.GetById(id);
