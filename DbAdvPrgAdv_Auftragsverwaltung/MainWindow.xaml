@@ -43,7 +43,7 @@
                     <Button x:Name="CmdCreateCustomer" Content="Erstellen" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="65" Click="CmdCreateCustomer_Click"/>
                     <Button x:Name="CmdSearchCustomer" Content="Suchen" HorizontalAlignment="left" Margin="140,0,0,10" VerticalAlignment="Bottom" Width="65" Click="CmdSearchCustomer_Click"/>
                     <TextBox x:Name="TxtCustomerSearch" Style="{StaticResource MyWaterMarkStyle}" Tag="Name" HorizontalAlignment="Left" Margin="10,0,0,10" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120"></TextBox>
-                    <Button x:Name="CmdExportCustomer" Content="Exportieren" HorizontalAlignment="Right" Margin="0,0,235,10" VerticalAlignment="Bottom" Width="65" Click="CmdFileExport_OnClick"/>
+                    <Button x:Name="CmdExportCustomer" Content="Import / Export" HorizontalAlignment="Right" Margin="0,0,235,10" VerticalAlignment="Bottom" Width="100" Click="CmdFileExport_OnClick"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Bestellungen">

@@ -216,12 +216,8 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
         }
         private void CmdFileExport_OnClick(object sender, RoutedEventArgs e)
         {
-            var selected = (Customer)GrdCustomer.SelectedItem;
-            if (selected != null)
-            {
-                var exportWindow = new ExportCustomer(selected);
-                exportWindow.Show();
-            }
+            var exportWindow = new ExportCustomer(this);
+            exportWindow.Show();
         }
 
         // Tabellen befüllen

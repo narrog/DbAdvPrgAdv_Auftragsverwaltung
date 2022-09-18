@@ -10,6 +10,7 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
     internal interface ICustomerRepository
     {
         public List<Customer> GetAll();
+        public List<Customer> GetAllTemporal(DateTime date);
         public Customer GetById(int id);
         public abstract List<Customer> SearchByName(string name);
         public abstract void Add(Customer entity);

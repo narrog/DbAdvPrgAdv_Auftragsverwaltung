@@ -1,4 +1,7 @@
-﻿using DbAdvPrgAdv_Auftragsverwaltung.Model;
+﻿using Autofac;
+using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using DbAdvPrgAdv_Auftragsverwaltung.Repository;
+using DbAdvPrgAdv_Auftragsverwaltung.ViewModel;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,27 +25,47 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
     /// </summary>
     public partial class ExportCustomer : Window
     {
-        public ExportCustomer(Customer cust)
+        private readonly ExportCustomerVM _exportCustomerVM;
+        public ExportCustomer(MainWindow main)
         {
+            Main = main;
             InitializeComponent();
-            Cust = cust;
             TemporalDate = DateTime.Now;
             this.DataContext = this;
+            var container = BuildAutofacContainer();
+            _exportCustomerVM = container.Resolve<ExportCustomerVM>();
         }
         public DateTime TemporalDate { get; set; }
-        private Customer Cust { get;}
+        public MainWindow Main { get; set; }
+        private static IContainer BuildAutofacContainer()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<CustomerRepository>().As<ICustomerRepository>();
+            builder.RegisterType<CityRepository>().As<ICityRepository>();
+            builder.RegisterType<ExportCustomerVM>();
+            return builder.Build();
+        }
         private void CmdExportXML_Click(object sender, RoutedEventArgs e)
         {
-            using (var context = new OrderContext())
-            {
-                var tempCust = context.Customers.TemporalAsOf(TemporalDate).FirstOrDefault(x => x.CustomerID == Cust.CustomerID);
-                var xml = new XmlSerializer(tempCust.GetType());
-                xml.Serialize(Console.Out,tempCust);
-            }
+            _exportCustomerVM.ExportXML(TemporalDate);
+            Close();
         }
         private void CmdExportJSON_Click(object sender, RoutedEventArgs e)
         {
-
+            _exportCustomerVM.ExportJSON(TemporalDate);
+            Close();
+        }
+        private void CmdImportXML_Click(object sender, RoutedEventArgs e)
+        {
+            _exportCustomerVM.ImportXML();
+            Main.UpdateGrid();
+            Close();
+        }
+        private void CmdImportJSON_Click(object sender, RoutedEventArgs e)
+        {
+            _exportCustomerVM.ImportJSON();
+            Main.UpdateGrid();
+            Close();
         }
     }
 }
