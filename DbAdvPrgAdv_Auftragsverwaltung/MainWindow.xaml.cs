@@ -214,6 +214,12 @@ namespace DbAdvPrgAdv_Auftragsverwaltung
             var windowInvoice = new InvoiceWindow();
             windowInvoice.Show();
         }
+        private void CmdFileExport_OnClick(object sender, RoutedEventArgs e)
+        {
+            var exportWindow = new ExportCustomer(this);
+            exportWindow.Show();
+        }
+
         // Tabellen befüllen
         public void UpdateGrid()
         {

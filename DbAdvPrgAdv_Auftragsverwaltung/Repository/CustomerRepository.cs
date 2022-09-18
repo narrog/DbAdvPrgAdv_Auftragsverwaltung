@@ -58,5 +58,13 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
                 context.SaveChanges();
             }
         }
+
+        public List<Customer> GetAllTemporal(DateTime date)
+        {
+            using (var context = new OrderContext())
+            {
+                return context.Customers.TemporalAsOf(date).ToList();
+            }
+        }
     }
 }
