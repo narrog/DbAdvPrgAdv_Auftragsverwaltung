@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
 {
-    internal class GroupRepository : RepositoryBase<Group>
+    public class GroupRepository : RepositoryBase<Group>,IGroupRepository
     {
         public override List<Group> GetAll()
         {
@@ -30,6 +30,23 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Repository
             using (var context = new OrderContext())
             {
                 return context.Groups.Where(x => x.Name.Contains(name)).ToList();
+            }
+        }
+        public override void Add(Group entity)
+        {
+            using (var context = new OrderContext())
+            {
+                context.Groups.Add(entity);
+                context.SaveChanges();
+            }
+        }
+
+        public override void Update(Group entity)
+        {
+            using (var context = new OrderContext())
+            {
+                context.Groups.Update(entity);
+                context.SaveChanges();
             }
         }
         public override void DeleteById(int id)

@@ -7,16 +7,20 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.ViewModel
 {
     internal class MainVM
     {
-        private readonly CustomerRepository _customerRep;
-        private readonly OrderRepository _orderRep;
-        private readonly ArticleRepository _articleRep;
-        private readonly GroupRepository _groupRep;
-        public MainVM()
+        private readonly ICustomerRepository _customerRep;
+        private readonly IOrderRepository _orderRep;
+        private readonly IArticleRepository _articleRep;
+        private readonly IGroupRepository _groupRep;
+        public MainVM(
+            ICustomerRepository custRepo,
+            IOrderRepository ordRepo, 
+            IArticleRepository artRepo,
+            IGroupRepository grpRepo)
         {
-            _customerRep = new CustomerRepository();
-            _orderRep = new OrderRepository(); 
-            _articleRep = new ArticleRepository();
-            _groupRep = new GroupRepository();
+            _customerRep = custRepo;
+            _orderRep = ordRepo; 
+            _articleRep = artRepo;
+            _groupRep = grpRepo;
         }
         public List<Customer> GetCustomers()
         {

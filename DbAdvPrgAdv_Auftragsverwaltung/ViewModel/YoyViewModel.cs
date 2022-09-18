@@ -1,4 +1,5 @@
 ﻿using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using DbAdvPrgAdv_Auftragsverwaltung.Repository;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,22 +12,22 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.ViewModel
 {
     public class YoyViewModel : INotifyPropertyChanged
     {
+        private readonly IYoyRepository _yoyRepository;
         private List<Yoy> yoySales;
         private List<Yoy> yoyArticlePer;
         private List<Yoy> yoySum;
         private List<YoyCustomer> yoyCustomers;
         private List<Yoy> yoySumArticles;
-        public YoyViewModel()
+        public YoyViewModel(IYoyRepository yoyRepo)
         {
-            using(var context = new OrderContext())
-            {
-                YoySales = context.SoldArticlesYoy();
-                YoyArticlePer = context.GetArticlesYoy();
-                YoySum = context.GetSumYoy();
-                YoyCustomers = context.GetSumCustomer();
-                YoySumArticles = context.GetSumArticles();
-                Close = new CommandClose();
-            }
+            _yoyRepository = yoyRepo;
+            YoySales = _yoyRepository.GetSoldArticles();
+            YoyArticlePer = _yoyRepository.GetArticles();
+            YoySum = _yoyRepository.GetSumYoy();
+            YoyCustomers = _yoyRepository.GetSumCustomers();
+            YoySumArticles = _yoyRepository.GetSumArticles();
+            Close = new CommandClose();
+            
         }
         public List<Yoy> YoySales
         {
