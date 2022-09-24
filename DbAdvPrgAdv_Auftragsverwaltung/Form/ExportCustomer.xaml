@@ -1,0 +1,18 @@
+﻿<Window x:Class="DbAdvPrgAdv_Auftragsverwaltung.Form.ExportCustomer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DbAdvPrgAdv_Auftragsverwaltung.Form"
+        mc:Ignorable="d"
+        Title="Kunden Exportieren" Height="160" Width="200">
+    <Grid>
+        <DatePicker SelectedDate="{Binding Path=TemporalDate}" HorizontalAlignment="Left" Margin="50,20,0,0" VerticalAlignment="Top"/>
+        <Label Content="Export:" HorizontalAlignment="Left" Margin="10,58,0,0" VerticalAlignment="Top"/>
+        <Button Content="XML" HorizontalAlignment="Left" Margin="70,60,0,0" Width="50" VerticalAlignment="Top" Click="CmdExportXML_Click" />
+        <Button Content="JSON" HorizontalAlignment="Left" Margin="130,60,0,0" Width="50" VerticalAlignment="Top" Click="CmdExportJSON_Click"/>
+        <Label Content="Import:" HorizontalAlignment="Left" Margin="10,98,0,0" VerticalAlignment="Top"/>
+        <Button Content="XML" HorizontalAlignment="Left" Margin="70,100,0,0" Width="50" VerticalAlignment="Top" Click="CmdImportXML_Click" />
+        <Button Content="JSON" HorizontalAlignment="Left" Margin="130,100,0,0" Width="50" VerticalAlignment="Top" Click="CmdImportJSON_Click"/>
+    </Grid>
+</Window>

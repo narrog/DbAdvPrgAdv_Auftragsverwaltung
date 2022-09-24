@@ -17,7 +17,7 @@
         <Label Content="PLZ" HorizontalAlignment="Left" Margin="415,10,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="TxtCity" Text="{Binding Path=SelectedCustomer.City.CityName}" HorizontalAlignment="Left" Margin="550,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <Label Content="Ort" HorizontalAlignment="Left" Margin="550,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="TxtEMail" Text="{Binding Path=SelectedCustomer.EMail}" HorizontalAlignment="Left" Margin="10,110,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="TxtEMail" Text="{Binding Path=SelectedCustomer.Email}" HorizontalAlignment="Left" Margin="10,110,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="E-Mail" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="TxtWebsite" Text="{Binding Path=SelectedCustomer.Website}" HorizontalAlignment="Left" Margin="145,110,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Webseite" HorizontalAlignment="Left" Margin="145,80,0,0" VerticalAlignment="Top"/>

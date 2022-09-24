@@ -1,18 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Windows.Input;
 using DbAdvPrgAdv_Auftragsverwaltung.Model;
+using DbAdvPrgAdv_Auftragsverwaltung.ViewModel;
+using DbAdvPrgAdv_Auftragsverwaltung.Repository;
+using Autofac;
 
 namespace DbAdvPrgAdv_Auftragsverwaltung.Form
 {
@@ -21,17 +14,18 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
     /// </summary>
     public partial class EditGroup : Window
     {
+        private readonly GroupVM _groupVM;
         public EditGroup(MainWindow mainWindow, Group selected)
         {
             InitializeComponent();
             Main = mainWindow;
             SelectedGroup = selected;
             this.DataContext = this;
+            var container = BuildAutofacContainer();
+            _groupVM = container.Resolve<GroupVM>();
 
-            using (var context = new OrderContext())
-            {
-                Groups = context.Groups.ToList();
-            }
+            Groups = _groupVM.GetGroups();
+
 
             // CmbBox füllen & falls nötig: übergeordnete Kategorie auswählen
             CmbGroupParent.Items.Add("");
@@ -50,7 +44,12 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
         public Group SelectedGroup { get; set; }
         public List<Group> Groups { get; set; }
         public string ParentName { get; set; }
-
+        private static IContainer BuildAutofacContainer() {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<GroupRepository>().As<IGroupRepository>();
+            builder.RegisterType<GroupVM>();
+            return builder.Build();
+        }
         private void CmdAbortGroup_Click(object sender, RoutedEventArgs e)
         {
             Main.UpdateGrid();
@@ -82,25 +81,21 @@ namespace DbAdvPrgAdv_Auftragsverwaltung.Form
                     parentID = 0;
                 }
 
-                using (var context = new OrderContext())
+                
+                // neuen Datensatz erstellen
+                if (SelectedGroup.GroupID == 0)
                 {
-                    // neuen Datensatz erstellen
-                    if (SelectedGroup.GroupID == 0)
-                    {
-                        var newGroup = new Group() { Name = TxtNameGroup.Text, ParentID = parentID };
-                        context.Groups.Add(newGroup);
-                    }
+                    var newGroup = new Group() { Name = TxtNameGroup.Text, ParentID = parentID };
+                    _groupVM.AddGroup(newGroup);
+                }
 
-                    // bestehnden Datensatz bearbeiten
-                    else
-                    {
-                        SelectedGroup = context.Groups.Find(SelectedGroup.GroupID);
+                // bestehnden Datensatz bearbeiten
+                else
+                {
+                    SelectedGroup = _groupVM.GetGroupByID(SelectedGroup.GroupID);
 
-                        SelectedGroup.ParentID = parentID;
-                        context.Groups.Update(SelectedGroup);
-                    }
-                    // Datensatz speichern
-                    context.SaveChanges();
+                    SelectedGroup.ParentID = parentID;
+                    _groupVM.UpdateGroup(SelectedGroup);
                 }
 
                 Main.UpdateGrid();
